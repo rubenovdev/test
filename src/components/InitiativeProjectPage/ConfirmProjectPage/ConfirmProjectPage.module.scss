@@ -1,0 +1,44 @@
+.title {
+  font-size: 25px;
+  font-weight: 300;
+  margin-bottom: 40px;
+
+  @media (min-width: 768px) {
+    font-size: 32px;
+  }
+}
+
+.confirmMessageWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    display: block;
+  }
+}
+
+.confirmMessage {
+  background-color: #ffffff;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  padding-top: 16px;
+  padding-right: 16px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  min-width: 280px;
+  min-height: 170px;
+  font-size: 13px;
+  margin-bottom: 40px;
+
+  @media (min-width: 768px) {
+    font-size: 20px;
+    height: 266px;
+    margin-bottom: 56px;
+    padding-top: 23px;
+    padding-right: 40px;
+    padding-bottom: 23px;
+    padding-left: 40px;
+  }
+}

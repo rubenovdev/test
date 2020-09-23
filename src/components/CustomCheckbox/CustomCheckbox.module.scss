@@ -1,0 +1,21 @@
+.check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 9px 8px;
+  background-color: white;
+  font-size: 13px;
+  font-weight: 200;
+  border-radius: 5px;
+  margin-bottom: 16px;
+  cursor: pointer;
+
+  @media (min-width: 1024px) {
+    margin-right: 24px;
+  }
+
+  &Input {
+    position: absolute;
+    appearance: none;
+  }
+}

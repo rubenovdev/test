@@ -1,0 +1,117 @@
+.homeTitle {
+  font-weight: 300;
+  font-size: 25px;
+
+  @media (min-width: 768px) {
+    font-size: 32px;
+  }
+}
+
+.mainContent {
+  padding: 15px 0;
+
+  @media screen and (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 56px 1fr;
+  }
+
+  @media screen and (min-width: 1024px) {
+    margin-top: 32px;
+    column-gap: 35px;
+    grid-template-columns: 1.7fr 1fr;
+    grid-template-rows: 1fr 104px;
+  }
+
+  @media screen and (min-width: 1300px) {
+    column-gap: 97px;
+  }
+}
+
+.daysTimer {
+  display: flex;
+  background-color: #242424;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.24);
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 14px 7px 8px;
+
+  @media screen and (min-width: 360px) {
+    padding: 10px 15px 10px 15px;
+  }
+
+  @media screen and (min-width: 768px) {
+    grid-row-start: 2;
+  }
+
+  @media screen and (min-width: 1024px) {
+    padding: 11px 43px 9px 25px;
+  }
+}
+
+.daysTimerText {
+  font-size: 12px;
+
+  @media screen and (min-width: 360px) {
+    font-size: 14px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    font-size: 20px;
+  }
+}
+
+.daysTimerCounter {
+  display: flex;
+  align-items: center;
+}
+
+.daysTimerCounterText {
+  font-size: 16px;
+  font-weight: 700;
+  font-style: italic;
+  margin-right: 9px;
+
+  @media screen and (min-width: 360px) {
+    font-size: 18px;
+    margin-right: 16px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    font-size: 32px;
+    margin-right: 30px;
+  }
+
+  @media screen and (min-width: 1300px) {
+    margin-right: 58px;
+  }
+}
+
+.daysTimerCounterImg {
+  width: 23px;
+  height: 36px;
+
+  @media screen and (min-width: 1024px) {
+    width: 54px;
+    height: 84px;
+  }
+}
+
+.mainMenu {
+  padding: 32px 0;
+  display: grid;
+  row-gap: 33px;
+
+  @media screen and (min-width: 768px) {
+    padding: 0 0;
+    padding-bottom: 35px;
+    row-gap: 43px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media screen and (min-width: 1024px) {
+    column-gap: 40px;
+  }
+}

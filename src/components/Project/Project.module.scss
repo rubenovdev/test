@@ -1,0 +1,91 @@
+.project {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 246px;
+  height: 170px;
+  border-radius: 10px;
+  margin-bottom: 38px;
+  padding-top: 16px;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+
+  .logoAndPlaces {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 214px;
+    margin-bottom: 21px;
+
+    .logo {
+      width: 131px;
+      height: 31px;
+    }
+
+    .companyName {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .places {
+      font-size: 15px;
+      color: #959595;
+    }
+  }
+
+  .description {
+    width: 202px;
+    max-height: 45px;
+    font-size: 13px;
+    line-height: 22px;
+    margin-bottom: 21px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .detailed {
+    font-size: 13px;
+    font-weight: 200;
+    text-transform: uppercase;
+    border-bottom: 1px solid black;
+    padding-bottom: 5.5px;
+  }
+}
+
+@media (min-width: 414px) {
+  .project {
+    width: 276px;
+    height: 184px;
+    margin-bottom: 48px;
+
+    .logoAndPlaces {
+      width: 245px;
+    }
+
+    .description {
+      width: 233px;
+      font-size: 15px;
+      line-height: 25px;
+      margin-left: 15px;
+      align-self: flex-start;
+    }
+
+    .detailed {
+      align-self: flex-start;
+      margin-left: 15px;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .project {
+    .logoAndPlaces {
+      .companyName {
+        font-size: 17px;
+      }
+    }
+  }
+}

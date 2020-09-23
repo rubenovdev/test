@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22.078" height="22" viewBox="0 0 22.078 22">
+  <g id="Group_256" data-name="Group 256" transform="translate(-209.5 -432.5)">
+    <g id="Group_255" data-name="Group 255" transform="translate(239.588 131.122)">
+      <rect id="Rectangle_670" data-name="Rectangle 670" width="17.853" height="18.19" rx="2" transform="translate(-29.588 304.688)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+      <path id="Path_291" data-name="Path 291" d="M-13.668,320.425l-3.214-3.274,12.781-13a.917.917,0,0,1,1.306,0l1.953,1.989a.882.882,0,0,1,0,1.239Z" transform="translate(-8 -2)" fill="#242424" stroke="#fff" stroke-miterlimit="10" stroke-width="1"/>
+    </g>
+    <g id="Path_292" data-name="Path 292" transform="translate(217.393 451.072) rotate(-173)" fill="none">
+      <path d="M3.346,0A.657.657,0,0,1,4,.659L3.346,4,0,1.378Z" stroke="none"/>
+      <path d="M 3.260693788528442 0.7920372486114502 L 1.377097606658936 1.567704916000366 L 2.878324747085571 2.744316577911377 L 3.260693788528442 0.7920372486114502 M 3.345690011978149 0 C 3.707050085067749 0 4 0.2951600551605225 4 0.6592600345611572 L 3.345690011978149 4 L 0 1.37775993347168 L 3.345690011978149 0 Z" stroke="none" fill="#fff"/>
+    </g>
+  </g>
+</svg>

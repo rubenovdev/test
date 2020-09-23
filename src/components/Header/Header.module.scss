@@ -1,0 +1,142 @@
+header {
+  background-color: #f7f5f8;
+
+  .wrapper {
+    padding: 25px 20px;
+    display: flex;
+    justify-content: space-between;
+
+    .sitetoolbar {
+      display: flex;
+      align-items: center;
+
+      button {
+        position: relative;
+        width: 45px;
+        height: 21px;
+
+        .line,
+        .line::before,
+        .line::after {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          margin-top: -1px;
+          width: 45px;
+          height: 2px;
+          background-color: #222;
+          transition: width 0.2s;
+        }
+
+        .line {
+          &::before,
+          &::after {
+            content: '';
+            display: block;
+          }
+
+          &::before {
+            transform: translateY(-9px);
+          }
+
+          &::after {
+            transform: translateY(9px);
+          }
+        }
+      }
+    }
+
+    .logoWrapper {
+      width: 41%;
+      max-width: 155px;
+
+      a {
+        display: flex;
+      }
+    }
+  }
+}
+
+@media (min-width: 420px) {
+  header {
+    .wrapper {
+      max-width: 420px;
+      margin: 0 auto;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  header {
+    .wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 25px 0;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  header {
+    .wrapper {
+      max-width: 1050px;
+      padding: 30px 40px;
+
+      .sitetoolbar {
+        position: fixed;
+        transform: translate(0, -50%);
+        top: 50%;
+        left: 2%;
+
+        button {
+          height: 60px;
+          width: 19px;
+
+          .line {
+            &::after {
+              transform: translate(15px, 0);
+            }
+            &::before {
+              display: none;
+            }
+          }
+
+          .line,
+          .line::after {
+            top: 0;
+            width: 3px;
+            height: 60px;
+            margin-top: 0;
+            transition: height 0.2s;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1300px) {
+  header {
+    .wrapper {
+      max-width: 1200px;
+      padding: 30px 0;
+
+      button {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1500px) {
+  header {
+    .wrapper {
+      width: 80%;
+      padding-bottom: 40px;
+
+      .logo-wrapper {
+        max-width: 170px;
+      }
+    }
+  }
+}

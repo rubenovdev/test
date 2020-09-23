@@ -1,0 +1,79 @@
+.header {
+  margin-bottom: 32px;
+
+  @media (min-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.headerContent {
+  @media (min-width: 768px) {
+    width: 80%;
+  }
+}
+
+.logoAndTitle {
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+
+.headerCompanyLogo {
+  width: 131px;
+  height: auto;
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 13px;
+
+  @media (min-width: 768px) {
+    margin-right: 25px;
+  }
+}
+
+.headerTitle {
+  font-size: 21px;
+  font-weight: 300;
+  margin-bottom: 8px;
+
+  @media (min-width: 768px) {
+    font-size: 23px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 25px;
+  }
+}
+
+.headerSubtitle {
+  font-size: 13px;
+  color: #9d9d9d;
+  margin-bottom: 30px;
+
+  @media (min-width: 768px) {
+    margin-bottom: 0;
+    font-size: 15px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 17px;
+  }
+}
+
+.signBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & button {
+    width: 122px;
+    padding: 10px 5px;
+
+    @media (min-width: 1024px) {
+      width: 145px;
+    }
+  }
+}

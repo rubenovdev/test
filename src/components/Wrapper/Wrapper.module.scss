@@ -1,0 +1,38 @@
+.wrapper {
+  padding: 10px 35px;
+}
+
+@media (min-width: 420px) {
+  .wrapper {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 10px 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wrapper {
+    max-width: 1100px;
+    padding: 10px 80px;
+  }
+}
+
+@media (min-width: 1300px) {
+  .wrapper {
+    max-width: 1080px;
+    padding: 10px 0;
+  }
+}
+
+@media (min-width: 1500px) {
+  .wrapper {
+    max-width: 70%;
+  }
+}

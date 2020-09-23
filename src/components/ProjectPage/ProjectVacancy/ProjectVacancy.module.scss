@@ -1,0 +1,175 @@
+.vacanciesWrapper {
+  @media (min-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.selectVacancyWarningWrapper {
+  order: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    width: 70%;
+  }
+}
+
+.selectVacancyWarning {
+  order: 2;
+  font-size: 13px;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 24px;
+
+  @media (min-width: 768px) {
+    font-size: 15px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 17px;
+  }
+}
+
+.separateSkills {
+  display: none;
+  order: 2;
+
+  @media (min-width: 768px) {
+    display: block;
+    max-width: 546px;
+  }
+}
+
+.skillsTitle {
+  font-size: 21px;
+  font-weight: 300;
+  margin-bottom: 24px;
+
+  @media (min-width: 768px) {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+}
+
+.skillsDescription {
+  font-size: 13px;
+  line-height: 22px;
+
+  @media (min-width: 786px) {
+    font-size: 15px;
+  }
+}
+
+.vacancies {
+  @media (min-width: 768px) {
+    margin-right: 136px;
+  }
+}
+
+.vacancy {
+  cursor: pointer;
+}
+
+.vacancy:not(:last-of-type) {
+  margin-bottom: 24px;
+}
+
+.vacancyContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 210px;
+  padding: 14px 21px 14px 8px;
+  border: 1px solid rgba(112, 112, 112, 0.15);
+  border-radius: 10px;
+
+  @media (min-width: 1024px) {
+    width: 357px;
+    padding: 16px;
+  }
+}
+
+.activeVacancyContent {
+  width: 245px;
+  background-color: #460ede;
+  color: #fff;
+
+  @media (min-width: 1024px) {
+    width: 357px;
+    margin-left: 15px;
+  }
+}
+
+.vacancyName {
+  font-size: 13px;
+  max-width: 230px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 10px;
+
+  @media (min-width: 786px) {
+    font-size: 15px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 17px;
+    margin-right: 52px;
+  }
+}
+
+.vacancyRateWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.userIcon {
+  width: 11px;
+  height: 15px;
+  margin-right: 8px;
+
+  @media (min-width: 1024px) {
+    width: 13px;
+    height: 20px;
+    margin-right: 4px;
+  }
+}
+
+.vacancyRate {
+  font-size: 13px;
+  margin-right: 21px;
+
+  @media (min-width: 786px) {
+    font-size: 15px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 17px;
+    margin-right: 0;
+  }
+}
+
+.rightChevron {
+  width: 24px;
+  height: 24px;
+
+  @media (min-width: 1024px) {
+    width: 31px;
+    height: 31px;
+    margin-left: 41px;
+  }
+}
+
+.noRightChevron {
+  display: none;
+}
+
+.skills {
+  padding-top: 24px;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}

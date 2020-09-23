@@ -1,0 +1,133 @@
+.tittle {
+  font-size: 25px;
+  font-weight: 200;
+  margin-bottom: 22px;
+}
+
+.searchWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 41px;
+
+  .searchLabel {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 16px;
+      top: 15px;
+      width: 13px;
+      height: 13px;
+      background: url('../../assets/images/search-icon.svg') center / contain
+        no-repeat;
+      opacity: 0.3;
+    }
+
+    .searchInput {
+      width: 246px;
+      height: 40px;
+      padding-left: 41px;
+      padding-right: 15px;
+      margin-bottom: 22px;
+      border-radius: 10px;
+      font-size: 14px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+
+      &::placeholder {
+        color: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}
+
+.projects {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 414px) {
+  .tittle {
+    font-size: 32px;
+    margin-bottom: 32px;
+  }
+
+  .searchWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .searchLabel {
+      &::before {
+        left: 17px;
+        top: 20px;
+        width: 17px;
+        height: 17px;
+      }
+
+      .searchInput {
+        width: 362px;
+        height: 54px;
+        margin-bottom: 32px;
+        padding-left: 49px;
+        font-size: 17px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  .projects {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .projects {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    justify-items: self-end;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tittle {
+    font-size: 32px;
+    margin-bottom: 32px;
+  }
+
+  .searchWrapper {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+
+    .searchLabel {
+      &::before {
+        left: 16px;
+        top: 12px;
+        width: 17px;
+        height: 17px;
+      }
+
+      .searchInput {
+        width: 352px;
+        height: 40px;
+        margin-right: 62px;
+        margin-bottom: 0;
+        border-radius: 10px;
+        font-size: 17px;
+      }
+    }
+  }
+
+  .projects {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    justify-items: center;
+  }
+}

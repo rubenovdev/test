@@ -1,0 +1,102 @@
+.selectWrapper {
+  position: relative;
+
+  .selectHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 246px;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.3);
+    background-color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+
+    &Open {
+      background-color: #242424;
+      border-radius: 10px 10px 0 0;
+      color: white;
+    }
+
+    .arrow {
+      width: 19px;
+    }
+  }
+
+  .selectList {
+    position: absolute;
+    width: 246px;
+    padding-top: 4px;
+    border-radius: 0 0 10px 10px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    background-color: #242424;
+    top: 40px;
+
+    &Item {
+      margin-bottom: 8px;
+      margin-left: 16px;
+    }
+
+    &Item:last-child {
+      margin-bottom: 17px;
+    }
+  }
+}
+
+.searchProject {
+  margin-bottom: 22px;
+}
+
+@media (min-width: 414px) {
+  .selectWrapper {
+    .selectHeader {
+      width: 362px;
+      height: 54px;
+      padding: 0 23px;
+      font-size: 17px;
+
+      .arrow {
+        width: 21px;
+      }
+    }
+
+    .selectList {
+      width: 362px;
+      padding-top: 0;
+      font-size: 15px;
+      top: 54px;
+
+      &Item {
+        margin-bottom: 12px;
+        margin-left: 23px;
+      }
+    }
+  }
+
+  .searchProject {
+    margin-bottom: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .selectWrapper {
+    .selectHeader {
+      width: 268px;
+      height: 40px;
+      font-size: 14px;
+    }
+
+    .selectList {
+      width: 268px;
+      top: 40px;
+    }
+  }
+
+  .searchProject {
+    margin-right: 56px;
+    margin-bottom: 0;
+  }
+}

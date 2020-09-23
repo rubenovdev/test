@@ -1,0 +1,78 @@
+.teamWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 1024px) {
+    padding-left: 108px;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.members {
+  @media (min-width: 1024px) {
+    margin-right: 80px;
+  }
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.input {
+  background-color: #f5f5f5;
+  min-width: 248px;
+  padding-top: 11px;
+  padding-bottom: 11px;
+  padding-left: 16px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+  color: rgba(36, 36, 36, 0.31);
+  font-size: 13px;
+}
+
+.searchLabel {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    width: 13px;
+    height: 13px;
+    background: url('../../../assets/images/search-icon.svg') center / contain
+      no-repeat;
+    opacity: 0.3;
+  }
+
+  .searchInput {
+    background-color: #f5f5f5;
+    width: 248px;
+    height: 40px;
+    padding-left: 41px;
+    padding-right: 15px;
+    margin-bottom: 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.31);
+
+    @media (min-width: 768px) {
+      width: 380px;
+    }
+  }
+}
+
+.warningText {
+  font-size: 13px;
+  padding-left: 17px;
+  margin-bottom: 40px;
+}
+
+.memberName {
+  font-weight: 300;
+  text-transform: uppercase;
+}

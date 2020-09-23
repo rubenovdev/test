@@ -1,0 +1,19 @@
+.items {
+  display: grid;
+  grid-template-columns: 104px 104px;
+  justify-items: start;
+
+  @media (min-width: 1024px) {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+.allFiltersButton {
+  width: auto;
+  height: 36px;
+  font-size: 14px;
+  font-weight: 200;
+  border-bottom: 1px solid #242424;
+}

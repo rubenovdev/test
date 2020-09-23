@@ -1,0 +1,23 @@
+.enter {
+  max-width: 150px;
+  width: 130px;
+  background-color: #460ede;
+  color: #fff;
+  font-weight: 300;
+  padding: 10px 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 3px 6px #00000029;
+}
+
+.detailed {
+  color: #242424;
+  font-size: 13px;
+  font-weight: 200;
+  border-bottom: 1px solid #242424;
+  padding-bottom: 5.5px;
+
+  @media (min-width: 768px) {
+    font-size: 17px;
+  }
+}

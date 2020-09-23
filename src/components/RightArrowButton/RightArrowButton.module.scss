@@ -1,0 +1,15 @@
+.bold {
+  display: block;
+
+  @media screen and (min-width: 1024px) {
+    display: none;
+  }
+}
+
+.light {
+  display: none;
+
+  @media screen and (min-width: 1024px) {
+    display: block;
+  }
+}

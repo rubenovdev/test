@@ -1,0 +1,40 @@
+.projectPageTab {
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 300;
+  padding: 11px 9px;
+
+  @media (min-width: 768px) {
+    font-size: 17px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 20px;
+  }
+}
+
+.projectPageTabActive {
+  color: #fff;
+  background: #242424;
+}
+
+.projectSearchFiltersTab {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 200;
+
+  &:not(:last-child) {
+    margin-right: 18px;
+
+    @media (min-width: 1024px) {
+      margin-right: 73px;
+    }
+  }
+}
+
+.projectSearchFiltersTabActive {
+  padding-bottom: 4px;
+  border-bottom: 0.5px solid black;
+}

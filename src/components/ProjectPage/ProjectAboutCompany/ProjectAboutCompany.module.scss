@@ -1,0 +1,87 @@
+.aboutCompany {
+  @media (min-width: 1024px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.aboutCompanyInfo {
+  @media (min-width: 1024px) {
+    max-width: 324px;
+    margin-right: 136px;
+  }
+}
+
+.aboutCompanyLogo {
+  width: 131px;
+  height: auto;
+  display: inline-block;
+  margin-bottom: 4px;
+  font-size: 13px;
+
+  @media (min-width: 1024px) {
+    margin-bottom: 9px;
+  }
+}
+
+.companyDescription {
+  color: #9d9d9d;
+  font-size: 11px;
+  line-height: 20px;
+  margin-bottom: 24px;
+
+  @media (min-width: 768px) {
+    font-size: 13px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 15px;
+  }
+}
+
+.benefits {
+  margin-bottom: 43px;
+}
+
+.benefit:not(:last-of-type) {
+  margin-bottom: 28px;
+}
+
+.benefitWrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.benefitIcon {
+  width: 18px;
+  height: 14px;
+  margin-right: 8px;
+}
+
+.benefitTitle {
+  font-size: 13px;
+  font-weight: 300;
+
+  @media (min-width: 768px) {
+    font-size: 15px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 17px;
+  }
+}
+
+.addInfo {
+  font-size: 13px;
+  line-height: 22px;
+
+  @media (min-width: 768px) {
+    font-size: 15px;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 545px;
+    font-size: 17px;
+  }
+}
