@@ -396,9 +396,12 @@
                 <button
                   class="tab"
                   aria-selected="true"
-                  data-casetab="docs"
+                  data-casetab="activity"
                   type="button"
                 >
+                  Активность <span id="tab-act-count"></span>
+                </button>
+                <button class="tab" data-casetab="docs" type="button">
                   Документы <span id="tab-docs-count"></span>
                 </button>
                 <button class="tab" data-casetab="tasks" type="button">
@@ -418,8 +421,37 @@
                 </button>
               </div>
 
+              <!-- Активность: сигналы вместо потока -->
+              <div data-casepanel="activity">
+                <p class="muted small" style="margin-bottom: 14px">
+                  Панель показывает не активность клиента, а отклонения, которые
+                  требуют действия. Каждая строка – это правило с порогом, а не
+                  наблюдение за человеком.
+                </p>
+
+                <p class="eyebrow" style="margin-bottom: 10px">
+                  Требует действия
+                </p>
+                <div id="case-signals"></div>
+
+                <div style="margin-top: 22px">
+                  <p class="eyebrow" style="margin-bottom: 10px">
+                    Что клиент делал по делу
+                  </p>
+                  <div class="feed" id="case-client-events"></div>
+                </div>
+
+                <div class="stage-detail" style="margin-top: 20px">
+                  <b style="color: var(--text)">Чего мы не собираем.</b> Время в
+                  кабинете и глубину прокрутки, черновики сообщений, историю
+                  переходов по страницам, действия вне дела. Юрист видит
+                  документы, задачи, переписку и оплату – то, за что отвечает по
+                  договору. Об этом же честно написано у клиента в профиле.
+                </div>
+              </div>
+
               <!-- Документы -->
-              <div data-casepanel="docs">
+              <div data-casepanel="docs" hidden>
                 <p class="muted small" style="margin-bottom: 14px">
                   Юрист принимает файл или возвращает на замену с причиной.
                   Клиент видит статус в разделе «Документы» и получает задачу,
@@ -760,6 +792,43 @@
                 'PDF, 2,4 МБ',
                 'вчера'
               ]
+            ],
+            // Факты для правил вкладки «Активность»
+            facts: {
+              answerHours: 0,
+              docsWaitingDays: 1,
+              taskIdleDays: 3,
+              certExpiresDays: 15,
+              stageWeeks: 1,
+              aiEscalated: false,
+              openedPaymentTimes: 2,
+              billOutstanding: false
+            },
+            clientEvents: [
+              [
+                '',
+                'Загрузил выписку по счету за 2024 год',
+                'PDF, 2,4 МБ',
+                'вчера, 19:02'
+              ],
+              [
+                'ok',
+                'Отметил задачу «Загрузить паспорт»',
+                'Все 8 страниц',
+                '24.07'
+              ],
+              [
+                'ai',
+                'Спросил AI про блокировку зарплатной карты',
+                'AI ответил, юрист подтвердил',
+                'сегодня, 09:20'
+              ],
+              [
+                '',
+                'Открывал раздел «Оплата»',
+                'Дважды, счет пока не выставлен',
+                'сегодня, 09:35'
+              ]
             ]
           },
           olga: {
@@ -876,6 +945,36 @@
                 'Кредитор МФО не заявил требование в срок',
                 'Юрист отметил в реестре',
                 '10.07'
+              ]
+            ],
+            facts: {
+              answerHours: 0,
+              docsWaitingDays: 0,
+              taskIdleDays: 8,
+              certExpiresDays: null,
+              stageWeeks: 10,
+              aiEscalated: false,
+              openedPaymentTimes: 0,
+              billOutstanding: false
+            },
+            clientEvents: [
+              [
+                'ai',
+                'Спросил AI про участие в заседании 12.09',
+                'AI отправил вопрос юристу',
+                'вчера, 12:40'
+              ],
+              [
+                'ok',
+                'Отметил задачу «Передать карты управляющему»',
+                '',
+                '20.05'
+              ],
+              [
+                '',
+                'Скачал определение суда о признании банкротом',
+                'PDF',
+                '16.05'
               ]
             ]
           },
@@ -1011,8 +1110,128 @@
                 '3 часа без ответа',
                 'сегодня'
               ]
+            ],
+            facts: {
+              answerHours: 27,
+              docsWaitingDays: 2,
+              taskIdleDays: 16,
+              certExpiresDays: null,
+              stageWeeks: 2,
+              aiEscalated: true,
+              openedPaymentTimes: 0,
+              billOutstanding: false
+            },
+            clientEvents: [
+              [
+                'ai',
+                'Спросил AI про дарение доли брату',
+                'AI отказался оценивать сделку и передал юристу',
+                'сегодня, 06:40'
+              ],
+              [
+                '',
+                'Загрузил график ипотеки и требование ФНС',
+                '2 файла',
+                '27.07'
+              ],
+              [
+                'warn',
+                'Задача «Договор дарения доли» не тронута',
+                'Поставлена 12.07',
+                '—'
+              ]
             ]
           }
+        }
+
+        // Правила сигналов: порог → факт → действие. Меняется только здесь.
+        const RULES = [
+          {
+            level: 'crit',
+            rule: 'Ответ клиенту дольше рабочего дня',
+            test: (f) => f.answerHours >= 24,
+            fact: (f) => f.answerHours + ' часов без ответа в чате',
+            action: 'Открыть чат',
+            tab: 'chat'
+          },
+          {
+            level: 'crit',
+            rule: 'Ключевой документ не получен больше двух недель',
+            test: (f) => f.taskIdleDays >= 14,
+            fact: (f) =>
+              'задача висит ' +
+              f.taskIdleDays +
+              ' дней, подавать без документа рискованно',
+            action: 'Напомнить и позвонить',
+            tab: 'tasks'
+          },
+          {
+            level: 'warn',
+            rule: 'Документ на проверке дольше рабочего дня',
+            test: (f) => f.docsWaitingDays >= 1,
+            fact: (f) =>
+              'ждет ' + f.docsWaitingDays + ' дн. – тормозим мы, не клиент',
+            action: 'Проверить документы',
+            tab: 'docs'
+          },
+          {
+            level: 'warn',
+            rule: 'Клиент застрял на задаче',
+            test: (f) => f.taskIdleDays >= 5 && f.taskIdleDays < 14,
+            fact: (f) => 'задача не тронута ' + f.taskIdleDays + ' дней',
+            action: 'Написать клиенту',
+            tab: 'tasks'
+          },
+          {
+            level: 'warn',
+            rule: 'AI отказался отвечать и передал вопрос юристу',
+            test: (f) => f.aiEscalated,
+            fact: () => 'вопрос про сделку – зона, где AI молчит по правилам',
+            action: 'Ответить самому',
+            tab: 'chat'
+          },
+          {
+            level: 'warn',
+            rule: 'Подготовка к подаче дольше шести недель',
+            // Только до подачи: сама процедура законно идет месяцами
+            test: (f, c) => f.stageWeeks >= 6 && c.stage <= 2,
+            fact: (f) =>
+              'идет ' + f.stageWeeks + ' недель, клиент может остыть',
+            action: 'Разобрать, что мешает',
+            tab: 'tasks'
+          },
+          {
+            level: 'info',
+            rule: 'Справка истекает раньше подачи',
+            test: (f) => f.certExpiresDays !== null && f.certExpiresDays <= 20,
+            fact: (f) =>
+              'осталось ' + f.certExpiresDays + ' дней срока действия',
+            action: 'Посмотреть документы',
+            tab: 'docs'
+          },
+          {
+            level: 'info',
+            rule: 'Клиент открывал оплату, но счет не выставлен',
+            test: (f) => f.openedPaymentTimes >= 2 && !f.billOutstanding,
+            fact: (f) =>
+              'заходил ' +
+              f.openedPaymentTimes +
+              ' раза – возможно, готов платить',
+            action: 'Выставить счет',
+            tab: 'pay'
+          }
+        ]
+
+        const signalsFor = (key) => {
+          const c = CASES[key]
+          const f = c.facts || {}
+          return RULES.filter((r) => r.test(f, c)).map((r) => ({
+            level: r.level,
+            rule: r.rule,
+            fact: r.fact(f, c),
+            action: r.action,
+            tab: r.tab
+          }))
         }
 
         const casePane = $('#casePane')
@@ -1039,6 +1258,82 @@
           renderEvents()
           outbox.unshift([title, detail])
           renderOutbox()
+          renderSignals()
+          renderCaseList()
+        }
+
+        // Сигналы: сначала критичные, у каждого – кнопка в то место, где закрывается
+        function renderSignals() {
+          const list = signalsFor(current)
+          const order = { crit: 0, warn: 1, info: 2 }
+          const label = { crit: 'срочно', warn: 'важно', info: 'к сведению' }
+          const stClass = { crit: 'st--warn', warn: 'st--wait', info: '' }
+
+          list.sort((a, b) => order[a.level] - order[b.level])
+
+          $('#case-signals').innerHTML = list.length
+            ? list
+                .map(
+                  (s) =>
+                    '<div class="doc"><div class="doc-name"><b>' +
+                    s.rule +
+                    '</b><span>' +
+                    s.fact +
+                    '</span></div><div class="doc-actions"><span class="st ' +
+                    stClass[s.level] +
+                    '">' +
+                    label[s.level] +
+                    '</span><button class="btn btn--ghost btn--sm" type="button" data-signal-tab="' +
+                    s.tab +
+                    '">' +
+                    s.action +
+                    '</button></div></div>'
+                )
+                .join('')
+            : '<p class="muted small">Ничего не требует действия: ответы даны, документы проверены, задачи движутся.</p>'
+
+          const urgent = list.filter((s) => s.level !== 'info').length
+          $('#tab-act-count').textContent = urgent ? '· ' + urgent : ''
+        }
+
+        function renderClientEvents() {
+          const items = CASES[current].clientEvents || []
+          $('#case-client-events').innerHTML = items.length
+            ? items
+                .map(
+                  ([kind, title, detail, time]) =>
+                    '<div class="feed-item ' +
+                    kind +
+                    '"><i></i><div><b>' +
+                    title +
+                    '</b><div class="muted small">' +
+                    detail +
+                    '</div></div><time>' +
+                    time +
+                    '</time></div>'
+                )
+                .join('')
+            : '<p class="muted small">Клиент пока ничего не делал по делу.</p>'
+        }
+
+        // Список дел: бейдж «нужно внимание» появляется из правил, а не руками
+        function renderCaseList() {
+          $$('#caseList .lead-item').forEach((item) => {
+            const key = item.dataset.case
+            if (!CASES[key]) return
+            const urgent = signalsFor(key).filter(
+              (s) => s.level === 'crit'
+            ).length
+            const badge = $('.lead-item-top .tag', item)
+            if (!badge) return
+            if (urgent) {
+              badge.className = 'tag st--warn'
+              badge.textContent = 'нужно внимание · ' + urgent
+            } else {
+              badge.className = key === current ? 'tag tag--accent' : 'tag'
+              badge.textContent = STAGES[CASES[key].stage].toLowerCase()
+            }
+          })
         }
 
         function renderOutbox() {
@@ -1238,6 +1533,8 @@
           renderChat()
           renderPay()
           renderEvents()
+          renderSignals()
+          renderClientEvents()
 
           $('#case-draft').className = 'draft is-empty'
           $('#case-draft').innerHTML =
@@ -1249,7 +1546,18 @@
               item.dataset.case === key
             )
           )
+          renderCaseList()
         }
+
+        // Кнопка сигнала ведет туда, где он закрывается
+        $('#case-signals').addEventListener('click', (e) => {
+          const btn = e.target.closest('button[data-signal-tab]')
+          if (!btn) return
+          const tab = $(
+            '#caseTabs .tab[data-casetab="' + btn.dataset.signalTab + '"]'
+          )
+          if (tab) tab.click()
+        })
 
         // Переключение режимов «Заявки» / «Дела»
         $('#modeTabs').addEventListener('click', (e) => {
@@ -1319,6 +1627,8 @@
             doc[3] = 'принято'
             doc[4] = false
             renderDocs()
+            // Пока есть непроверенное – сигнал остается, иначе гаснет
+            if (!c.docs.some((d) => d[4])) c.facts.docsWaitingDays = 0
             logAction(
               'Документ принят: ' + doc[0],
               'Статус в кабинете – принято',
@@ -1439,6 +1749,9 @@
                 '<b>Ответ юриста:</b> ' + target.textContent
               ])
               renderChat()
+              // Ответ дан – сигналы про ожидание и эскалацию гаснут
+              CASES[current].facts.answerHours = 0
+              CASES[current].facts.aiEscalated = false
               logAction(
                 'Ответ юриста отправлен клиенту',
                 target.textContent.slice(0, 80) + '…',
@@ -1488,6 +1801,7 @@
             row[2] = 'wait'
             row[3] = 'выставлен к оплате'
             renderPay()
+            c.facts.billOutstanding = true
             logAction(
               'Выставлен к оплате: ' + row[0],
               'В кабинете появилась кнопка «Оплатить»'
