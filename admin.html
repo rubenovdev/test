@@ -1448,14 +1448,14 @@
             })
           }
 
-          if (reduced) {
+          // Без анимации, если ее просили выключить или вкладка не на экране:
+          // в фоне таймеры замедляются до одного тика в секунду и печать зависает.
+          if (reduced || document.hidden) {
             target.textContent = text
             finish()
             return
           }
 
-          // Таймер, а не requestAnimationFrame: в неактивной вкладке rAF замирает
-          // и черновик остается пустым.
           let shown = 0
           const step = Math.max(2, Math.ceil(text.length / 50))
           const timer = setInterval(() => {
@@ -1466,6 +1466,15 @@
               finish()
             }
           }, 24)
+
+          // Страховка: если печать не успела за полторы секунды, дописываем сразу
+          setTimeout(() => {
+            if (shown >= text.length) return
+            clearInterval(timer)
+            shown = text.length
+            target.textContent = text
+            finish()
+          }, 1500)
         })
 
         // Оплата

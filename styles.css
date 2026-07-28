@@ -209,6 +209,17 @@ img {
   }
 }
 
+/* На телефоне список страниц макета едет одной строкой, а не занимает пол-экрана */
+@media (max-width: 620px) {
+  .mock-nav {
+    white-space: nowrap;
+    overflow-x: auto;
+    font-size: 0.78rem;
+    padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* Шапка */
 
 .topbar {
@@ -1214,13 +1225,13 @@ img {
 
 .admin {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px minmax(0, 1fr);
   min-height: 100vh;
 }
 
 @media (max-width: 900px) {
   .admin {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1228,11 +1239,24 @@ img {
   border-right: 1px solid var(--border);
   background: var(--surface);
   padding: 20px 0;
+  min-width: 0;
 }
 
 .admin-main {
   padding: 28px 32px 60px;
   max-width: 860px;
+  min-width: 0;
+}
+
+@media (max-width: 620px) {
+  .admin-main {
+    padding: 22px 18px 60px;
+  }
+}
+
+/* Иначе таблицы и ряды вкладок растягивают колонку по содержимому */
+.admin-main .stack-lg {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .lead-item {
