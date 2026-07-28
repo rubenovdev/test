@@ -571,7 +571,9 @@
     var fileBtn = $('#chat-file')
     if (fileBtn) {
       fileBtn.addEventListener('click', function () {
-        toast('В макете загрузка файлов отключена – на живом сайте здесь фото и PDF')
+        toast(
+          'В макете загрузка файлов отключена – на живом сайте здесь фото и PDF'
+        )
       })
     }
 
@@ -1010,7 +1012,6 @@
     window.addEventListener('hashchange', openFromHash)
   }
 
-
   /* ---------- Мок Telegram: заявка приходит юристу ---------- */
 
   var TG_LEAD = {
@@ -1047,7 +1048,13 @@
     function leadCard() {
       var rows = TG_LEAD.lines
         .map(function (pair) {
-          return '<div><span>' + pair[0] + '</span><span>' + pair[1] + '</span></div>'
+          return (
+            '<div><span>' +
+            pair[0] +
+            '</span><span>' +
+            pair[1] +
+            '</span></div>'
+          )
         })
         .join('')
 
@@ -1150,7 +1157,8 @@
     add('system', 'Сегодня')
     add(
       '',
-      '<b>Бот подключен</b><p class="tiny muted">Сюда приходят новые заявки с сайта. Отвечать можно прямо здесь – клиент получит сообщение в чате на сайте.</p>' + time()
+      '<b>Бот подключен</b><p class="tiny muted">Сюда приходят новые заявки с сайта. Отвечать можно прямо здесь – клиент получит сообщение в чате на сайте.</p>' +
+        time()
     )
     setTimeout(leadCard, reduced ? 0 : 900)
 
@@ -1327,6 +1335,8 @@
     initArticle()
     initAdmin()
     initDocs()
+    initTelegram()
+    initFunnel()
   }
 
   if (document.readyState === 'loading') {

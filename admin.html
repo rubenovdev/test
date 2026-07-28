@@ -216,102 +216,377 @@
       <!-- Карточка заявки -->
       <main class="admin-main">
         <div id="leadPane">
-        <div class="stat-row">
-          <div>
-            <b>28</b>
-            <span>заявок за 7 дней</span>
+          <div class="stat-row">
+            <div>
+              <b>28</b>
+              <span>заявок за 7 дней</span>
+            </div>
+            <div>
+              <b>19</b>
+              <span>целевых, 68%</span>
+            </div>
+            <div>
+              <b>2</b>
+              <span>договора</span>
+            </div>
+            <div>
+              <b>1 720 ₽</b>
+              <span>стоимость заявки</span>
+            </div>
           </div>
-          <div>
-            <b>19</b>
-            <span>целевых, 68%</span>
-          </div>
-          <div>
-            <b>2</b>
-            <span>договора</span>
-          </div>
-          <div>
-            <b>1 720 ₽</b>
-            <span>стоимость заявки</span>
+
+          <div class="stack-lg">
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2 style="font-size: 1.4rem" id="lead-name">Сергей М.</h2>
+                  <p class="small muted" id="lead-meta"></p>
+                </div>
+                <span class="tag tag--accent" id="lead-tag"
+                  >судебное банкротство</span
+                >
+              </div>
+
+              <dl class="kv" id="lead-facts"></dl>
+
+              <div>
+                <p class="eyebrow" style="margin-bottom: 10px">Диалог с AI</p>
+                <div class="dialog" id="lead-dialog"></div>
+                <p
+                  class="tiny muted"
+                  style="margin-top: 10px"
+                  id="lead-files"
+                ></p>
+              </div>
+            </div>
+
+            <!-- Ответ клиенту -->
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Ответ клиенту</h3>
+                <button
+                  class="btn btn--ghost btn--sm"
+                  type="button"
+                  id="draft-generate"
+                >
+                  Сгенерировать черновик AI
+                </button>
+              </div>
+
+              <div class="draft is-empty" id="lead-draft"></div>
+
+              <p class="tiny muted">
+                Уведомление о новой заявке и о сообщении клиента приходит в
+                Telegram – отвечать можно прямо оттуда, не заходя в панель.
+              </p>
+            </div>
+
+            <!-- Итог по заявке -->
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Итог по заявке</h3>
+                <span class="tag">обязательное поле</span>
+              </div>
+              <p class="muted small">
+                Пока итог не выставлен, заявка считается незакрытой. Именно из
+                этих отметок считается конверсия «заявка – договор»: без нее
+                непонятно, окупается ли реклама.
+              </p>
+              <div class="btn-row" style="align-items: center">
+                <select class="select-real" id="lead-outcome">
+                  <option value="">Выберите итог…</option>
+                  <option value="won">Договор заключен</option>
+                  <option value="lost-price">Отказ клиента – дорого</option>
+                  <option value="lost-think">Отказ клиента – передумал</option>
+                  <option value="lost-other">Ушел к другим</option>
+                  <option value="noanswer">Не дозвонились</option>
+                  <option value="notours">
+                    Не наш случай – МФЦ или не нужно
+                  </option>
+                </select>
+                <span class="badge-status" id="lead-status"
+                  >Итог не выставлен</span
+                >
+              </div>
+              <p class="tiny muted">
+                Итоги выгружаются в Яндекс.Метрику как оффлайн-конверсии –
+                реклама начинает оптимизироваться на договоры, а не на клики.
+              </p>
+            </div>
           </div>
         </div>
 
-        <div class="stack-lg">
-          <div class="panel">
-            <div class="panel-head">
-              <div>
-                <h2 style="font-size: 1.4rem" id="lead-name">Сергей М.</h2>
-                <p class="small muted" id="lead-meta"></p>
+        <!-- Дело в работе: обратная сторона личного кабинета -->
+        <div id="casePane" hidden>
+          <div class="stat-row" id="case-stats"></div>
+
+          <div class="stack-lg">
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2 style="font-size: 1.4rem" id="case-name">Сергей М.</h2>
+                  <p class="small muted" id="case-meta"></p>
+                </div>
+                <div class="doc-actions">
+                  <span class="st st--wait" id="case-stage-badge"
+                    >этап 2 из 8</span
+                  >
+                  <a class="btn btn--ghost btn--sm" href="cabinet.html"
+                    >Открыть кабинет клиента</a
+                  >
+                </div>
               </div>
-              <span class="tag tag--accent" id="lead-tag"
-                >судебное банкротство</span
-              >
+
+              <div>
+                <p class="eyebrow" style="margin-bottom: 10px">
+                  Этап дела – клиент видит его в кабинете
+                </p>
+                <div class="track" id="case-track">
+                  <button data-stage="0">
+                    <span class="bar"></span><small>Разбор</small>
+                  </button>
+                  <button data-stage="1">
+                    <span class="bar"></span><small>Документы</small>
+                  </button>
+                  <button data-stage="2">
+                    <span class="bar"></span><small>Заявление</small>
+                  </button>
+                  <button data-stage="3">
+                    <span class="bar"></span><small>Подача</small>
+                  </button>
+                  <button data-stage="4">
+                    <span class="bar"></span><small>Заседание</small>
+                  </button>
+                  <button data-stage="5">
+                    <span class="bar"></span><small>Процедура</small>
+                  </button>
+                  <button data-stage="6">
+                    <span class="bar"></span><small>Реализация</small>
+                  </button>
+                  <button data-stage="7">
+                    <span class="bar"></span><small>Списание</small>
+                  </button>
+                </div>
+                <p
+                  class="tiny muted"
+                  style="margin-top: 10px"
+                  id="case-stage-note"
+                ></p>
+              </div>
+
+              <div>
+                <p class="eyebrow" style="margin-bottom: 10px">
+                  Следующий шаг, который видит клиент на главном экране
+                </p>
+                <div class="composer2">
+                  <input id="case-next" />
+                  <button
+                    class="btn btn--primary btn--sm"
+                    type="button"
+                    id="case-next-save"
+                  >
+                    Обновить в кабинете
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <dl class="kv" id="lead-facts"></dl>
+            <div class="panel">
+              <div class="tabs" id="caseTabs">
+                <button
+                  class="tab"
+                  aria-selected="true"
+                  data-casetab="docs"
+                  type="button"
+                >
+                  Документы <span id="tab-docs-count"></span>
+                </button>
+                <button class="tab" data-casetab="tasks" type="button">
+                  Задачи
+                </button>
+                <button class="tab" data-casetab="creditors" type="button">
+                  Кредиторы
+                </button>
+                <button class="tab" data-casetab="chat" type="button">
+                  Чат
+                </button>
+                <button class="tab" data-casetab="pay" type="button">
+                  Оплата
+                </button>
+                <button class="tab" data-casetab="events" type="button">
+                  События
+                </button>
+              </div>
 
-            <div>
-              <p class="eyebrow" style="margin-bottom: 10px">Диалог с AI</p>
-              <div class="dialog" id="lead-dialog"></div>
-              <p
-                class="tiny muted"
-                style="margin-top: 10px"
-                id="lead-files"
-              ></p>
+              <!-- Документы -->
+              <div data-casepanel="docs">
+                <p class="muted small" style="margin-bottom: 14px">
+                  Юрист принимает файл или возвращает на замену с причиной.
+                  Клиент видит статус в разделе «Документы» и получает задачу,
+                  если файл вернули.
+                </p>
+                <div id="case-docs"></div>
+
+                <div style="margin-top: 18px">
+                  <p class="eyebrow" style="margin-bottom: 10px">
+                    Запросить документ
+                  </p>
+                  <div class="composer2">
+                    <select id="case-doc-request">
+                      <option value="Справка из ПФР о состоянии счета">
+                        Справка из ПФР о состоянии счета
+                      </option>
+                      <option value="Выписка по счету в Сбере за 2023 год">
+                        Выписка по счету в Сбере за 2023 год
+                      </option>
+                      <option value="Свидетельство о браке">
+                        Свидетельство о браке
+                      </option>
+                      <option value="Справка о размере пенсии">
+                        Справка о размере пенсии
+                      </option>
+                    </select>
+                    <button
+                      class="btn btn--ghost btn--sm"
+                      type="button"
+                      id="case-doc-add"
+                    >
+                      Запросить у клиента
+                    </button>
+                  </div>
+                  <p class="tiny muted" style="margin-top: 8px">
+                    Запрос сразу становится задачей в кабинете, с памяткой «где
+                    заказать».
+                  </p>
+                </div>
+              </div>
+
+              <!-- Задачи -->
+              <div data-casepanel="tasks" hidden>
+                <p class="muted small" style="margin-bottom: 14px">
+                  Те же задачи, что клиент видит в разделе «Что делать». Отсюда
+                  видно, что он уже сделал, и можно поставить новую.
+                </p>
+                <div id="case-tasks"></div>
+
+                <div style="margin-top: 18px">
+                  <p class="eyebrow" style="margin-bottom: 10px">
+                    Поставить задачу
+                  </p>
+                  <div class="composer2">
+                    <select id="case-task-tpl">
+                      <option
+                        value="Внести депозит управляющего 25 000 ₽ на депозит суда"
+                      >
+                        Внести депозит управляющего 25 000 ₽
+                      </option>
+                      <option
+                        value="Подписать заявление и подать через «Мой Арбитр»"
+                      >
+                        Подписать и подать заявление
+                      </option>
+                      <option
+                        value="Проверить список кредиторов и подтвердить суммы"
+                      >
+                        Проверить список кредиторов
+                      </option>
+                      <option value="Прислать чек об оплате публикации">
+                        Прислать чек об оплате публикации
+                      </option>
+                    </select>
+                    <button
+                      class="btn btn--primary btn--sm"
+                      type="button"
+                      id="case-task-add"
+                    >
+                      Отправить клиенту
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Кредиторы -->
+              <div data-casepanel="creditors" hidden>
+                <p class="muted small" style="margin-bottom: 14px">
+                  Список из заявления. Юрист подтверждает сумму справкой или
+                  запрашивает документ – клиент видит статус у себя.
+                </p>
+                <div class="tbl-wrap">
+                  <table class="tbl">
+                    <thead>
+                      <tr>
+                        <th>Кредитор</th>
+                        <th>Тип</th>
+                        <th>Сумма</th>
+                        <th>Статус</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="case-creditors"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Чат -->
+              <div data-casepanel="chat" hidden>
+                <p class="muted small" style="margin-bottom: 14px">
+                  Тот же чат, что у клиента в кабинете. AI отвечает сам, юрист
+                  подтверждает или пишет свое – его ответ идет без пометки AI.
+                </p>
+                <div class="dialog" id="case-dialog"></div>
+                <div
+                  class="draft is-empty"
+                  id="case-draft"
+                  style="margin-top: 16px"
+                ></div>
+                <div class="btn-row" style="margin-top: 12px">
+                  <button
+                    class="btn btn--ghost btn--sm"
+                    type="button"
+                    id="case-draft-btn"
+                  >
+                    Сгенерировать черновик AI
+                  </button>
+                </div>
+              </div>
+
+              <!-- Оплата -->
+              <div data-casepanel="pay" hidden>
+                <p class="muted small" style="margin-bottom: 14px">
+                  Этапы оплаты и обязательные расходы. Выставленный этап
+                  появляется у клиента кнопкой «Оплатить».
+                </p>
+                <div id="case-pay"></div>
+              </div>
+
+              <!-- События -->
+              <div data-casepanel="events" hidden>
+                <p class="muted small" style="margin-bottom: 14px">
+                  Каждое действие пишется в ленту дела – ее же видит клиент в
+                  кабинете. Это и журнал работы, и защита от спора «мне ничего
+                  не говорили».
+                </p>
+                <div class="feed" id="case-events"></div>
+              </div>
             </div>
-          </div>
 
-          <!-- Ответ клиенту -->
-          <div class="panel">
-            <div class="panel-head">
-              <h3>Ответ клиенту</h3>
-              <button
-                class="btn btn--ghost btn--sm"
-                type="button"
-                id="draft-generate"
-              >
-                Сгенерировать черновик AI
-              </button>
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Что уйдет клиенту прямо сейчас</h3>
+                <span class="tag">черновик уведомлений</span>
+              </div>
+              <div id="case-outbox">
+                <p class="muted small">
+                  Пока ничего: сделайте действие выше – принять документ,
+                  поставить задачу, сменить этап – и здесь появится то, что
+                  увидит клиент.
+                </p>
+              </div>
+              <p class="tiny muted">
+                Уведомления уходят в Telegram и на почту по настройкам клиента.
+                В кабинете они висят в колокольчике.
+              </p>
             </div>
-
-            <div class="draft is-empty" id="lead-draft"></div>
-
-            <p class="tiny muted">
-              Уведомление о новой заявке и о сообщении клиента приходит в
-              Telegram – отвечать можно прямо оттуда, не заходя в панель.
-            </p>
-          </div>
-
-          <!-- Итог по заявке -->
-          <div class="panel">
-            <div class="panel-head">
-              <h3>Итог по заявке</h3>
-              <span class="tag">обязательное поле</span>
-            </div>
-            <p class="muted small">
-              Пока итог не выставлен, заявка считается незакрытой. Именно из
-              этих отметок считается конверсия «заявка – договор»: без нее
-              непонятно, окупается ли реклама.
-            </p>
-            <div class="btn-row" style="align-items: center">
-              <select class="select-real" id="lead-outcome">
-                <option value="">Выберите итог…</option>
-                <option value="won">Договор заключен</option>
-                <option value="lost-price">Отказ клиента – дорого</option>
-                <option value="lost-think">Отказ клиента – передумал</option>
-                <option value="lost-other">Ушел к другим</option>
-                <option value="noanswer">Не дозвонились</option>
-                <option value="notours">
-                  Не наш случай – МФЦ или не нужно
-                </option>
-              </select>
-              <span class="badge-status" id="lead-status"
-                >Итог не выставлен</span
-              >
-            </div>
-            <p class="tiny muted">
-              Итоги выгружаются в Яндекс.Метрику как оффлайн-конверсии – реклама
-              начинает оптимизироваться на договоры, а не на клики.
-            </p>
           </div>
         </div>
 
