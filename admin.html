@@ -602,5 +602,905 @@
       </main>
     </div>
     <script src="app.js" defer></script>
+    <script>
+      // Режим «Дела»: обратная сторона личного кабинета. Заявки живут в app.js.
+      ;(() => {
+        const $ = (sel, root = document) => root.querySelector(sel)
+        const $$ = (sel, root = document) => [...root.querySelectorAll(sel)]
+
+        const STAGES = [
+          'Разбор ситуации',
+          'Сбор документов',
+          'Заявление',
+          'Подача в суд',
+          'Первое заседание',
+          'Процедура',
+          'Реализация имущества',
+          'Списание'
+        ]
+
+        const CASES = {
+          sergey: {
+            name: 'Сергей М.',
+            meta: 'Договор 25.07.2026 · Самарская область · дело не подано · телефон <span class="mono">+7 9•• ••• 41 08</span>',
+            stage: 1,
+            next: 'Осталось заказать 3 справки – без них заявление не подать',
+            stats: [
+              ['11 из 14', 'документов собрано'],
+              ['2', 'файла ждут проверки'],
+              ['3', 'задачи у клиента открыты'],
+              ['1 из 4', 'этапов оплачено']
+            ],
+            docs: [
+              [
+                'Договор купли-продажи автомобиля, 2024',
+                'Загружен 26.07 · ключевой документ по риску сделки',
+                'wait',
+                'на проверке',
+                true
+              ],
+              [
+                'Заявление о признании банкротом',
+                'Черновик AI от 27.07 · нужна проверка перед подачей',
+                'wait',
+                'на проверке',
+                true
+              ],
+              [
+                'Справка о задолженности из банка',
+                'Загружена 14.07 · истекает 12.08',
+                'warn',
+                'скоро истечет',
+                false
+              ],
+              [
+                'Паспорт, все страницы',
+                '8 файлов · принято 24.07',
+                'ok',
+                'принято',
+                false
+              ]
+            ],
+            tasks: [
+              [
+                'Заказать справку о доходах в ФНС',
+                'открыта с 25.07 · Госуслуги, до 5 дней',
+                false
+              ],
+              [
+                'Запросить выписку по счету в Т-Банке за 2024',
+                'открыта с 25.07',
+                false
+              ],
+              ['Взять справку о задолженности в МФО', 'открыта с 26.07', false],
+              ['Загрузить все страницы паспорта', 'выполнено 24.07', true]
+            ],
+            creditors: [
+              [
+                'Банк 1',
+                'Потребительский кредит',
+                '612 000 ₽',
+                'ok',
+                'подтверждено справкой'
+              ],
+              ['Банк 3', 'Кредитная карта', '274 100 ₽', '', 'ждем справку'],
+              [
+                'Коллекторское агентство',
+                'Долг продан по цессии',
+                '498 500 ₽',
+                'warn',
+                'уточняем сумму'
+              ],
+              [
+                'УК «Жилсервис»',
+                'Коммунальные платежи',
+                '42 000 ₽',
+                '',
+                'со слов клиента'
+              ]
+            ],
+            chat: [
+              [
+                'user',
+                'А что будет с зарплатной картой, когда начнется процедура?'
+              ],
+              [
+                'ai',
+                'Счетами распоряжается управляющий, карты обычно блокируются, деньги на жизнь выделяются из дохода. Порядок по вашему делу подтвердит юрист.'
+              ],
+              [
+                'lawyer',
+                '<b>Ответ юриста:</b> подтверждаю. Зарплату будем получать через специальный счет, объясню на этапе подачи. Сейчас главное – три справки.'
+              ]
+            ],
+            draft:
+              'Сергей, договор по машине принял – цена рыночная, вопросов не будет. Осталось три справки: ФНС, Т-Банк за 2024 и МФО. Как только придут, за 2–3 дня собираем заявление и подаем.',
+            pay: [
+              [
+                'Этап 1. Разбор, план, старт сбора документов',
+                'Оплачено 25.07.2026',
+                'ok',
+                'оплачено'
+              ],
+              [
+                'Этап 2. Пакет документов и заявление',
+                'Выставляется после проверки комплекта',
+                '',
+                'не выставлен'
+              ],
+              [
+                'Депозит управляющего 25 000 ₽',
+                'Вносится на депозит суда перед подачей',
+                '',
+                'не внесен'
+              ],
+              [
+                'Публикации в Федресурсе и издании',
+                'Оплачиваются в ходе процедуры',
+                '',
+                'позже'
+              ]
+            ],
+            events: [
+              [
+                'ok',
+                'Юрист проверил опись имущества',
+                'Замечаний нет, документ готов к подаче',
+                'сегодня'
+              ],
+              [
+                'ai',
+                'AI подготовил проект списка кредиторов',
+                '6 кредиторов, 1 843 000 ₽ – ждет проверки',
+                'вчера'
+              ],
+              [
+                '',
+                'Клиент загрузил выписку по счету за 2024 год',
+                'PDF, 2,4 МБ',
+                'вчера'
+              ]
+            ]
+          },
+          olga: {
+            name: 'Ольга В.',
+            meta: 'Договор 03.03.2026 · признана банкротом 14.05.2026 · дело <span class="mono">А55-12481/2026</span>',
+            stage: 5,
+            next: 'От вас ничего не требуется: ждем отчет управляющего и заседание 12.09',
+            stats: [
+              ['14 из 14', 'документов собрано'],
+              ['0', 'файлов ждут проверки'],
+              ['1', 'задача у клиента открыта'],
+              ['4 из 4', 'этапов оплачено']
+            ],
+            docs: [
+              [
+                'Заявление о признании банкротом',
+                'Подано 02.04 · принято судом',
+                'ok',
+                'принято',
+                false
+              ],
+              [
+                'Опись имущества',
+                'Версия 3 от 28.03 · принято',
+                'ok',
+                'принято',
+                false
+              ],
+              [
+                'Отчет управляющего к заседанию',
+                'Черновик от 26.07 · готовит юрист',
+                'wait',
+                'в работе',
+                true
+              ]
+            ],
+            tasks: [
+              [
+                'Прислать справку о доходах за последние 3 месяца',
+                'открыта с 20.07 · нужна к заседанию',
+                false
+              ],
+              ['Передать карты управляющему', 'выполнено 20.05', true],
+              ['Внести депозит управляющего', 'выполнено 30.03', true]
+            ],
+            creditors: [
+              [
+                'Банк 1',
+                'Ипотека закрыта продажей',
+                '1 240 000 ₽',
+                'ok',
+                'включен в реестр'
+              ],
+              [
+                'Банк 2',
+                'Кредитная карта',
+                '386 000 ₽',
+                'ok',
+                'включен в реестр'
+              ],
+              ['ФНС', 'Налоги', '128 400 ₽', 'ok', 'включен в реестр'],
+              ['МФО', 'Микрозайм', '84 000 ₽', 'warn', 'не заявился в срок']
+            ],
+            chat: [
+              ['user', 'Заседание 12 сентября – мне нужно приехать?'],
+              [
+                'ai',
+                'Обычно достаточно участия по видео-конференц-связи, но по вашему делу порядок подтвердит юрист.'
+              ]
+            ],
+            draft:
+              'Ольга, приезжать не нужно – заявим участие по видео-конференц-связи, я буду на заседании. От вас только справка о доходах за 3 месяца, остальное готово.',
+            pay: [
+              [
+                'Этап 1. Разбор и план',
+                'Оплачено 03.03.2026',
+                'ok',
+                'оплачено'
+              ],
+              [
+                'Этап 2. Документы и заявление',
+                'Оплачено 28.03.2026',
+                'ok',
+                'оплачено'
+              ],
+              [
+                'Этап 3. Подача и заседание',
+                'Оплачено 10.04.2026',
+                'ok',
+                'оплачено'
+              ],
+              [
+                'Этап 4. Ведение процедуры',
+                'Оплачено 20.05.2026',
+                'ok',
+                'оплачено'
+              ]
+            ],
+            events: [
+              [
+                'ok',
+                'Суд признал банкротом, введена реализация',
+                'Определение от 14.05.2026',
+                '14.05'
+              ],
+              [
+                '',
+                'Сведения опубликованы в Федресурсе',
+                'Публикация оплачена',
+                '19.05'
+              ],
+              [
+                '',
+                'Кредитор МФО не заявил требование в срок',
+                'Юрист отметил в реестре',
+                '10.07'
+              ]
+            ]
+          },
+          igor: {
+            name: 'Игорь Т.',
+            meta: 'Договор 12.07.2026 · Москва · дело не подано · премиум-тариф',
+            stage: 1,
+            next: 'Пришлите договор дарения доли за 2024 год – без него подавать рискованно',
+            stats: [
+              ['6 из 17', 'документов собрано'],
+              ['2', 'файла ждут проверки'],
+              ['4', 'задачи у клиента открыты'],
+              ['1 из 4', 'этапов оплачено']
+            ],
+            docs: [
+              [
+                'График платежей по ипотеке',
+                'Загружен 27.07',
+                'wait',
+                'на проверке',
+                true
+              ],
+              [
+                'Требование ФНС',
+                'Загружено 27.07',
+                'wait',
+                'на проверке',
+                true
+              ],
+              [
+                'Договор дарения доли, 2024',
+                'Клиент пока не прислал – зона риска',
+                'warn',
+                'запрошен',
+                false
+              ]
+            ],
+            tasks: [
+              [
+                'Найти и загрузить договор дарения доли за 2024 год',
+                'открыта с 12.07 · критично',
+                false
+              ],
+              [
+                'Заказать справку из ФНС по закрытому ИП',
+                'открыта с 15.07',
+                false
+              ],
+              [
+                'Взять справку об остатке долга по ипотеке',
+                'открыта с 15.07',
+                false
+              ],
+              [
+                'Прислать выписки по счетам ИП за 3 года',
+                'открыта с 20.07',
+                false
+              ]
+            ],
+            creditors: [
+              [
+                'Банк 1',
+                'Ипотека, действующая',
+                '2 480 000 ₽',
+                'ok',
+                'подтверждено справкой'
+              ],
+              ['Банк 2', 'Кредит на бизнес', '910 000 ₽', '', 'ждем справку'],
+              [
+                'ФНС',
+                'Налоги после закрытия ИП',
+                '640 000 ₽',
+                'warn',
+                'уточняем пени'
+              ],
+              [
+                'Автосалон, рассрочка',
+                'Автомобиль 2022 года в залоге',
+                '170 000 ₽',
+                '',
+                'со слов клиента'
+              ]
+            ],
+            chat: [
+              [
+                'user',
+                'Если долю брату подарил, ее точно отберут? Он не при чем.'
+              ],
+              [
+                'ai',
+                'Сделку могут оспорить, но оценку по вашей ситуации должен дать юрист – это не тот вопрос, где отвечает AI.'
+              ]
+            ],
+            draft:
+              'Игорь, дарение доли в 2024 году – главный риск дела, и решать его нужно до подачи, а не после. Пришлите договор дарения и выписку по счету за тот месяц: посмотрю, есть ли основания у оспаривания и что можно подготовить заранее.',
+            pay: [
+              [
+                'Этап 1. Разбор и стратегия по премиум-тарифу',
+                'Оплачено 12.07.2026',
+                'ok',
+                'оплачено'
+              ],
+              [
+                'Этап 2. Документы, позиция по сделке и ипотеке',
+                'Выставляется после разбора сделки',
+                '',
+                'не выставлен'
+              ],
+              [
+                'Депозит управляющего 25 000 ₽',
+                'Перед подачей',
+                '',
+                'не внесен'
+              ],
+              ['Публикации', 'В ходе процедуры', '', 'позже']
+            ],
+            events: [
+              [
+                'ai',
+                'AI отметил риск: дарение доли в 2024 году',
+                'Эскалация юристу при разборе',
+                '12.07'
+              ],
+              [
+                '',
+                'Клиент загрузил график ипотеки и требование ФНС',
+                '2 файла',
+                '27.07'
+              ],
+              [
+                'warn',
+                'Вопрос клиента в чате ждет ответа юриста',
+                '3 часа без ответа',
+                'сегодня'
+              ]
+            ]
+          }
+        }
+
+        const casePane = $('#casePane')
+        if (!casePane) return
+
+        let current = 'sergey'
+        const outbox = []
+
+        function toast(text) {
+          const el = document.createElement('div')
+          el.className = 'toast'
+          el.textContent = text
+          document.body.append(el)
+          requestAnimationFrame(() => el.classList.add('is-on'))
+          setTimeout(() => {
+            el.classList.remove('is-on')
+            setTimeout(() => el.remove(), 300)
+          }, 2600)
+        }
+
+        // Все действия юриста попадают и в ленту дела, и в «что уйдет клиенту»
+        function logAction(title, detail, kind = '') {
+          CASES[current].events.unshift([kind, title, detail, 'только что'])
+          renderEvents()
+          outbox.unshift([title, detail])
+          renderOutbox()
+        }
+
+        function renderOutbox() {
+          const box = $('#case-outbox')
+          if (!outbox.length) return
+          box.innerHTML = outbox
+            .slice(0, 6)
+            .map(
+              ([title, detail]) =>
+                '<div class="doc"><div class="doc-name"><b>' +
+                title +
+                '</b><span>' +
+                detail +
+                '</span></div><div class="doc-actions"><span class="st st--wait">уйдет клиенту</span></div></div>'
+            )
+            .join('')
+        }
+
+        function renderEvents() {
+          $('#case-events').innerHTML = CASES[current].events
+            .map(
+              ([kind, title, detail, time]) =>
+                '<div class="feed-item ' +
+                kind +
+                '"><i></i><div><b>' +
+                title +
+                '</b><div class="muted small">' +
+                detail +
+                '</div></div><time>' +
+                time +
+                '</time></div>'
+            )
+            .join('')
+        }
+
+        function stageNote(index) {
+          const total = STAGES.length
+          return (
+            'Сейчас: ' +
+            STAGES[index] +
+            ' (' +
+            (index + 1) +
+            ' из ' +
+            total +
+            '). Клик по другому этапу переводит дело – клиент увидит это в кабинете и получит уведомление.'
+          )
+        }
+
+        function renderStage() {
+          const c = CASES[current]
+          $$('#case-track button').forEach((btn) => {
+            const i = +btn.dataset.stage
+            btn.className = i < c.stage ? 'done' : i === c.stage ? 'now' : ''
+          })
+          $('#case-stage-badge').textContent = 'этап ' + (c.stage + 1) + ' из 8'
+          $('#case-stage-note').textContent = stageNote(c.stage)
+        }
+
+        function docRow(doc, i) {
+          const [name, sub, st, label, actionable] = doc
+          const actions = actionable
+            ? '<button class="btn btn--primary btn--sm" type="button" data-accept="' +
+              i +
+              '">Принять</button><button class="btn btn--ghost btn--sm" type="button" data-return="' +
+              i +
+              '">Вернуть на замену</button>'
+            : ''
+          return (
+            '<div class="doc" data-docrow="' +
+            i +
+            '"><div class="doc-name"><b>' +
+            name +
+            '</b><span>' +
+            sub +
+            '</span></div><div class="doc-actions"><span class="st ' +
+            (st ? 'st--' + st : '') +
+            '">' +
+            label +
+            '</span>' +
+            actions +
+            '</div></div>'
+          )
+        }
+
+        function renderDocs() {
+          const c = CASES[current]
+          $('#case-docs').innerHTML = c.docs.map(docRow).join('')
+          const waiting = c.docs.filter(
+            (d) => d[3] === 'на проверке' || d[3] === 'в работе'
+          ).length
+          $('#tab-docs-count').textContent = waiting
+            ? '· ' + waiting + ' на проверке'
+            : ''
+        }
+
+        function renderTasks() {
+          $('#case-tasks').innerHTML = CASES[current].tasks
+            .map(
+              ([title, sub, done]) =>
+                '<div class="doc"><div class="doc-name"><b style="' +
+                (done ? 'text-decoration:line-through;opacity:.6' : '') +
+                '">' +
+                title +
+                '</b><span>' +
+                sub +
+                '</span></div><div class="doc-actions"><span class="st ' +
+                (done ? 'st--ok' : 'st--wait') +
+                '">' +
+                (done ? 'выполнена' : 'у клиента') +
+                '</span></div></div>'
+            )
+            .join('')
+        }
+
+        function renderCreditors() {
+          $('#case-creditors').innerHTML = CASES[current].creditors
+            .map(
+              ([name, type, sum, st, label], i) =>
+                '<tr><td>' +
+                name +
+                '</td><td>' +
+                type +
+                '</td><td>' +
+                sum +
+                '</td><td><span class="st ' +
+                (st ? 'st--' + st : '') +
+                '">' +
+                label +
+                '</span></td><td><div class="doc-actions">' +
+                (st === 'ok'
+                  ? ''
+                  : '<button class="btn btn--ghost btn--sm" type="button" data-confirm="' +
+                    i +
+                    '">Подтвердить</button><button class="btn btn--ghost btn--sm" type="button" data-ask="' +
+                    i +
+                    '">Запросить справку</button>') +
+                '</div></td></tr>'
+            )
+            .join('')
+        }
+
+        function renderChat() {
+          $('#case-dialog').innerHTML = CASES[current].chat
+            .map(
+              ([who, text]) =>
+                '<div class="bubble bubble--' +
+                who +
+                '" style="max-width:92%">' +
+                text +
+                '</div>'
+            )
+            .join('')
+        }
+
+        function renderPay() {
+          $('#case-pay').innerHTML = CASES[current].pay
+            .map(
+              ([title, sub, st, label], i) =>
+                '<div class="pay"><div><b>' +
+                title +
+                '</b><div class="muted small">' +
+                sub +
+                '</div></div><div class="doc-actions"><span class="st ' +
+                (st ? 'st--' + st : '') +
+                '">' +
+                label +
+                '</span>' +
+                (st === 'ok'
+                  ? ''
+                  : '<button class="btn btn--ghost btn--sm" type="button" data-bill="' +
+                    i +
+                    '">Выставить к оплате</button><button class="btn btn--ghost btn--sm" type="button" data-paid="' +
+                    i +
+                    '">Отметить оплаченным</button>') +
+                '</div></div>'
+            )
+            .join('')
+        }
+
+        function renderCase(key) {
+          current = key
+          const c = CASES[key]
+
+          $('#case-name').textContent = c.name
+          $('#case-meta').innerHTML = c.meta
+          $('#case-next').value = c.next
+          $('#case-stats').innerHTML = c.stats
+            .map(
+              ([b, s]) => '<div><b>' + b + '</b><span>' + s + '</span></div>'
+            )
+            .join('')
+
+          renderStage()
+          renderDocs()
+          renderTasks()
+          renderCreditors()
+          renderChat()
+          renderPay()
+          renderEvents()
+
+          $('#case-draft').className = 'draft is-empty'
+          $('#case-draft').innerHTML =
+            '<p class="tiny" style="font-weight:600">Черновик AI</p><p class="muted">Нажмите «Сгенерировать черновик AI» – он подготовит ответ по этому делу.</p>'
+
+          $$('#caseList .lead-item').forEach((item) =>
+            item.classList.toggle(
+              'lead-item--active',
+              item.dataset.case === key
+            )
+          )
+        }
+
+        // Переключение режимов «Заявки» / «Дела»
+        $('#modeTabs').addEventListener('click', (e) => {
+          const btn = e.target.closest('button[data-mode]')
+          if (!btn) return
+          const cases = btn.dataset.mode === 'cases'
+          $$('#modeTabs button').forEach((b) =>
+            b.classList.toggle('side-tab--on', b === btn)
+          )
+          $('#leadList').hidden = cases
+          $('#caseList').hidden = !cases
+          $('#leadPane').hidden = cases
+          $('#casePane').hidden = !cases
+          if (cases) renderCase(current)
+        })
+
+        $('#caseList').addEventListener('click', (e) => {
+          const item = e.target.closest('.lead-item[data-case]')
+          if (item) renderCase(item.dataset.case)
+        })
+
+        // Вкладки дела
+        $('#caseTabs').addEventListener('click', (e) => {
+          const tab = e.target.closest('.tab')
+          if (!tab) return
+          $$('#caseTabs .tab').forEach((t) =>
+            t.setAttribute('aria-selected', String(t === tab))
+          )
+          $$('[data-casepanel]').forEach(
+            (p) => (p.hidden = p.dataset.casepanel !== tab.dataset.casetab)
+          )
+        })
+
+        // Этап дела
+        $('#case-track').addEventListener('click', (e) => {
+          const btn = e.target.closest('button[data-stage]')
+          if (!btn) return
+          const c = CASES[current]
+          c.stage = +btn.dataset.stage
+          renderStage()
+          logAction(
+            'Этап дела: ' + STAGES[c.stage],
+            'Трекер в кабинете обновлен, клиенту ушло уведомление',
+            'ok'
+          )
+          toast('Этап обновлен – клиент увидит его в кабинете')
+        })
+
+        // Следующий шаг клиента
+        $('#case-next-save').addEventListener('click', () => {
+          const text = $('#case-next').value.trim()
+          if (!text) return
+          CASES[current].next = text
+          logAction('Обновлен следующий шаг клиента', text, 'ok')
+          toast('Текст на главном экране кабинета обновлен')
+        })
+
+        // Документы
+        $('#case-docs').addEventListener('click', (e) => {
+          const accept = e.target.closest('button[data-accept]')
+          const back = e.target.closest('button[data-return]')
+          const c = CASES[current]
+
+          if (accept) {
+            const doc = c.docs[+accept.dataset.accept]
+            doc[2] = 'ok'
+            doc[3] = 'принято'
+            doc[4] = false
+            renderDocs()
+            logAction(
+              'Документ принят: ' + doc[0],
+              'Статус в кабинете – принято',
+              'ok'
+            )
+            toast('Клиент увидит статус «принято»')
+            return
+          }
+
+          if (back) {
+            const doc = c.docs[+back.dataset.return]
+            doc[2] = 'warn'
+            doc[3] = 'нужна замена'
+            doc[4] = false
+            c.tasks.unshift([
+              'Заменить документ: ' + doc[0],
+              'поставлена только что · причина: нечитаемый скан',
+              false
+            ])
+            renderDocs()
+            renderTasks()
+            logAction(
+              'Документ возвращен на замену: ' + doc[0],
+              'Клиенту поставлена задача с причиной',
+              'warn'
+            )
+            toast('Клиенту ушла задача заменить документ')
+          }
+        })
+
+        $('#case-doc-add').addEventListener('click', () => {
+          const name = $('#case-doc-request').value
+          const c = CASES[current]
+          c.docs.push([name, 'Запрошен только что', 'warn', 'запрошен', false])
+          c.tasks.unshift([
+            'Получить и загрузить: ' + name,
+            'поставлена только что',
+            false
+          ])
+          renderDocs()
+          renderTasks()
+          logAction(
+            'Запрошен документ: ' + name,
+            'В кабинете появилась задача с памяткой'
+          )
+          toast('Запрос ушел клиенту как задача')
+        })
+
+        // Задачи
+        $('#case-task-add').addEventListener('click', () => {
+          const text = $('#case-task-tpl').value
+          CASES[current].tasks.unshift([text, 'поставлена только что', false])
+          renderTasks()
+          logAction('Поставлена задача клиенту', text)
+          toast('Задача появилась у клиента в разделе «Что делать»')
+        })
+
+        // Кредиторы
+        $('#case-creditors').addEventListener('click', (e) => {
+          const confirmBtn = e.target.closest('button[data-confirm]')
+          const askBtn = e.target.closest('button[data-ask]')
+          const c = CASES[current]
+
+          if (confirmBtn) {
+            const row = c.creditors[+confirmBtn.dataset.confirm]
+            row[3] = 'ok'
+            row[4] = 'подтверждено справкой'
+            renderCreditors()
+            logAction(
+              'Подтверждена сумма долга: ' + row[0],
+              row[2] + ' – по справке',
+              'ok'
+            )
+            toast('Сумма подтверждена, клиент видит статус')
+            return
+          }
+
+          if (askBtn) {
+            const row = c.creditors[+askBtn.dataset.ask]
+            row[3] = ''
+            row[4] = 'ждем справку'
+            c.tasks.unshift([
+              'Запросить справку о задолженности: ' + row[0],
+              'поставлена только что',
+              false
+            ])
+            renderCreditors()
+            renderTasks()
+            logAction(
+              'Запрошена справка по кредитору: ' + row[0],
+              'Клиенту поставлена задача'
+            )
+            toast('Клиенту ушла задача взять справку')
+          }
+        })
+
+        // Чат: черновик AI и отправка
+        $('#case-draft-btn').addEventListener('click', () => {
+          const box = $('#case-draft')
+          const text = CASES[current].draft
+          box.classList.remove('is-empty')
+          box.innerHTML =
+            '<p class="tiny" style="font-weight:600">Черновик AI · виден только вам</p><p id="case-draft-text"></p>'
+          const target = $('#case-draft-text', box)
+          const reduced = window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+          ).matches
+
+          const finish = () => {
+            box.insertAdjacentHTML(
+              'beforeend',
+              '<div class="btn-row"><button class="btn btn--primary btn--sm" type="button" id="case-draft-send">Правки и отправить</button></div>' +
+                '<p class="tiny muted">Уйдет как ответ юриста, без пометки AI – вы его прочитали и подтвердили.</p>'
+            )
+            $('#case-draft-send', box).addEventListener('click', () => {
+              CASES[current].chat.push([
+                'lawyer',
+                '<b>Ответ юриста:</b> ' + target.textContent
+              ])
+              renderChat()
+              logAction(
+                'Ответ юриста отправлен клиенту',
+                target.textContent.slice(0, 80) + '…',
+                'ok'
+              )
+              toast('Ответ ушел в чат клиента')
+            })
+          }
+
+          if (reduced) {
+            target.textContent = text
+            finish()
+            return
+          }
+
+          const started = performance.now()
+          requestAnimationFrame(function step(now) {
+            const progress = Math.min(1, (now - started) / 1200)
+            target.textContent = text.slice(
+              0,
+              Math.ceil(text.length * progress)
+            )
+            if (progress < 1) requestAnimationFrame(step)
+            else finish()
+          })
+        })
+
+        // Оплата
+        $('#case-pay').addEventListener('click', (e) => {
+          const bill = e.target.closest('button[data-bill]')
+          const paid = e.target.closest('button[data-paid]')
+          const c = CASES[current]
+
+          if (bill) {
+            const row = c.pay[+bill.dataset.bill]
+            row[2] = 'wait'
+            row[3] = 'выставлен к оплате'
+            renderPay()
+            logAction(
+              'Выставлен к оплате: ' + row[0],
+              'В кабинете появилась кнопка «Оплатить»'
+            )
+            toast('Клиент видит счет в разделе «Оплата»')
+            return
+          }
+
+          if (paid) {
+            const row = c.pay[+paid.dataset.paid]
+            row[2] = 'ok'
+            row[3] = 'оплачено'
+            renderPay()
+            logAction(
+              'Отмечена оплата: ' + row[0],
+              'Статус в кабинете – оплачено',
+              'ok'
+            )
+            toast('Оплата отмечена')
+          }
+        })
+
+        renderCase('sergey')
+      })()
+    </script>
   </body>
 </html>

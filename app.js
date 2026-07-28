@@ -13,6 +13,27 @@
     return Array.prototype.slice.call((root || document).querySelectorAll(sel))
   }
 
+  /* ---------- Печать текста по буквам ---------- */
+
+  function typeText(el, text, duration, done) {
+    if (reduced) {
+      el.textContent = text
+      if (done) done()
+      return
+    }
+
+    var startedAt = Date.now()
+    var timer = setInterval(function () {
+      var progress = Math.min(1, (Date.now() - startedAt) / duration)
+      el.textContent = text.slice(0, Math.ceil(text.length * progress))
+
+      if (progress >= 1) {
+        clearInterval(timer)
+        if (done) done()
+      }
+    }, 40)
+  }
+
   /* ---------- Уведомление ---------- */
 
   var toastEl
@@ -915,18 +936,7 @@
         return
       }
 
-      var startedAt = performance.now()
-      var duration = 1400
-
-      requestAnimationFrame(function step(now) {
-        var progress = Math.min(1, (now - startedAt) / duration)
-        target.textContent = text.slice(0, Math.ceil(text.length * progress))
-
-        if (progress < 1) {
-          requestAnimationFrame(step)
-          return
-        }
-
+      typeText(target, text, 1400, function () {
         target.classList.remove('caret')
         finishDraft()
       })
@@ -1092,16 +1102,8 @@
 
       target.classList.add('caret')
 
-      requestAnimationFrame(function step(now) {
-        var p = reduced ? 1 : Math.min(1, (now - startedAt) / 1300)
-        target.textContent = text.slice(0, Math.ceil(text.length * p))
+      typeText(target, text, 1300, function () {
         body.scrollTop = body.scrollHeight
-
-        if (p < 1) {
-          requestAnimationFrame(step)
-          return
-        }
-
         target.classList.remove('caret')
         msg.insertAdjacentHTML(
           'beforeend',
@@ -1318,7 +1320,7 @@
     render('price')
   }
 
-  window.__prototypeBuild = '2026-07-28-docs'
+  window.__prototypeBuild = '2026-07-28-funnel'
 
   /* ---------- Запуск ---------- */
 
