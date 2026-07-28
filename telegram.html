@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Заявки в Telegram – рабочее место юриста</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="mockbar">
+      <div class="wrap">
+        <strong>Макет Telegram.</strong>
+        <span
+          >Так заявка приходит Дмитрию в мессенджер. Кнопки рабочие – нажмите
+          «Сгенерировать черновик» и «Итог».</span
+        >
+        <span class="mock-nav"
+          >Страницы макета: <a href="index.html">лендинг</a> ·
+          <a href="roadmap.html">путь по шагам</a> ·
+          <a href="lawyer.html">о юристе</a> ·
+          <a href="blog.html">блог</a> · <a href="article.html">статья</a> ·
+          <a href="chat.html">AI-разбор</a> ·
+          <a href="cabinet.html">кабинет</a> ·
+          <a href="docs.html">документы</a> ·
+          <a href="telegram.html">Telegram</a> ·
+          <a href="admin.html">панель юриста</a></span
+        >
+      </div>
+    </div>
+
+    <header class="topbar">
+      <div class="wrap">
+        <a class="logo" href="index.html"
+          >Ерзиков <span>банкротство физлиц</span></a
+        >
+        <nav class="nav">
+          <a href="roadmap.html">Путь по шагам</a>
+          <a href="index.html#price">Цена</a>
+          <a href="blog.html">Блог</a>
+          <a href="admin.html">Панель юриста</a>
+        </nav>
+        <a class="btn btn--ghost btn--sm" href="admin.html">Открыть панель</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Рабочее место юриста</p>
+        <h1 style="max-width: 24ch">
+          Заявки приходят в Telegram, отвечать можно оттуда же
+        </h1>
+        <p class="lead" style="margin-top: 18px">
+          У практикующего управляющего одновременно идут десятки дел, и
+          открывать еще одну систему ради переписки с новым клиентом никто не
+          будет. Поэтому заявка приходит в мессенджер: карточка ситуации,
+          черновик ответа по кнопке и итог – тоже кнопкой. Панель нужна, чтобы
+          смотреть очередь и цифры, а не чтобы вести в ней переписку.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap price-grid">
+        <!-- Мок мессенджера -->
+        <div class="tg" data-tg>
+          <div class="tg-head">
+            <span class="tg-avatar">ЕБ</span>
+            <div>
+              <b>Ерзиков · заявки</b>
+              <span>бот, только для вас и команды</span>
+            </div>
+          </div>
+          <div class="tg-body" id="tg-body"></div>
+          <div class="tg-foot">
+            <div class="fake-input">Написать ответ клиенту…</div>
+            <button class="btn btn--primary btn--sm" type="button" id="tg-send">
+              Отправить
+            </button>
+          </div>
+        </div>
+
+        <!-- Что происходит на нашей стороне -->
+        <div class="stack">
+          <div class="card">
+            <h3>Что при этом происходит у нас</h3>
+            <ul class="list small">
+              <li>Диалог клиента с AI и разметка лида пишутся в нашу базу</li>
+              <li>
+                Ответ из Telegram уходит клиенту в чат на сайте – он остается на
+                сайте, а не переписывается в личке
+              </li>
+              <li>
+                Итог по кнопке («договор», «отказ», «не наш случай») – это
+                числитель конверсии из заявки в договор
+              </li>
+              <li>
+                Итоги выгружаются в Яндекс.Метрику как оффлайн-конверсии:
+                реклама учится на договорах, а не на кликах
+              </li>
+            </ul>
+          </div>
+
+          <div class="card card--tint">
+            <h3>Почему не только панель и не только звонок</h3>
+            <div class="tg-lines">
+              <div>
+                <span>Веб-панель с чатом</span
+                ><span>данные у нас, но нужно заходить</span>
+              </div>
+              <div>
+                <span>Telegram + наша база</span
+                ><span>отвечаете там, где и так сидите</span>
+              </div>
+              <div>
+                <span>Только звонок из колл-центра</span
+                ><span>исход остается в чужой CRM</span>
+              </div>
+            </div>
+            <p class="tiny muted">
+              Выбранный вариант – второй: Telegram как транспорт, панель как
+              журнал и отчетность. Кнопка «перезвонить» у клиента остается в
+              любом случае.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Что нужно решить с вами</h3>
+            <ul class="list small">
+              <li>Кто в боте: вы лично, сотрудники или дежурство по очереди</li>
+              <li>
+                Реалистичное время ответа – от него зависит, что мы вправе
+                написать на лендинге
+              </li>
+              <li>
+                Нужен ли автоответ клиенту в нерабочие часы и с какой
+                формулировкой
+              </li>
+            </ul>
+            <p class="tiny muted">
+              До вашего ответа на сайте не будет ни «онлайн 24/7», ни конкретных
+              минут – обещание, которого не держим, бьет по доверию сильнее, чем
+              его отсутствие.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tint">
+      <div class="wrap stack-lg">
+        <div>
+          <p class="eyebrow">Дальше по цепочке</p>
+          <h2>Куда ведет заявка после ответа</h2>
+        </div>
+        <div class="flow">
+          <a href="chat.html">
+            <span class="flow-step">01</span>
+            <b>Чат клиента</b>
+            <span>AI-разбор и захват контакта</span>
+          </a>
+          <a href="telegram.html">
+            <span class="flow-step">02</span>
+            <b>Telegram юриста</b>
+            <span>карточка заявки и ответ</span>
+          </a>
+          <a href="admin.html">
+            <span class="flow-step">03</span>
+            <b>Панель</b>
+            <span>очередь, итоги, метрики</span>
+          </a>
+          <a href="cabinet.html">
+            <span class="flow-step">04</span>
+            <b>Кабинет клиента</b>
+            <span>дело после договора</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap">
+        <p class="tiny">
+          Внутренний экран, для клиентов он не публикуется. Телефон и контакты в
+          карточке заявки –
+          <span class="slot" title="Реальные данные не выносим в макет"
+            >замаскированы</span
+          >.
+        </p>
+      </div>
+    </footer>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

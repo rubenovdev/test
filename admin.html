@@ -93,9 +93,12 @@
         <span class="mock-nav"
           >Страницы макета: <a href="index.html">лендинг</a> ·
           <a href="roadmap.html">путь по шагам</a> ·
+          <a href="lawyer.html">о юристе</a> ·
           <a href="blog.html">блог</a> · <a href="article.html">статья</a> ·
           <a href="chat.html">AI-разбор</a> ·
           <a href="cabinet.html">кабинет</a> ·
+          <a href="docs.html">документы</a> ·
+          <a href="telegram.html">Telegram юриста</a> ·
           <a href="admin.html">панель юриста</a></span
         >
       </div>
@@ -184,7 +187,9 @@
                 <h2 style="font-size: 1.4rem" id="lead-name">Сергей М.</h2>
                 <p class="small muted" id="lead-meta"></p>
               </div>
-              <span class="tag tag--accent" id="lead-tag">судебное банкротство</span>
+              <span class="tag tag--accent" id="lead-tag"
+                >судебное банкротство</span
+              >
             </div>
 
             <dl class="kv" id="lead-facts"></dl>
@@ -192,8 +197,11 @@
             <div>
               <p class="eyebrow" style="margin-bottom: 10px">Диалог с AI</p>
               <div class="dialog" id="lead-dialog"></div>
-              </div>
-              <p class="tiny muted" style="margin-top: 10px" id="lead-files"></p>
+              <p
+                class="tiny muted"
+                style="margin-top: 10px"
+                id="lead-files"
+              ></p>
             </div>
           </div>
 
@@ -201,7 +209,11 @@
           <div class="panel">
             <div class="panel-head">
               <h3>Ответ клиенту</h3>
-              <button class="btn btn--ghost btn--sm" type="button" id="draft-generate">
+              <button
+                class="btn btn--ghost btn--sm"
+                type="button"
+                id="draft-generate"
+              >
                 Сгенерировать черновик AI
               </button>
             </div>
@@ -233,9 +245,13 @@
                 <option value="lost-think">Отказ клиента – передумал</option>
                 <option value="lost-other">Ушел к другим</option>
                 <option value="noanswer">Не дозвонились</option>
-                <option value="notours">Не наш случай – МФЦ или не нужно</option>
+                <option value="notours">
+                  Не наш случай – МФЦ или не нужно
+                </option>
               </select>
-              <span class="badge-status" id="lead-status">Итог не выставлен</span>
+              <span class="badge-status" id="lead-status"
+                >Итог не выставлен</span
+              >
             </div>
             <p class="tiny muted">
               Итоги выгружаются в Яндекс.Метрику как оффлайн-конверсии – реклама
@@ -255,6 +271,6 @@
         </div>
       </main>
     </div>
-      <script src="app.js" defer></script>
+    <script src="app.js" defer></script>
   </body>
 </html>

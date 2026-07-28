@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Дмитрий Ерзиков – финансовый управляющий. Макет страницы</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .lawyer-hero {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 48px;
+        align-items: start;
+      }
+
+      @media (max-width: 860px) {
+        .lawyer-hero {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+      }
+
+      .lawyer-hero img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        object-position: center top;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+      }
+
+      .check-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+        counter-reset: check;
+      }
+
+      .check-step {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 22px;
+        display: grid;
+        gap: 10px;
+        align-content: start;
+        background: var(--bg);
+      }
+
+      .check-step b {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mockbar">
+      <div class="wrap">
+        <strong>Макет страницы о юристе.</strong>
+        <span
+          >Статус в реестре, СРО и ссылки на госреестры – реальные и
+          проверяемые. Подсвеченное
+          <span class="slot" title="На согласование">желтым</span> – цифры
+          практики, состав команды и время ответа: их подтверждает
+          Дмитрий.</span
+        >
+        <span class="mock-nav"
+          >Страницы макета: <a href="index.html">лендинг</a> ·
+          <a href="roadmap.html">путь по шагам</a> ·
+          <a href="lawyer.html">о юристе</a> · <a href="blog.html">блог</a> ·
+          <a href="article.html">статья</a> ·
+          <a href="chat.html">AI-разбор</a> ·
+          <a href="cabinet.html">кабинет</a> ·
+          <a href="docs.html">документы</a> ·
+          <a href="telegram.html">Telegram юриста</a> ·
+          <a href="admin.html">панель юриста</a></span
+        >
+      </div>
+    </div>
+
+    <header class="topbar">
+      <div class="wrap">
+        <a class="logo" href="index.html"
+          >Ерзиков <span>банкротство физлиц</span></a
+        >
+        <nav class="nav">
+          <a href="roadmap.html">Путь по шагам</a>
+          <a href="index.html#price">Цена</a>
+          <a href="index.html#cases">Дела</a>
+          <a href="lawyer.html">О юристе</a>
+          <a href="blog.html">Блог</a>
+          <a href="index.html#faq">Вопросы</a>
+        </nav>
+        <a class="btn btn--primary btn--sm" href="chat.html"
+          >Разобрать ситуацию</a
+        >
+      </div>
+    </header>
+
+    <!-- Первый экран -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="lawyer-hero">
+          <img src="dmitry.jpg" alt="Дмитрий Ерзиков, финансовый управляющий" />
+          <div class="stack">
+            <p class="eyebrow">Кто отвечает за качество</p>
+            <h1 style="font-size: clamp(2rem, 3.8vw, 2.9rem)">
+              Дмитрий Ерзиков
+            </h1>
+            <p class="lead">
+              Юрист, действующий арбитражный (финансовый) управляющий. Веду
+              процедуры банкротства граждан с 2023 года: от первой консультации
+              до определения суда об освобождении от долгов. Отвечаю за проверку
+              документов перед подачей и за качество работы по вашему делу –
+              лично, а не «отдел контроля».
+            </p>
+            <div class="btn-row" style="margin-top: 8px">
+              <a class="btn btn--primary" href="chat.html"
+                >Разобрать мою ситуацию</a
+              >
+              <a class="btn btn--ghost" href="index.html#price"
+                >Посмотреть цену</a
+              >
+            </div>
+            <p class="tiny muted">
+              Первый разбор бесплатный и ни к чему не обязывает. Если
+              банкротство вам не нужно – скажу прямо.
+            </p>
+          </div>
+        </div>
+
+        <div class="trust" style="margin-top: 48px">
+          <div>
+            <b>№ 22354</b>
+            <span>в реестре арбитражных управляющих с 19.07.2023</span>
+          </div>
+          <div>
+            <b>САМРО ААУ</b>
+            <span>СРО «Ассоциация антикризисных управляющих», Самара</span>
+          </div>
+          <div>
+            <b
+              class="slot"
+              title="Публикацию цифр практики подтверждает Дмитрий"
+              >458 дел</b
+            >
+            <span>процедур граждан, из них 199 ведутся сейчас</span>
+          </div>
+          <div>
+            <b>СамГУ</b>
+            <span>юриспруденция, практика с 2010 года</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Как работаю -->
+    <section class="section">
+      <div class="wrap stack-lg">
+        <div>
+          <p class="eyebrow">Как я работаю</p>
+          <h2>Четыре правила, по которым берусь за дело</h2>
+        </div>
+        <div class="cards">
+          <div class="card">
+            <span class="tag tag--free">Правило первое</span>
+            <h3>Сначала проверяю, нужно ли вам платить</h3>
+            <p class="muted small">
+              Если ваш случай проходит через МФЦ – скажу об этом и объясню
+              порядок: процедура бесплатная, мои услуги там не нужны. Если
+              банкротство вам вообще не нужно – тоже скажу прямо.
+            </p>
+          </div>
+          <div class="card">
+            <span class="tag tag--accent">Правило второе</span>
+            <h3>Документы готовит AI, критичное проверяю я</h3>
+            <p class="muted small">
+              Рутину – сбор данных, черновики заявления, описи, списка
+              кредиторов, памятки по справкам – делает AI. Заявление, опись и
+              позицию по спорным эпизодам перед подачей смотрю сам.
+            </p>
+          </div>
+          <div class="card">
+            <span class="tag">Правило третье</span>
+            <h3>Отвечаю текстом и по делу</h3>
+            <p class="muted small">
+              Вопросы – в чате, без навязчивых звонков. Звонок только если вы
+              сами его попросите.
+              <span
+                class="slot"
+                title="Часы и время ответа подтверждает Дмитрий"
+                >Рабочие часы и время ответа – уточняем</span
+              >.
+            </p>
+          </div>
+          <div class="card">
+            <span class="tag">Правило четвертое</span>
+            <h3>Показываю слабые места до подачи</h3>
+            <p class="muted small">
+              Сделки за 3 года, платежи после просрочки, доход, имущество – все,
+              из-за чего суд может отказать в списании, разбираем заранее, а не
+              на заседании.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- С чем работаю -->
+    <section class="section section--tint">
+      <div class="wrap stack-lg">
+        <div>
+          <p class="eyebrow">С чем работаю</p>
+          <h2>Долги граждан и то, что вокруг них</h2>
+          <p class="lead" style="margin-top: 14px">
+            Специализация –
+            <span class="slot" title="Состав услуг подтверждает Дмитрий"
+              >банкротство граждан и бывших ИП</span
+            >; смежные задачи по взысканию беру, когда они мешают процедуре или
+            решаются быстрее нее.
+          </p>
+        </div>
+        <div class="split">
+          <div>
+            <span class="tag tag--accent">Банкротство</span>
+            <ul class="list">
+              <li>Банковские кредиты, кредитные карты, микрозаймы</li>
+              <li>Долги по ЖКХ и налогам</li>
+              <li>Долги после закрытия ИП</li>
+              <li>Процедуры с действующей ипотекой</li>
+              <li>Проверка сделок за 3 года и позиция по ним</li>
+            </ul>
+          </div>
+          <div>
+            <span class="tag">Взыскание и приставы</span>
+            <ul class="list list--muted">
+              <li>Отмена судебных приказов</li>
+              <li>Окончание исполнительных производств</li>
+              <li>Возврат удержанных приставами средств</li>
+              <li>Снятие ограничения на выезд</li>
+              <li>Защита от давления коллекторов</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Как проверить -->
+    <section class="section">
+      <div class="wrap stack-lg">
+        <div>
+          <p class="eyebrow">Проверьте меня</p>
+          <h2>Три шага, чтобы не поверить мне на слово</h2>
+          <p class="lead" style="margin-top: 14px">
+            Статус финансового управляющего публичен. Это главное отличие от
+            «раздолжнителя»: его нельзя нарисовать на сайте, он либо есть в
+            государственных реестрах, либо нет.
+          </p>
+        </div>
+        <div class="check-steps">
+          <div class="check-step">
+            <b>01</b>
+            <h3>Реестр арбитражных управляющих</h3>
+            <p class="muted small">
+              Официальный регистр ФНС: номер 22354, дата регистрации 19.07.2023,
+              членство в СРО.
+            </p>
+            <a
+              class="small"
+              href="https://rau.nalog.gov.ru/arbitr-managers-registry/0c9e0000-6b51-96d5-04dc-08dd09664a53"
+              target="_blank"
+              rel="noopener"
+              >Открыть карточку в реестре ФНС</a
+            >
+          </div>
+          <div class="check-step">
+            <b>02</b>
+            <h3>Федресурс</h3>
+            <p class="muted small">
+              Реестр сведений о банкротстве: процедуры, в которых я утвержден
+              управляющим, и публикации по делам.
+            </p>
+            <a
+              class="small"
+              href="https://fedresurs.ru/persons/4c9d2f76-6ae2-46de-ad8f-0e6d0901e0b2"
+              target="_blank"
+              rel="noopener"
+              >Открыть карточку на Федресурсе</a
+            >
+          </div>
+          <div class="check-step">
+            <b>03</b>
+            <h3>Картотека арбитражных дел</h3>
+            <p class="muted small">
+              По номеру любого опубликованного дела читаете определение суда
+              сами – и видите исход, а не рейтинг из отзывов.
+            </p>
+            <a class="small" href="index.html#cases"
+              >Смотреть дела с номерами</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Отзывы -->
+    <section class="section section--tint">
+      <div class="wrap stack-lg">
+        <div>
+          <p class="eyebrow">Отзывы</p>
+          <h2>Что пишут клиенты</h2>
+          <p class="lead" style="margin-top: 14px">
+            Публикуем со ссылкой на первоисточник, чтобы отзыв можно было
+            прочитать целиком. Заявленные клиентами суммы списаний не выносим:
+            их нельзя проверить, а непроверяемым цифрам на сайте не место.
+          </p>
+        </div>
+        <div class="cards">
+          <blockquote class="quote">
+            <p>
+              «Процесс шел полтора года. Прежний юрист просто перестал отвечать,
+              а Дмитрий остался и довел дело до конца».
+            </p>
+            <footer>Олеся Г. · отзыв на profi.ru</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>
+              «Первое, что сделал – спокойно объяснил, как все устроено, и
+              развеял мифы. На связи был все время процедуры».
+            </p>
+            <footer>Илья Д. · отзыв на profi.ru</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>
+              «До этого обошла несколько консультаций без толку. Здесь дали
+              рассрочку и объяснили порядок действий по шагам».
+            </p>
+            <footer>Отзыв с Авито</footer>
+          </blockquote>
+          <blockquote class="quote">
+            <p>
+              «Банк тормозил детские пособия – вопросы решались быстро, без
+              нервотрепки с моей стороны».
+            </p>
+            <footer>Марина Б. · отзыв на profi.ru</footer>
+          </blockquote>
+        </div>
+        <p class="tiny muted">
+          <span
+            class="slot"
+            title="Ссылки на публичные страницы отзывов – от Дмитрия"
+            >Прямые ссылки на страницы отзывов подставляем после
+            согласования</span
+          >.
+        </p>
+      </div>
+    </section>
+
+    <!-- Чего не обещаю -->
+    <section class="section">
+      <div class="wrap stack-lg">
+        <div>
+          <p class="eyebrow">Честно о границах</p>
+          <h2>Чего я не обещаю</h2>
+          <p class="lead" style="margin-top: 14px">
+            Этот блок здесь не для скромности. Обещания, которые нельзя
+            выполнить, – главный признак недобросовестного посредника, и с 2026
+            года часть из них прямо запрещена в рекламе банкротных услуг.
+          </p>
+        </div>
+        <div class="split">
+          <div>
+            <span class="tag">Не обещаю</span>
+            <ul class="list list--muted">
+              <li>Гарантии списания – решение принимает суд, не юрист</li>
+              <li>Сроков «за 3–4 месяца»: активная часть 4–14 месяцев</li>
+              <li>
+                Что процедура пройдет без последствий – они есть и конечны
+              </li>
+              <li>
+                Что возьмусь за любое дело: если банкротство вредит, откажусь
+              </li>
+            </ul>
+          </div>
+          <div>
+            <span class="tag tag--accent">Обещаю</span>
+            <ul class="list">
+              <li>Честный маршрут: МФЦ, суд или «вам это не нужно»</li>
+              <li>Названные заранее слабые места вашей ситуации</li>
+              <li>Проверку критичных документов перед подачей лично</li>
+              <li>Прозрачную цену и оплату этапами, без полной предоплаты</li>
+            </ul>
+          </div>
+        </div>
+        <p class="tiny muted">
+          <span
+            class="slot"
+            title="Формулировки блока и обязательное предупреждение утверждает Дмитрий"
+            >Формулировки этого блока и текст обязательного предупреждения
+            утверждает Дмитрий</span
+          >
+          – с учетом требований к рекламе услуг в сфере банкротства граждан.
+        </p>
+      </div>
+    </section>
+
+    <!-- Команда -->
+    <section class="section section--tint">
+      <div class="wrap stack-lg">
+        <div>
+          <p class="eyebrow">Команда</p>
+          <h2>Кто еще работает по вашему делу</h2>
+        </div>
+        <div class="cards">
+          <div class="card">
+            <h3>Дмитрий Ерзиков</h3>
+            <p class="muted small">
+              Юрист, финансовый управляющий. Проверяет документы, ведет спорные
+              вопросы, отвечает за результат работы по договору.
+            </p>
+          </div>
+          <div class="card">
+            <h3>AI-ассистент</h3>
+            <p class="muted small">
+              Разбирает ситуацию, собирает данные, готовит проекты документов и
+              памятки, следит за сроками. Каждый его ответ помечен.
+            </p>
+          </div>
+          <div class="card card--tint">
+            <h3 class="slot" title="Состав команды подтверждает Дмитрий">
+              Сотрудники и помощники
+            </h3>
+            <p class="muted small">
+              Кто помогает с делами и кто отвечает клиентам в чате – заполним
+              после согласования: от этого зависит и то, что мы пишем про время
+              ответа.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section section--flat" style="padding-top: 56px">
+      <div class="wrap">
+        <div class="cta">
+          <h2>Начнем с разбора вашей ситуации</h2>
+          <p class="lead">
+            Расскажите про долги – посмотрю, что у вас за случай, и скажу, что
+            делать первым шагом. Бесплатно и без обязательств.
+          </p>
+          <div class="btn-row">
+            <a class="btn btn--primary" href="chat.html">Разобрать ситуацию</a>
+            <a class="btn btn--ghost" href="roadmap.html"
+              >Сначала посмотреть, как проходит процедура</a
+            >
+          </div>
+          <p class="tiny muted">
+            Или напишите напрямую:
+            <span class="slot" title="Контакты – на согласование с Дмитрием"
+              >Telegram и телефон</span
+            >.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div class="stack">
+            <a class="logo" href="index.html"
+              >Ерзиков <span>банкротство физлиц</span></a
+            >
+            <p class="tiny">
+              Информационно-технические услуги по подготовке документов и
+              сопровождению процедуры банкротства гражданина. Заявление в суд
+              подписывает и подает сам должник.
+            </p>
+            <p class="tiny">
+              Исполнитель по договору:
+              <span class="slot" title="Юрлицо и реквизиты – от Дмитрия"
+                >реквизиты юрлица</span
+              >
+            </p>
+          </div>
+          <div class="footer-links">
+            <b style="color: var(--text)">Разделы</b>
+            <a href="index.html">Главная</a>
+            <a href="roadmap.html">Путь по шагам</a>
+            <a href="lawyer.html">О юристе</a>
+            <a href="blog.html">Блог</a>
+            <a href="chat.html">AI-разбор</a>
+          </div>
+          <div class="footer-links">
+            <b style="color: var(--text)">Документы</b>
+            <a href="docs.html#contract">Договор и оферта</a>
+            <a href="docs.html#refund">Условия возврата</a>
+            <a href="docs.html#rules">Правила сервиса</a>
+          </div>
+        </div>
+
+        <div class="disclaimer">
+          <b>Место обязательного предупреждения о последствиях банкротства.</b>
+          <span class="slot" title="Дословный текст утверждает юрист"
+            >Дословную формулировку и параметры показа утверждает Дмитрий по
+            первоисточнику</span
+          >
+          – в макете текст намеренно не сочинен.
+        </div>
+
+        <p class="tiny" style="margin-top: 24px">
+          Данные о статусе управляющего – реестр арбитражных управляющих ФНС и
+          Федресурс, проверено 18.07.2026.
+        </p>
+      </div>
+    </footer>
+    <script src="app.js" defer></script>
+  </body>
+</html>

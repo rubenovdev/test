@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Документы – макет раздела</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .docs-layout {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 44px;
+        align-items: start;
+      }
+
+      @media (max-width: 900px) {
+        .docs-layout {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+      }
+
+      .docs-side {
+        position: sticky;
+        top: 90px;
+        display: grid;
+        gap: 4px;
+      }
+
+      @media (max-width: 900px) {
+        .docs-side {
+          position: static;
+          grid-auto-flow: column;
+          grid-auto-columns: max-content;
+          overflow-x: auto;
+          padding-bottom: 6px;
+        }
+      }
+
+      .docs-side button {
+        text-align: left;
+        border: 0;
+        background: transparent;
+        font: inherit;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        padding: 10px 14px;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        white-space: nowrap;
+        transition:
+          background 0.15s ease,
+          color 0.15s ease;
+      }
+
+      .docs-side button:hover {
+        background: var(--surface-2);
+        color: var(--text);
+      }
+
+      .docs-side button.is-on {
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-weight: 550;
+      }
+
+      .doc-pane {
+        display: none;
+        max-width: 74ch;
+      }
+
+      .doc-pane.is-on {
+        display: grid;
+        gap: 26px;
+        animation: bubble-in 0.3s ease both;
+      }
+
+      .doc-block {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        display: grid;
+        gap: 12px;
+        background: var(--bg);
+      }
+
+      .doc-block h3 {
+        display: flex;
+        gap: 12px;
+        align-items: baseline;
+        flex-wrap: wrap;
+      }
+
+      .doc-num {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .doc-block ul {
+        margin: 0;
+        padding-left: 20px;
+        color: var(--text-muted);
+        font-size: 0.96rem;
+        display: grid;
+        gap: 7px;
+      }
+
+      .doc-note {
+        border-left: 3px solid var(--accent);
+        background: var(--accent-soft);
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        padding: 14px 16px;
+        font-size: 0.9rem;
+      }
+
+      .doc-note b {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .doc-note--warn {
+        border-left-color: var(--warn-line);
+        background: var(--warn-soft);
+      }
+
+      .doc-note--stop {
+        border-left-color: var(--positive);
+        background: var(--positive-soft);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mockbar">
+      <div class="wrap">
+        <strong>Макет раздела документов.</strong>
+        <span
+          >Это не готовая оферта, а каркас: структура разделов, принципы и
+          места, куда встают формулировки юриста. Юридические тексты пишет и
+          утверждает Дмитрий.</span
+        >
+        <span class="mock-nav"
+          >Страницы макета: <a href="index.html">лендинг</a> ·
+          <a href="roadmap.html">путь по шагам</a> ·
+          <a href="lawyer.html">о юристе</a> ·
+          <a href="blog.html">блог</a> · <a href="article.html">статья</a> ·
+          <a href="chat.html">AI-разбор</a> ·
+          <a href="cabinet.html">кабинет</a> ·
+          <a href="docs.html">документы</a> ·
+          <a href="telegram.html">Telegram юриста</a> ·
+          <a href="admin.html">панель юриста</a></span
+        >
+      </div>
+    </div>
+
+    <header class="topbar">
+      <div class="wrap">
+        <a class="logo" href="index.html"
+          >Ерзиков <span>банкротство физлиц</span></a
+        >
+        <nav class="nav">
+          <a href="roadmap.html">Путь по шагам</a>
+          <a href="index.html#price">Цена</a>
+          <a href="index.html#cases">Дела</a>
+          <a href="blog.html">Блог</a>
+          <a href="index.html#faq">Вопросы</a>
+        </nav>
+        <a class="btn btn--primary btn--sm" href="chat.html"
+          >Разобрать ситуацию</a
+        >
+      </div>
+    </header>
+
+    <section class="section section--flat" style="padding-top: 48px">
+      <div class="wrap stack-lg">
+        <div>
+          <p class="eyebrow">Документы</p>
+          <h1 style="font-size: clamp(1.9rem, 3.4vw, 2.6rem)">
+            Что вы подписываете и на каких условиях
+          </h1>
+          <p class="lead" style="margin-top: 16px">
+            Договор, условия возврата денег и правила сервиса – в открытом
+            доступе до оплаты, а не по запросу. Здесь же честно написано, чего
+            мы не обещаем.
+          </p>
+        </div>
+
+        <div class="docs-layout">
+          <aside class="docs-side" data-docs-nav>
+            <button type="button" class="is-on" data-doc="contract">
+              Договор на услуги
+            </button>
+            <button type="button" data-doc="refund">Возврат денег</button>
+            <button type="button" data-doc="rules">Правила сервиса и AI</button>
+            <button type="button" data-doc="details">Реквизиты</button>
+            <button type="button" data-doc="open">Что еще не решено</button>
+          </aside>
+
+          <div>
+            <!-- Договор -->
+            <div class="doc-pane is-on" data-pane="contract">
+              <div class="doc-note">
+                <b>Коротко о главном</b>
+                Мы готовим документы и ведем вас по процедуре, критичное
+                проверяет живой юрист. Заявление в суд подписываете и подаете вы
+                сами – так требует закон, и это не формальность, а граница нашей
+                услуги.
+              </div>
+
+              <div class="doc-block">
+                <h3><span class="doc-num">1</span> Предмет договора</h3>
+                <p class="muted small">
+                  Информационно-технические услуги: анализ ситуации, подготовка
+                  проектов документов, инструкции и сопровождение процедуры.
+                </p>
+                <ul>
+                  <li>что именно входит в пакет – перечнем, без «и иное»;</li>
+                  <li>
+                    что не входит: представительство в суде, подача от вашего
+                    имени, оплата обязательных расходов;
+                  </li>
+                  <li>
+                    кто исполнитель –
+                    <span class="slot" title="Юрлицо и реквизиты – от Дмитрия"
+                      >юрлицо на согласовании</span
+                    >.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="doc-block">
+                <h3>
+                  <span class="doc-num">2</span> Этапы и результат каждого
+                </h3>
+                <p class="muted small">
+                  Этап закрывается актом только тогда, когда есть измеримый
+                  результат: собранный комплект, готовый проект заявления,
+                  поданные документы.
+                </p>
+                <ul>
+                  <li>разбор ситуации и план – письменное заключение;</li>
+                  <li>сбор документов – комплект по чек-листу;</li>
+                  <li>
+                    подготовка заявления, описи, списка кредиторов – проекты
+                    документов;
+                  </li>
+                  <li>подача – отметка суда о принятии;</li>
+                  <li>
+                    сопровождение до определения суда – отчеты о движении дела.
+                  </li>
+                </ul>
+                <div class="doc-note doc-note--warn">
+                  <b>Так не делаем</b>
+                  Акт, который подписывается вместе с договором «на все этапы
+                  сразу». Деньги за фактически не оказанное взыскиваются, и это
+                  правильно.
+                </div>
+              </div>
+
+              <div class="doc-block">
+                <h3><span class="doc-num">3</span> Цена и порядок оплаты</h3>
+                <ul>
+                  <li>
+                    стоимость услуг –
+                    <span class="slot" title="Цену определяет Дмитрий"
+                      >фиксированная сумма на согласовании</span
+                    >;
+                  </li>
+                  <li>
+                    оплата по этапам, без полной предоплаты; график –
+                    <span class="slot" title="График оплаты – от Дмитрия"
+                      >в приложении к договору</span
+                    >;
+                  </li>
+                  <li>
+                    обязательные расходы клиент оплачивает напрямую: депозит
+                    финансового управляющего 25 000 ₽, публикации, госпошлина –
+                    это не наше вознаграждение.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="doc-block">
+                <h3><span class="doc-num">4</span> Чего мы не обещаем</h3>
+                <div class="doc-note doc-note--stop">
+                  <b>Гарантии списания долгов нет и быть не может</b>
+                  Решение принимает суд. Мы отвечаем за качество работы –
+                  подготовку документов и сопровождение, но не за исход дела.
+                  Любой, кто обещает «спишем 100%», обещает чужое решение.
+                </div>
+                <ul>
+                  <li>не гарантируем сроки, зависящие от суда и кредиторов;</li>
+                  <li>
+                    не даем оценок «вам точно спишут» – в разборе показываем
+                    риски отказа;
+                  </li>
+                  <li>
+                    не подаем документы за вас и не входим в ваш личный кабинет
+                    Госуслуг.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="doc-block">
+                <h3><span class="doc-num">5</span> Ответственность сторон</h3>
+                <ul>
+                  <li>
+                    наша – за качество подготовленных документов и
+                    своевременность работы по этапам;
+                  </li>
+                  <li>
+                    ваша – за полноту и достоверность сведений: скрытое
+                    имущество или сделки ведут к отказу в списании, и это не
+                    ошибка исполнителя;
+                  </li>
+                  <li>
+                    порядок претензий: сначала письменное обращение, срок ответа
+                    <span class="slot" title="Срок ответа – от Дмитрия"
+                      >на согласовании</span
+                    >.
+                  </li>
+                </ul>
+                <div class="doc-note doc-note--warn">
+                  <b>Условия, которых в договоре не будет</b>
+                  «Деньги не возвращаются», «исполнитель не отвечает за ошибки
+                  сервиса», штраф за отказ от услуги. Такие пункты ничтожны по
+                  закону о защите прав потребителей и только портят договор.
+                </div>
+              </div>
+
+              <div class="doc-block">
+                <h3>
+                  <span class="doc-num">6</span> Гарантия возврата при
+                  неосвобождении
+                </h3>
+                <p class="muted small">
+                  Отдельная договорная гарантия: если суд не освободит от долгов
+                  по нашей вине – возвращаем оплату услуг. Не распространяется
+                  на случаи недобросовестности должника (сокрытие имущества,
+                  недостоверные сведения) и на обязательные расходы, уже
+                  уплаченные третьим лицам.
+                </p>
+                <div class="doc-note doc-note--warn">
+                  <b>Решение за Дмитрием</b>
+                  Даем такую гарантию или нет – открытый вопрос. Если даем, она
+                  живет только в договоре: в рекламе и на сайте обещать
+                  результат нельзя.
+                  <span
+                    class="slot"
+                    title="Формулировку и объем гарантии утверждает юрист"
+                    >Формулировка и объем – на утверждение.</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Возврат -->
+            <div class="doc-pane" data-pane="refund">
+              <div class="doc-note">
+                <b>Правило простое</b>
+                Вы можете отказаться от услуги в любой момент. Возвращаем все,
+                кроме фактически понесенных расходов по уже выполненным этапам.
+              </div>
+
+              <div class="doc-block">
+                <h3>Как отказаться</h3>
+                <ul>
+                  <li>
+                    письменно – в личном кабинете, по почте или на e-mail
+                    <span class="slot" title="Контакты – на согласование"
+                      >адрес на согласовании</span
+                    >;
+                  </li>
+                  <li>причину объяснять не нужно;</li>
+                  <li>
+                    заявление фиксируется датой обращения – с нее считается
+                    срок.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="doc-block">
+                <h3>Что возвращается и в какой срок</h3>
+                <ul>
+                  <li>
+                    неотработанная часть оплаты – в срок
+                    <span class="slot" title="Срок подтверждает юрист"
+                      >до 10 дней</span
+                    >
+                    с момента требования;
+                  </li>
+                  <li>
+                    оплата этапов, по которым есть подписанный акт и результат,
+                    не возвращается;
+                  </li>
+                  <li>
+                    обязательные расходы, уже ушедшие третьим лицам – депозит на
+                    счет суда, публикации – возвращаем не мы: порядок их
+                    возврата объясним отдельно.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="doc-block">
+                <h3>Если услуга оказана некачественно</h3>
+                <ul>
+                  <li>
+                    исправляем за свой счет либо соразмерно уменьшаем цену – на
+                    ваш выбор;
+                  </li>
+                  <li>
+                    если исправление невозможно – возвращаем оплату за этап;
+                  </li>
+                  <li>
+                    неудовлетворенность исходом дела сама по себе не означает
+                    некачественную услугу: результат решает суд.
+                  </li>
+                </ul>
+              </div>
+
+              <p class="tiny muted">
+                Основания: право отказаться от договора в любое время с оплатой
+                фактически понесенных расходов – статья 32 закона «О защите прав
+                потребителей» и статья 782 Гражданского кодекса; десятидневный
+                срок удовлетворения требования о возврате – пункт 1 статьи 31
+                того же закона; условия, ущемляющие права потребителя,
+                недействительны – статья 16.
+                <span class="slot" title="Итоговый текст утверждает юрист"
+                  >Итоговые формулировки – на утверждение Дмитрия.</span
+                >
+              </p>
+            </div>
+
+            <!-- Правила сервиса -->
+            <div class="doc-pane" data-pane="rules">
+              <div class="doc-block">
+                <h3>Как работает AI и где граница</h3>
+                <ul>
+                  <li>
+                    ответы AI помечены – вы всегда видите, где машина, а где
+                    человек;
+                  </li>
+                  <li>
+                    AI не заменяет юриста: заявление, опись и список кредиторов
+                    перед подачей проверяет живой специалист;
+                  </li>
+                  <li>
+                    AI не дает прогноза «спишут или нет» и не квалифицирует ваши
+                    сделки – это делает юрист;
+                  </li>
+                  <li>
+                    разбор в чате бесплатный и не создает обязательств ни для
+                    вас, ни для нас.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="doc-block">
+                <h3>Личный кабинет и документы</h3>
+                <ul>
+                  <li>
+                    вход по номеру телефона или почте, доступ к делу только у
+                    вас и у вашего юриста;
+                  </li>
+                  <li>
+                    ограничения на загрузку:
+                    <span class="slot" title="Лимиты определим при разработке"
+                      >размер и типы файлов уточняются</span
+                    >;
+                  </li>
+                  <li>
+                    документы хранятся в течение процедуры и
+                    <span class="slot" title="Срок хранения – на согласование"
+                      >срок после ее завершения на согласовании</span
+                    >.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="doc-block">
+                <h3>Что мы не делаем</h3>
+                <ul>
+                  <li>не просим ваш пароль от Госуслуг и не входим за вас;</li>
+                  <li>не звоним без вашей просьбы;</li>
+                  <li>
+                    не передаем контакты третьим лицам для рекламы других услуг.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Реквизиты -->
+            <div class="doc-pane" data-pane="details">
+              <div class="doc-block">
+                <h3>Исполнитель по договору</h3>
+                <ul>
+                  <li>
+                    наименование, ИНН, ОГРН –
+                    <span class="slot" title="Реквизиты юрлица – от Дмитрия"
+                      >на согласовании</span
+                    >;
+                  </li>
+                  <li>
+                    адрес, банковские реквизиты –
+                    <span class="slot" title="Реквизиты – от Дмитрия"
+                      >на согласовании</span
+                    >;
+                  </li>
+                  <li>
+                    контакты для обращений и претензий –
+                    <span class="slot" title="Контакты – на согласование"
+                      >на согласовании</span
+                    >.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="doc-block">
+                <h3>Юрист, отвечающий за качество</h3>
+                <p class="muted small">
+                  Дмитрий Ерзиков, финансовый управляющий, номер в реестре
+                  арбитражных управляющих 22354 от 19.07.2023, СРО САМРО
+                  «Ассоциация антикризисных управляющих».
+                </p>
+                <div class="btn-row">
+                  <a
+                    class="btn btn--ghost btn--sm"
+                    href="https://rau.nalog.gov.ru/arbitr-managers-registry/0c9e0000-6b51-96d5-04dc-08dd09664a53"
+                    target="_blank"
+                    rel="noopener"
+                    >Реестр ФНС</a
+                  >
+                  <a
+                    class="btn btn--ghost btn--sm"
+                    href="https://fedresurs.ru/persons/4c9d2f76-6ae2-46de-ad8f-0e6d0901e0b2"
+                    target="_blank"
+                    rel="noopener"
+                    >Карточка на Федресурсе</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Открытые вопросы -->
+            <div class="doc-pane" data-pane="open">
+              <div class="doc-note doc-note--warn">
+                <b>Служебный раздел – на живом сайте его не будет</b>
+                Здесь собрано то, что нельзя дописать в макете: это решения
+                Дмитрия, от которых зависят и тексты документов, и то, что можно
+                писать на страницах сайта.
+              </div>
+
+              <div class="doc-block">
+                <h3>Пять решений, без которых документы не собрать</h3>
+                <ul>
+                  <li>
+                    <b>Кто исполнитель.</b> На какое юрлицо оформляется договор
+                    с клиентом и от кого идет оферта.
+                  </li>
+                  <li>
+                    <b>Цена и график.</b> Фиксированная сумма или вилка, состав
+                    пакета, разбивка по этапам, условия рассрочки.
+                  </li>
+                  <li>
+                    <b>Гарантия возврата при неосвобождении.</b> Даем или нет, с
+                    какими исключениями, как это соотносится с запретом обещать
+                    результат в рекламе.
+                  </li>
+                  <li>
+                    <b>Обязательное предупреждение в рекламе.</b> Дословный
+                    текст и параметры показа – по первоисточнику, который нужно
+                    дозагрузить.
+                  </li>
+                  <li>
+                    <b>Сроки ответа на обращения.</b> За сколько отвечаем в чате
+                    и на претензии – это обещание, которое попадет и в договор,
+                    и на лендинг.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="doc-block">
+                <h3>Что мы уже зафиксировали и не меняем</h3>
+                <ul>
+                  <li>гарантии списания в рекламе нет ни в каком виде;</li>
+                  <li>
+                    заявление подписывает и подает клиент сам, доступ к его
+                    Госуслугам мы не запрашиваем;
+                  </li>
+                  <li>
+                    критичные документы перед подачей проверяет живой юрист;
+                  </li>
+                  <li>ответы AI маркируются как машинные.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div class="stack">
+            <a class="logo" href="index.html"
+              >Ерзиков <span>банкротство физлиц</span></a
+            >
+            <p class="tiny">
+              Информационно-технические услуги по подготовке документов и
+              сопровождению процедуры банкротства гражданина. Заявление в суд
+              подписывает и подает сам должник.
+            </p>
+          </div>
+          <div class="footer-links">
+            <b style="color: var(--text)">Разделы</b>
+            <a href="index.html">Главная</a>
+            <a href="roadmap.html">Путь по шагам</a>
+            <a href="blog.html">Блог</a>
+            <a href="chat.html">AI-разбор</a>
+          </div>
+          <div class="footer-links">
+            <b style="color: var(--text)">Документы</b>
+            <a href="docs.html">Договор и оферта</a>
+            <a href="docs.html">Условия возврата</a>
+            <a href="docs.html">Правила сервиса</a>
+          </div>
+        </div>
+
+        <div class="disclaimer">
+          <b>Место обязательного предупреждения о последствиях банкротства.</b>
+          <span class="slot" title="Дословный текст утверждает юрист"
+            >Дословную формулировку и параметры показа утверждает Дмитрий по
+            первоисточнику</span
+          >
+          – в макете текст намеренно не сочинен.
+        </div>
+      </div>
+    </footer>
+    <script src="app.js" defer></script>
+  </body>
+</html>

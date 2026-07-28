@@ -972,6 +972,40 @@
     renderLead('sergey')
   }
 
+  /* ---------- Раздел документов: переключение ---------- */
+
+  function initDocs() {
+    var nav = $('[data-docs-nav]')
+    if (!nav) return
+
+    nav.addEventListener('click', function (event) {
+      var btn = event.target.closest('button')
+      if (!btn) return
+
+      $$('button', nav).forEach(function (b) {
+        b.classList.remove('is-on')
+      })
+      btn.classList.add('is-on')
+
+      var name = btn.dataset.doc
+
+      $$('[data-pane]').forEach(function (pane) {
+        pane.classList.toggle('is-on', pane.dataset.pane === name)
+      })
+
+      if (window.scrollY > 320) {
+        window.scrollTo({ top: 320, behavior: reduced ? 'auto' : 'smooth' })
+      }
+    })
+
+    // Открыть нужный раздел по якорю: docs.html#refund
+    var hash = location.hash.replace('#', '')
+    if (hash) {
+      var target = $('[data-doc="' + hash + '"]', nav)
+      if (target) target.click()
+    }
+  }
+
   window.__prototypeBuild = '2026-07-28-interactive'
 
   /* ---------- Запуск ---------- */
@@ -988,6 +1022,7 @@
     initBlogFilter()
     initArticle()
     initAdmin()
+    initDocs()
   }
 
   if (document.readyState === 'loading') {
