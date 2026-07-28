@@ -913,16 +913,21 @@
         return
       }
 
-      var i = 0
-      var timer = setInterval(function () {
-        i += 3
-        target.textContent = text.slice(0, i)
-        if (i >= text.length) {
-          clearInterval(timer)
-          target.classList.remove('caret')
-          finishDraft()
+      var startedAt = performance.now()
+      var duration = 1400
+
+      requestAnimationFrame(function step(now) {
+        var progress = Math.min(1, (now - startedAt) / duration)
+        target.textContent = text.slice(0, Math.ceil(text.length * progress))
+
+        if (progress < 1) {
+          requestAnimationFrame(step)
+          return
         }
-      }, 16)
+
+        target.classList.remove('caret')
+        finishDraft()
+      })
 
       function finishDraft() {
         draftEl.insertAdjacentHTML(
