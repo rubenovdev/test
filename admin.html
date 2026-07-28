@@ -123,6 +123,9 @@
             <button class="side-tab" data-mode="cases" type="button">
               Дела · 11
             </button>
+            <button class="side-tab" data-mode="blog" type="button">
+              Блог · 9
+            </button>
           </div>
         </div>
 
@@ -209,6 +212,66 @@
 
           <p class="tiny muted" style="padding: 14px 20px">
             В макете три дела из одиннадцати. Остальные открываются так же.
+          </p>
+        </div>
+
+        <!-- Материалы блога -->
+        <div id="blogList" hidden>
+          <div class="lead-item" data-post="mfc">
+            <div class="lead-item-top">
+              <span>МФЦ или суд: куда идти с долгами</span>
+              <span class="post-status live"><i></i>опубликовано</span>
+            </div>
+            <div class="lead-item-sub">МФЦ и суд · 28.07.2026</div>
+            <div class="lead-item-sub mono">
+              «банкротство через мфц» – 58 228
+            </div>
+          </div>
+
+          <div class="lead-item lead-item--active" data-post="consequences">
+            <div class="lead-item-top">
+              <span>Последствия банкротства</span>
+              <span class="post-status review"><i></i>на вычитке</span>
+            </div>
+            <div class="lead-item-sub">
+              Последствия и страхи · черновик готов
+            </div>
+            <div class="lead-item-sub mono">«последствия» – 5 048</div>
+          </div>
+
+          <div class="lead-item" data-post="flat">
+            <div class="lead-item-top">
+              <span>Заберут ли единственную квартиру</span>
+              <span class="post-status draft"><i></i>черновик</span>
+            </div>
+            <div class="lead-item-sub">Последствия и страхи · пишет AI</div>
+            <div class="lead-item-sub mono">кластер «заберут ли квартиру»</div>
+          </div>
+
+          <div class="lead-item" data-post="minus">
+            <div class="lead-item-top">
+              <span>Минусы банкротства</span>
+              <span class="post-status draft"><i></i>черновик</span>
+            </div>
+            <div class="lead-item-sub">Последствия и страхи</div>
+            <div class="lead-item-sub mono">«минусы» – 3 428</div>
+          </div>
+
+          <div class="lead-item" data-post="card">
+            <div class="lead-item-top">
+              <span>Заблокировали карту: что делать</span>
+              <span class="post-status draft"><i></i>черновик</span>
+            </div>
+            <div class="lead-item-sub">Пошаговые инструкции</div>
+            <div class="lead-item-sub mono">
+              «разблокируют карты» – 255 + 253
+            </div>
+          </div>
+
+          <p class="tiny muted" style="padding: 14px 20px">
+            В макете открываются два материала: «Последствия» – черновик на
+            вычитке, «МФЦ или суд» – уже опубликованный. Остальные из тех же
+            девяти, что видны в блоге.
           </p>
         </div>
       </aside>
@@ -622,12 +685,333 @@
           </div>
         </div>
 
+        <!-- Блог: редактор и публикация -->
+        <div id="blogPane" hidden>
+          <div class="stat-row">
+            <div>
+              <b id="blog-live">1</b>
+              <span>опубликовано</span>
+            </div>
+            <div>
+              <b id="blog-review">1</b>
+              <span>ждет вашей вычитки</span>
+            </div>
+            <div>
+              <b id="blog-queue">7</b>
+              <span>в очереди</span>
+            </div>
+            <div>
+              <b>6–18 мес</b>
+              <span>до трафика из поиска</span>
+            </div>
+          </div>
+
+          <div class="stack-lg">
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2 style="font-size: 1.4rem" id="post-title-head">
+                    Последствия банкротства: что действительно меняется в жизни
+                  </h2>
+                  <p class="small muted" id="post-meta">
+                    Черновик от 28.07.2026 · рубрика «Последствия и страхи» ·
+                    <span class="mono">/blog/posledstviya-bankrotstva</span>
+                  </p>
+                </div>
+                <span class="badge-status" id="post-status"
+                  >На вычитке у юриста</span
+                >
+              </div>
+
+              <div class="editor-grid">
+                <label class="editor-field">
+                  <span>Заголовок</span>
+                  <input
+                    class="real-input"
+                    id="post-title"
+                    value="Последствия банкротства: что действительно меняется в жизни"
+                  />
+                </label>
+                <label class="editor-field">
+                  <span>Рубрика</span>
+                  <select class="select-real" id="post-cat">
+                    <option>Последствия и страхи</option>
+                    <option>МФЦ и суд</option>
+                    <option>Деньги и расходы</option>
+                    <option>Как не попасть к мошенникам</option>
+                    <option>Пошаговые инструкции</option>
+                  </select>
+                </label>
+              </div>
+
+              <label class="editor-field">
+                <span>Текст статьи</span>
+                <textarea class="real-input" id="post-body" rows="10">
+Банкротство закрывает долги, но меняет несколько вещей в жизни на пять лет вперед. Разберем по пунктам, без запугивания и без обещаний: мы спишем ваши долги полностью и вернем спокойствие уже через три месяца.
+
+Кредитная история. Запись о процедуре остается, но она не приговор: банки смотрят на срок после завершения дела и на текущий доход.
+
+Публичность. Сведения о деле публикуются в открытом реестре – это часть процедуры, скрыть ее нельзя. Гарантий списания мы не даем: решение принимает суд, и отказы бывают.</textarea>
+              </label>
+
+              <div class="btn-row" style="align-items: center">
+                <button
+                  class="btn btn--ghost btn--sm"
+                  type="button"
+                  id="post-ai"
+                >
+                  Сгенерировать черновик AI
+                </button>
+                <button
+                  class="btn btn--ghost btn--sm"
+                  type="button"
+                  id="post-check"
+                >
+                  Проверить формулировки
+                </button>
+                <span class="tiny muted" id="post-saved"
+                  >Черновик сохраняется автоматически</span
+                >
+              </div>
+            </div>
+
+            <!-- Проверка формулировок -->
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Рискованные формулировки</h3>
+                <span class="tag">332-ФЗ и ЗоЗПП</span>
+              </div>
+              <div class="flags" id="post-flags">
+                <p class="muted small">
+                  Нажмите «Проверить формулировки»: система ищет обещания
+                  результата, гарантии, нереальные сроки и призывы не платить
+                  кредиторам – то, за что штрафуют по рекламе. Отрицания вроде
+                  «гарантий не даем» она не трогает.
+                </p>
+              </div>
+              <p class="tiny muted">
+                Проверка машинная и не заменяет юриста – она снимает грубые
+                случаи до того, как текст дойдет до вычитки.
+              </p>
+            </div>
+
+            <!-- SEO -->
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Как статья выглядит в поиске</h3>
+                <span class="tag">SEO</span>
+              </div>
+              <div class="editor-grid">
+                <label class="editor-field">
+                  <span>Заголовок для поиска</span>
+                  <input
+                    class="real-input"
+                    id="seo-title"
+                    value="Последствия банкротства физлица в 2026 году: что меняется"
+                  />
+                </label>
+                <label class="editor-field">
+                  <span>Ключевой запрос</span>
+                  <input
+                    class="real-input"
+                    id="seo-key"
+                    value="последствия банкротства"
+                  />
+                </label>
+              </div>
+              <label class="editor-field">
+                <span>Описание</span>
+                <input
+                  class="real-input"
+                  id="seo-desc"
+                  value="Кредитная история, работа, выезд за границу, повторное банкротство. Разбирает действующий финансовый управляющий."
+                />
+              </label>
+
+              <div class="serp">
+                <div class="serp-list">
+                  <div class="serp-item serp-item--ours">
+                    <div class="serp-url">
+                      <span class="mono"
+                        >erzikov.ru › blog › posledstviya-bankrotstva</span
+                      >
+                      <span class="serp-label">наша статья</span>
+                    </div>
+                    <div class="serp-title" id="serp-title">
+                      Последствия банкротства физлица в 2026 году: что меняется
+                    </div>
+                    <div class="serp-desc" id="serp-desc">
+                      Кредитная история, работа, выезд за границу, повторное
+                      банкротство. Разбирает действующий финансовый управляющий.
+                    </div>
+                  </div>
+                </div>
+                <p class="serp-note">
+                  Превью обновляется, пока вы правите поля выше. Домен в макете
+                  условный.
+                </p>
+              </div>
+            </div>
+
+            <!-- Публикация -->
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Публикация</h3>
+                <span class="tag">нужны две подписи</span>
+              </div>
+
+              <div class="checklist">
+                <label>
+                  <input type="checkbox" id="chk-author" checked disabled />
+                  <span>
+                    Подготовил: AI + Александр
+                    <small
+                      >Черновик и правки редактора. Отметка ставится
+                      автоматически.</small
+                    >
+                  </span>
+                </label>
+                <label>
+                  <input type="checkbox" id="chk-lawyer" />
+                  <span>
+                    Вычитал юрист: Дмитрий Ерзиков
+                    <small
+                      >Ставите вы. Без этой отметки статья не публикуется – так
+                      же, как документы клиента не уходят в суд без
+                      проверки.</small
+                    >
+                  </span>
+                </label>
+                <label>
+                  <input type="checkbox" id="chk-flags" disabled />
+                  <span>
+                    Рискованные формулировки исправлены
+                    <small id="chk-flags-note">Проверка не запускалась.</small>
+                  </span>
+                </label>
+              </div>
+
+              <div class="btn-row" style="align-items: center">
+                <button
+                  class="btn btn--primary btn--sm"
+                  type="button"
+                  id="post-publish"
+                  disabled
+                >
+                  Опубликовать
+                </button>
+                <button
+                  class="btn btn--ghost btn--sm"
+                  type="button"
+                  id="post-preview"
+                >
+                  Открыть предпросмотр
+                </button>
+                <span class="tiny muted" id="publish-hint"
+                  >Кнопка включится, когда обе подписи и проверка формулировок
+                  будут закрыты.</span
+                >
+              </div>
+
+              <div>
+                <p class="eyebrow" style="margin-bottom: 10px">
+                  История версий
+                </p>
+                <div class="feed" id="post-history">
+                  <div class="feed-item ai">
+                    <i></i>
+                    <div>
+                      <b>AI подготовил черновик</b>
+                      <div class="tiny muted">
+                        По теме из контент-плана, 4 200 знаков
+                      </div>
+                    </div>
+                    <time>28.07, 09:05</time>
+                  </div>
+                  <div class="feed-item">
+                    <i></i>
+                    <div>
+                      <b>Александр отредактировал</b>
+                      <div class="tiny muted">
+                        Структура, подзаголовки, ссылки на нормы
+                      </div>
+                    </div>
+                    <time>28.07, 10:20</time>
+                  </div>
+                </div>
+                <p class="tiny muted" style="margin-top: 10px">
+                  Каждая версия сохраняется: можно посмотреть, что изменилось, и
+                  откатиться. Копия текстов уходит в репозиторий – блог не
+                  заперт внутри одной панели.
+                </p>
+              </div>
+            </div>
+
+            <!-- Темы из вопросов клиентов -->
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Темы из вопросов клиентов</h3>
+                <span class="tag tag--accent">контент-план</span>
+              </div>
+              <p class="muted small">
+                Что спрашивают в AI-чате и чего нет в блоге. Это не догадки
+                маркетолога, а реальные вопросы людей, которые уже пришли на
+                сайт.
+              </p>
+              <div class="ideas" id="post-ideas">
+                <div
+                  class="idea"
+                  data-idea="Что будет с зарплатной картой во время процедуры"
+                >
+                  <span>Что будет с зарплатной картой во время процедуры</span>
+                  <span class="idea-count">31 вопрос за месяц</span>
+                  <button class="btn btn--ghost btn--sm" type="button">
+                    Взять в работу
+                  </button>
+                </div>
+                <div
+                  class="idea"
+                  data-idea="Можно ли работать за границей после банкротства"
+                >
+                  <span>Можно ли работать за границей после банкротства</span>
+                  <span class="idea-count">18 вопросов</span>
+                  <button class="btn btn--ghost btn--sm" type="button">
+                    Взять в работу
+                  </button>
+                </div>
+                <div
+                  class="idea"
+                  data-idea="Спишут ли долг по расписке частному лицу"
+                >
+                  <span>Спишут ли долг по расписке частному лицу</span>
+                  <span class="idea-count">14 вопросов</span>
+                  <button class="btn btn--ghost btn--sm" type="button">
+                    Взять в работу
+                  </button>
+                </div>
+                <div
+                  class="idea"
+                  data-idea="Что происходит с созаемщиком и поручителем"
+                >
+                  <span>Что происходит с созаемщиком и поручителем</span>
+                  <span class="idea-count">12 вопросов</span>
+                  <button class="btn btn--ghost btn--sm" type="button">
+                    Взять в работу
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="pagenav">
           <a href="index.html">← Лендинг</a>
           <span>·</span>
           <a href="chat.html">Чат клиента</a>
           <span>·</span>
           <a href="cabinet.html">Кабинет клиента</a>
+          <span>·</span>
+          <a href="blog.html">Блог</a>
           <span>·</span>
           <a href="roadmap.html">Путь по шагам</a>
         </div>
@@ -1560,18 +1944,33 @@
         })
 
         // Переключение режимов «Заявки» / «Дела»
+        // Режимы панели: у каждого свой список слева и своя область справа.
+        // Карта, а не пара флагов – иначе новый режим молча покажет пустой экран.
+        const MODES = {
+          leads: { list: '#leadList', pane: '#leadPane' },
+          cases: { list: '#caseList', pane: '#casePane' },
+          blog: { list: '#blogList', pane: '#blogPane' }
+        }
+
         $('#modeTabs').addEventListener('click', (e) => {
           const btn = e.target.closest('button[data-mode]')
           if (!btn) return
-          const cases = btn.dataset.mode === 'cases'
+          const mode = btn.dataset.mode
+          if (!MODES[mode]) return
+
           $$('#modeTabs button').forEach((b) =>
             b.classList.toggle('side-tab--on', b === btn)
           )
-          $('#leadList').hidden = cases
-          $('#caseList').hidden = !cases
-          $('#leadPane').hidden = cases
-          $('#casePane').hidden = !cases
-          if (cases) renderCase(current)
+
+          Object.keys(MODES).forEach((key) => {
+            const off = key !== mode
+            const list = $(MODES[key].list)
+            const pane = $(MODES[key].pane)
+            if (list) list.hidden = off
+            if (pane) pane.hidden = off
+          })
+
+          if (mode === 'cases') renderCase(current)
         })
 
         $('#caseList').addEventListener('click', (e) => {
@@ -1825,6 +2224,514 @@
         })
 
         renderCase('sergey')
+      })()
+    </script>
+
+    <script>
+      /* Раздел «Блог»: редактор, проверка формулировок, публикация в две подписи */
+      ;(() => {
+        const $ = (sel, root) => (root || document).querySelector(sel)
+        const $$ = (sel, root) =>
+          Array.from((root || document).querySelectorAll(sel))
+
+        const pane = $('#blogPane')
+        if (!pane) return
+
+        const reduced = window.matchMedia(
+          '(prefers-reduced-motion: reduce)'
+        ).matches
+
+        function toast(text) {
+          const el = document.createElement('div')
+          el.className = 'toast'
+          el.textContent = text
+          document.body.append(el)
+          requestAnimationFrame(() => el.classList.add('is-on'))
+          setTimeout(() => {
+            el.classList.remove('is-on')
+            setTimeout(() => el.remove(), 400)
+          }, 2600)
+        }
+
+        const POSTS = {
+          consequences: {
+            title:
+              'Последствия банкротства: что действительно меняется в жизни',
+            cat: 'Последствия и страхи',
+            slug: '/blog/posledstviya-bankrotstva',
+            status: 'review',
+            metaNote: 'Черновик от 28.07.2026',
+            body: 'Банкротство закрывает долги, но меняет несколько вещей в жизни на пять лет вперед. Разберем по пунктам, без запугивания и без обещаний: мы спишем ваши долги полностью и вернем спокойствие уже через три месяца.\n\nКредитная история. Запись о процедуре остается, но она не приговор: банки смотрят на срок после завершения дела и на текущий доход.\n\nПубличность. Сведения о деле публикуются в открытом реестре – это часть процедуры, скрыть ее нельзя. Гарантий списания мы не даем: решение принимает суд, и отказы бывают.',
+            seo: {
+              title:
+                'Последствия банкротства физлица в 2026 году: что меняется',
+              desc: 'Кредитная история, работа, выезд за границу, повторное банкротство. Разбирает действующий финансовый управляющий.',
+              key: 'последствия банкротства'
+            },
+            lawyerOk: false,
+            history: [
+              [
+                'ai',
+                'AI подготовил черновик',
+                'По теме из контент-плана, 4 200 знаков',
+                '28.07, 09:05'
+              ],
+              [
+                '',
+                'Александр отредактировал',
+                'Структура, подзаголовки, ссылки на нормы',
+                '28.07, 10:20'
+              ]
+            ]
+          },
+          mfc: {
+            title: 'МФЦ или суд: как понять, куда идти с вашими долгами',
+            cat: 'МФЦ и суд',
+            slug: '/blog/mfc-ili-sud',
+            status: 'live',
+            metaNote: 'Опубликовано 28.07.2026',
+            body: 'В России есть две процедуры с одинаковым результатом, но с разным входом. Внесудебное банкротство через МФЦ бесплатное: заявление, шесть месяцев, списание указанных в нем долгов. Судебное идет через арбитражный суд с финансовым управляющим.\n\nУсловия внесудебной процедуры – пункт 1 статьи 223.2 127-ФЗ: долг от 25 тысяч до 1 миллиона и одно из четырех оснований. Срок и освобождение – пункт 1 статьи 223.6.\n\nВо внесудебной процедуре списываются только те долги, которые вы указали в заявлении. Забыли микрозайм – он останется.',
+            seo: {
+              title: 'МФЦ или суд при банкротстве: как выбрать процедуру',
+              desc: 'Условия внесудебного банкротства по 127-ФЗ, таблица «что выбрать при вашей ситуации» и три ошибки, которые стоят полугода.',
+              key: 'банкротство через мфц'
+            },
+            lawyerOk: true,
+            history: [
+              [
+                'ai',
+                'AI подготовил черновик',
+                'Тема из кластера «через МФЦ» – 58 228 показов в месяц',
+                '24.07, 12:40'
+              ],
+              [
+                '',
+                'Александр отредактировал',
+                'Добавлена таблица и врезка с нормой',
+                '25.07, 09:15'
+              ],
+              [
+                'ok',
+                'Дмитрий вычитал и подписал',
+                'Проверены ссылки на статьи 223.2 и 223.6, редакции указаны',
+                '27.07, 18:30'
+              ],
+              [
+                'ok',
+                'Опубликовано',
+                'Страница в блоге и в карте сайта',
+                '28.07, 08:00'
+              ]
+            ]
+          }
+        }
+
+        // Формулировки, за которые бьют по рекламе банкротных услуг.
+        // Рядом с находкой ищем отрицание: «гарантий не даем» – это не нарушение.
+        const RISKY = [
+          {
+            re: /спиш(ем|у)[^.!?]{0,40}долг\w*/gi,
+            why: 'Обещание результата: списание зависит от суда, а не от нас',
+            law: 'ст. 28.1 38-ФЗ, ст. 10 ЗоЗПП'
+          },
+          {
+            re: /гаранти\w*\s+(списани\w+|результат\w*|банкротств\w*)/gi,
+            why: 'Гарантия исхода дела',
+            law: 'ст. 28.1 38-ФЗ'
+          },
+          {
+            re: /(100|99[.,]?\d?)\s*%\s*(гаранти\w*|списани\w*|результат\w*)/gi,
+            why: 'Процентная гарантия результата',
+            law: 'ст. 28.1 38-ФЗ'
+          },
+          {
+            re: /(за|через)\s+(три|3|четыре|4)\s+месяц\w*/gi,
+            why: 'Нереальный срок: активная часть занимает 4–14 месяцев',
+            law: 'ст. 10 ЗоЗПП, признак недобросовестной рекламы'
+          },
+          {
+            re: /государственн\w+\s+программ\w+/gi,
+            why: '«Госпрограмма списания долгов» не существует',
+            law: 'ст. 28.1 38-ФЗ'
+          },
+          {
+            re: /не\s+плат\w+\s+(банк\w*|кредитор\w*)/gi,
+            why: 'Призыв не платить кредиторам',
+            law: 'ст. 28.1 38-ФЗ'
+          },
+          {
+            re: /(робот-юрист|вместо\s+юриста|заменяет\s+юриста)/gi,
+            why: 'AI подан как замена юристу',
+            law: 'урок дела DoNotPay, ст. 10 ЗоЗПП'
+          }
+        ]
+
+        const NEGATIONS =
+          /(не\s+даем|не\s+дает|не\s+обещаем|не\s+гарантиру\w+|никаких\s+гаранти\w*|без\s+гаранти\w*)/i
+
+        function findRisky(text) {
+          const found = []
+
+          RISKY.forEach((rule) => {
+            rule.re.lastIndex = 0
+            let match
+            while ((match = rule.re.exec(text)) !== null) {
+              const from = Math.max(0, match.index - 60)
+              const to = Math.min(
+                text.length,
+                match.index + match[0].length + 60
+              )
+              // Отрицание рядом – формулировка честная, не трогаем
+              if (NEGATIONS.test(text.slice(from, to))) continue
+              found.push({
+                quote: match[0].trim(),
+                why: rule.why,
+                law: rule.law
+              })
+            }
+          })
+
+          return found
+        }
+
+        let current = 'consequences'
+        let checked = false
+
+        const titleHead = $('#post-title-head')
+        const metaEl = $('#post-meta')
+        const statusEl = $('#post-status')
+        const titleInput = $('#post-title')
+        const catInput = $('#post-cat')
+        const bodyInput = $('#post-body')
+        const flagsEl = $('#post-flags')
+        const chkLawyer = $('#chk-lawyer')
+        const chkFlags = $('#chk-flags')
+        const chkFlagsNote = $('#chk-flags-note')
+        const publishBtn = $('#post-publish')
+        const publishHint = $('#publish-hint')
+        const historyEl = $('#post-history')
+        const seoTitle = $('#seo-title')
+        const seoDesc = $('#seo-desc')
+
+        function renderHistory() {
+          historyEl.innerHTML = POSTS[current].history
+            .map(
+              (row) =>
+                '<div class="feed-item ' +
+                row[0] +
+                '"><i></i><div><b>' +
+                row[1] +
+                '</b><div class="tiny muted">' +
+                row[2] +
+                '</div></div><time>' +
+                row[3] +
+                '</time></div>'
+            )
+            .join('')
+        }
+
+        function addHistory(kind, title, note) {
+          const now = new Date(2026, 6, 28, 11, 40)
+          POSTS[current].history.push([
+            kind,
+            title,
+            note,
+            '28.07, ' +
+              String(now.getHours()) +
+              ':' +
+              String(now.getMinutes()).padStart(2, '0')
+          ])
+          renderHistory()
+        }
+
+        function renderStatus() {
+          const post = POSTS[current]
+          const live = post.status === 'live'
+          statusEl.textContent = live
+            ? 'Опубликовано'
+            : post.status === 'review'
+              ? 'На вычитке у юриста'
+              : 'Черновик'
+          statusEl.className =
+            'badge-status' + (live ? ' badge-status--won' : '')
+          metaEl.innerHTML =
+            post.metaNote +
+            ' · рубрика «' +
+            post.cat +
+            '» · <span class="mono">' +
+            post.slug +
+            '</span>'
+        }
+
+        function renderPublish() {
+          const post = POSTS[current]
+          const ready = post.lawyerOk && checked && post.status !== 'live'
+          publishBtn.disabled = !ready
+          publishBtn.textContent =
+            post.status === 'live' ? 'Уже опубликовано' : 'Опубликовать'
+
+          if (post.status === 'live') {
+            publishHint.textContent =
+              'Статья в блоге. Правки публикуются так же – через вычитку.'
+            return
+          }
+
+          if (!post.lawyerOk && !checked) {
+            publishHint.textContent =
+              'Нужны подпись юриста и проверка формулировок.'
+          } else if (!post.lawyerOk) {
+            publishHint.textContent = 'Ждет вашей подписи как юриста.'
+          } else if (!checked) {
+            publishHint.textContent =
+              'Запустите проверку формулировок – без нее не публикуем.'
+          } else {
+            publishHint.textContent = 'Обе подписи есть, можно публиковать.'
+          }
+        }
+
+        function renderFlags(found) {
+          if (!found) {
+            flagsEl.innerHTML =
+              '<p class="muted small">Нажмите «Проверить формулировки»: система ищет обещания результата, гарантии, нереальные сроки и призывы не платить кредиторам – то, за что штрафуют по рекламе. Отрицания вроде «гарантий не даем» она не трогает.</p>'
+            return
+          }
+
+          if (!found.length) {
+            flagsEl.innerHTML =
+              '<div class="flag flag--ok"><i>✓</i><div><b>Запрещенных формулировок не нашли.</b> Проверены обещания результата, гарантии, сроки, призывы не платить и подача AI как замены юристу.</div></div>'
+            return
+          }
+
+          flagsEl.innerHTML =
+            found
+              .map(
+                (item) =>
+                  '<div class="flag"><i>!</i><div><b>' +
+                  item.why +
+                  '</b><q>«' +
+                  item.quote +
+                  '»</q><div class="tiny muted">' +
+                  item.law +
+                  '</div></div></div>'
+              )
+              .join('') +
+            '<div class="btn-row"><button class="btn btn--ghost btn--sm" type="button" id="post-fix">Предложить замену AI</button></div>'
+
+          $('#post-fix').addEventListener('click', fixText)
+        }
+
+        function fixText() {
+          bodyInput.value = bodyInput.value
+            .replace(
+              /мы спиш(ем|у)[^.!?]*месяц\w*/gi,
+              'мы разберем вашу ситуацию честно и скажем, каких последствий ждать'
+            )
+            .replace(/\s+и вернем спокойствие/gi, '')
+          toast('AI переписал рискованный фрагмент – перепроверьте текст')
+          runCheck()
+        }
+
+        function runCheck() {
+          const found = findRisky(bodyInput.value)
+          checked = found.length === 0
+          renderFlags(found)
+          chkFlags.checked = checked
+          chkFlagsNote.textContent = checked
+            ? 'Проверка пройдена: обещаний результата и гарантий в тексте нет.'
+            : 'Найдено рискованных формулировок: ' +
+              found.length +
+              '. Публикация заблокирована.'
+          renderPublish()
+        }
+
+        function renderPost(key) {
+          if (!POSTS[key]) return
+          current = key
+          const post = POSTS[key]
+
+          titleHead.textContent = post.title
+          titleInput.value = post.title
+          catInput.value = post.cat
+          bodyInput.value = post.body
+          seoTitle.value = post.seo.title
+          seoDesc.value = post.seo.desc
+          $('#seo-key').value = post.seo.key
+          $('#serp-title').textContent = post.seo.title
+          $('#serp-desc').textContent = post.seo.desc
+
+          chkLawyer.checked = post.lawyerOk
+          checked = false
+          chkFlags.checked = false
+          chkFlagsNote.textContent = 'Проверка не запускалась.'
+          renderFlags(null)
+          renderStatus()
+          renderPublish()
+          renderHistory()
+
+          $$('#blogList .lead-item').forEach((item) =>
+            item.classList.toggle(
+              'lead-item--active',
+              item.dataset.post === key
+            )
+          )
+        }
+
+        // Выбор материала
+        $('#blogList').addEventListener('click', (e) => {
+          const item = e.target.closest('.lead-item[data-post]')
+          if (!item) return
+          if (!POSTS[item.dataset.post]) {
+            toast(
+              'В макете открываются два материала: «Последствия» и «МФЦ или суд»'
+            )
+            return
+          }
+          renderPost(item.dataset.post)
+        })
+
+        // Заголовок правится живьем
+        titleInput.addEventListener('input', () => {
+          POSTS[current].title = titleInput.value
+          titleHead.textContent = titleInput.value
+        })
+
+        catInput.addEventListener('change', () => {
+          POSTS[current].cat = catInput.value
+          renderStatus()
+        })
+
+        bodyInput.addEventListener('input', () => {
+          POSTS[current].body = bodyInput.value
+          if (!checked) return
+          checked = false
+          chkFlags.checked = false
+          chkFlagsNote.textContent =
+            'Текст изменился – проверьте формулировки заново.'
+          renderPublish()
+        })
+
+        // Живое превью выдачи
+        seoTitle.addEventListener('input', () => {
+          POSTS[current].seo.title = seoTitle.value
+          $('#serp-title').textContent = seoTitle.value
+        })
+
+        seoDesc.addEventListener('input', () => {
+          POSTS[current].seo.desc = seoDesc.value
+          $('#serp-desc').textContent = seoDesc.value
+        })
+
+        // Черновик AI
+        $('#post-ai').addEventListener('click', () => {
+          const text =
+            'Банкротство закрывает долги, но на пять лет меняет несколько вещей. Разберем по пунктам: кредитная история, работа, выезд за границу, повторная процедура.\n\nКредитная история. Запись о процедуре остается на пять лет, но это не запрет на кредит: банки смотрят на срок после завершения дела и текущий доход.\n\nРабота. Ограничение касается руководящих должностей в кредитных организациях и участия в управлении компанией – обычная работа по найму не запрещена.\n\nПубличность. Сведения публикуются в открытом реестре: это часть процедуры, скрыть ее нельзя. Решение о списании принимает суд, отказы бывают – чаще всего за сокрытие сведений.'
+
+          const finish = () => {
+            POSTS[current].body = bodyInput.value
+            addHistory(
+              'ai',
+              'AI переписал черновик',
+              'По плану статьи, 3 900 знаков'
+            )
+            checked = false
+            chkFlags.checked = false
+            chkFlagsNote.textContent = 'Текст новый – проверьте формулировки.'
+            renderFlags(null)
+            renderPublish()
+            toast('Черновик готов. Он виден только вам, на сайт не уходит')
+          }
+
+          if (reduced) {
+            bodyInput.value = text
+            finish()
+            return
+          }
+
+          bodyInput.value = ''
+          let shown = 0
+          const step = Math.max(4, Math.ceil(text.length / 60))
+          const timer = setInterval(() => {
+            shown = Math.min(text.length, shown + step)
+            bodyInput.value = text.slice(0, shown)
+            if (shown >= text.length) {
+              clearInterval(timer)
+              finish()
+            }
+          }, 24)
+        })
+
+        $('#post-check').addEventListener('click', runCheck)
+
+        // Подпись юриста
+        chkLawyer.addEventListener('change', () => {
+          POSTS[current].lawyerOk = chkLawyer.checked
+          if (chkLawyer.checked) {
+            addHistory(
+              'ok',
+              'Дмитрий вычитал и подписал',
+              'Без этой подписи публикация недоступна'
+            )
+            toast('Подпись поставлена')
+          }
+          renderPublish()
+        })
+
+        publishBtn.addEventListener('click', () => {
+          const post = POSTS[current]
+          post.status = 'live'
+          post.metaNote = 'Опубликовано 28.07.2026'
+          addHistory('ok', 'Опубликовано', 'Страница в блоге и в карте сайта')
+          renderStatus()
+          renderPublish()
+
+          const item = $('#blogList .lead-item[data-post="' + current + '"]')
+          if (item) {
+            const status = $('.post-status', item)
+            if (status) {
+              status.className = 'post-status live'
+              status.innerHTML = '<i></i>опубликовано'
+            }
+          }
+
+          const live = $('#blog-live')
+          const review = $('#blog-review')
+          live.textContent = String(Number(live.textContent) + 1)
+          review.textContent = String(
+            Math.max(0, Number(review.textContent) - 1)
+          )
+
+          toast('Статья опубликована и попала в карту сайта')
+        })
+
+        $('#post-preview').addEventListener('click', () => {
+          window.open('article.html', '_blank')
+        })
+
+        // Темы из вопросов клиентов
+        $('#post-ideas').addEventListener('click', (e) => {
+          const btn = e.target.closest('button')
+          if (!btn) return
+          const row = btn.closest('.idea')
+          const theme = row.dataset.idea
+
+          row.remove()
+          const queue = $('#blog-queue')
+          queue.textContent = String(Number(queue.textContent) + 1)
+
+          const list = $('#blogList')
+          const card = document.createElement('div')
+          card.className = 'lead-item'
+          card.innerHTML =
+            '<div class="lead-item-top"><span>' +
+            theme +
+            '</span><span class="post-status draft"><i></i>черновик</span></div>' +
+            '<div class="lead-item-sub">Из вопросов клиентов · в очереди</div>'
+          list.prepend(card)
+
+          toast('Тема в очереди: AI подготовит черновик, вы вычитаете')
+        })
+
+        renderPost('consequences')
       })()
     </script>
   </body>
