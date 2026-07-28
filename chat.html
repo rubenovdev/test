@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI-разбор ситуации – макет чата</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .chatpage {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 32px 24px 120px;
+        display: grid;
+        gap: 20px;
+      }
+
+      .result {
+        border: 1px solid color-mix(in srgb, var(--accent) 32%, var(--border));
+        background: var(--accent-soft);
+        border-radius: var(--radius);
+        padding: 24px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .result-rows {
+        display: grid;
+        gap: 1px;
+        background: color-mix(in srgb, var(--accent) 18%, transparent);
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+      }
+
+      .result-rows > div {
+        background: var(--bg);
+        padding: 13px 16px;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 0.94rem;
+        flex-wrap: wrap;
+      }
+
+      .result-rows span:first-child {
+        color: var(--text-muted);
+      }
+
+      .result-rows span:last-child {
+        font-weight: 550;
+        text-align: right;
+      }
+
+      .capture {
+        border: 1px solid var(--border);
+        background: var(--bg);
+        border-radius: var(--radius);
+        padding: 24px;
+        display: grid;
+        gap: 14px;
+      }
+
+      .composer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: color-mix(in srgb, var(--bg) 92%, transparent);
+        backdrop-filter: blur(14px);
+        border-top: 1px solid var(--border);
+        padding: 14px 24px 18px;
+      }
+
+      .composer-inner {
+        max-width: 780px;
+        margin: 0 auto;
+        display: grid;
+        gap: 10px;
+      }
+
+      .composer-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      /* На узком экране панель ввода компактнее, а страница оставляет под нее место */
+      @media (max-width: 760px) {
+        .chatpage {
+          padding-bottom: 210px;
+        }
+
+        .composer .tiny {
+          display: none;
+        }
+
+        /* Грид вместо flex: поле ввода на всю строку, кнопки под ним */
+        .composer-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+
+        .composer-row .fake-input {
+          grid-column: 1 / -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mockbar">
+      <div class="wrap">
+        <strong>Макет чата.</strong>
+        <span
+          >Диалог статичный, ввод не работает – показывает формат первого
+          контакта: AI разбирает ситуацию, вопрос юристу уходит человеку.</span
+        >
+      </div>
+    </div>
+
+    <header class="topbar">
+      <div class="wrap">
+        <a class="logo" href="index.html"
+          >Ерзиков <span>банкротство физлиц</span></a
+        >
+        <nav class="nav">
+          <a href="index.html#price">Цена</a>
+          <a href="index.html#faq">Вопросы</a>
+          <a href="admin.html">Панель юриста</a>
+        </nav>
+        <a class="btn btn--ghost btn--sm" href="index.html">На сайт</a>
+      </div>
+    </header>
+
+    <main class="chatpage">
+      <div>
+        <p class="eyebrow">Бесплатный разбор</p>
+        <h1 style="font-size: 1.9rem">
+          Расскажите про долги – разберем ситуацию
+        </h1>
+        <p class="lead small" style="margin-top: 10px">
+          Отвечайте своими словами, как есть. Можно приложить фото или PDF:
+          справки, кредитные договоры, постановления приставов.
+        </p>
+      </div>
+
+      <div class="stack">
+        <div class="bubble bubble--ai">
+          Здравствуйте. Чтобы понять вашу ситуацию, начнем с главного: какая
+          примерно сумма долгов и кому вы должны – банки, микрозаймы, налоги,
+          коммунальные?
+        </div>
+
+        <div class="bubble bubble--user">
+          Примерно 1,8 млн. Три кредита в банках, две кредитные карты и один
+          микрозайм. Еще задолженность по коммуналке тысяч на 40.
+        </div>
+
+        <div class="bubble bubble--ai">
+          Спасибо. Теперь про имущество и доход – от этого зависит и процедура,
+          и что будет с вещами:
+          <ul>
+            <li>есть ли квартира или дом, и не в ипотеке ли;</li>
+            <li>есть ли машина, доля в другом жилье, дача;</li>
+            <li>официальный доход сейчас есть?</li>
+          </ul>
+        </div>
+
+        <div class="bubble bubble--user">
+          Квартира одна, без ипотеки. Машины нет. Работаю официально, 70 тысяч
+          на руки. Платить перестал в феврале, звонят коллекторы, приставов пока
+          нет.
+        </div>
+
+        <div class="bubble bubble--ai">
+          Понятно, картина типовая. Один важный вопрос – о нем часто забывают, а
+          суд смотрит: за последние 3 года вы продавали или дарили что-нибудь –
+          машину, долю в квартире, дачу? И не брали ли новые кредиты уже после
+          того, как платить стало нечем?
+        </div>
+
+        <div class="bubble bubble--user">
+          Машину продал в 2024, по договору за 300 тысяч. Новых кредитов не
+          брал.
+        </div>
+
+        <div class="bubble bubble--ai">
+          <b>Ваш путь – судебное банкротство.</b> Бесплатное банкротство через
+          МФЦ вам не подходит: там лимит долга 1 млн ₽, у вас больше. Продажа
+          машины в 2024 – не проблема сама по себе, но управляющий будет
+          проверять цену сделки, поэтому договор и подтверждение оплаты нужно
+          сохранить.
+          <div class="bubble-meta">
+            Ответ подготовлен с помощью AI. Это разбор ситуации, а не гарантия
+            исхода: решение о списании принимает суд.
+          </div>
+        </div>
+
+        <!-- Карточка результата -->
+        <div class="result">
+          <div>
+            <span class="tag tag--accent">Предварительный разбор</span>
+            <h3 style="margin-top: 12px">
+              Судебное банкротство, реализация имущества
+            </h3>
+          </div>
+          <div class="result-rows">
+            <div><span>Сумма долга</span><span>~1,84 млн ₽</span></div>
+            <div>
+              <span>Единственное жилье</span
+              ><span>защищено, вне конкурсной массы</span>
+            </div>
+            <div>
+              <span>Что проверит юрист</span
+              ><span>сделку 2024 года и платежи с февраля</span>
+            </div>
+            <div>
+              <span>Обязательные расходы</span
+              ><span class="slot" title="Суммы подтверждает Дмитрий"
+                >~45 000 ₽</span
+              >
+            </div>
+            <div>
+              <span>Наша работа</span
+              ><span class="slot" title="Цену определяет Дмитрий"
+                >– ₽, оплата этапами</span
+              >
+            </div>
+            <div>
+              <span>Ориентировочный срок</span
+              ><span>8–14 месяцев активной части</span>
+            </div>
+          </div>
+          <p class="tiny muted">
+            Следующий шаг – проверка юристом: Дмитрий смотрит слабые места и
+            подтверждает план. Это бесплатно и ни к чему не обязывает.
+          </p>
+        </div>
+
+        <!-- Захват контакта -->
+        <div class="capture">
+          <h3>Куда отправить полный разбор и памятку по документам</h3>
+          <p class="muted small">
+            Пришлем разбор с расчетом, список нужных справок и порядок действий.
+            Здесь же юрист ответит на ваши вопросы – текстом, без звонков, если
+            вы этого не хотите.
+          </p>
+          <div class="btn-row">
+            <div class="fake-input" style="min-width: 240px">
+              Телефон или e-mail
+            </div>
+            <button class="btn btn--primary" type="button">
+              Получить разбор
+            </button>
+          </div>
+          <label
+            class="tiny muted"
+            style="display: flex; gap: 8px; align-items: flex-start"
+          >
+            <input type="checkbox" />
+            <span>Хочу, чтобы юрист перезвонил – выберу удобное время</span>
+          </label>
+        </div>
+
+        <!-- Ответ живого юриста -->
+        <div class="bubble bubble--lawyer">
+          <b>Дмитрий Ерзиков, финансовый управляющий:</b> посмотрел ваш разбор.
+          Сделка 2024 года рисков не создает, если цена была рыночной –
+          приложите договор и выписку о поступлении денег. Начните с трех
+          справок: о задолженности из банков, из ФНС и выписки по счетам за 3
+          года. Дальше соберем пакет.
+          <div class="bubble-meta">
+            Ответ человека, не AI ·
+            <span class="slot" title="Время ответа подтверждает Дмитрий"
+              >ответ в рабочее время</span
+            >
+          </div>
+        </div>
+
+        <div class="chips">
+          <a class="chip" href="#">Что будет с картами?</a>
+          <a class="chip" href="#">Узнают ли на работе?</a>
+          <a class="chip" href="#">Сколько это стоит целиком?</a>
+          <a class="chip" href="#">А если суд откажет?</a>
+        </div>
+      </div>
+    </main>
+
+    <div class="composer">
+      <div class="composer-inner">
+        <div class="composer-row">
+          <div class="fake-input" style="flex: 1">
+            Напишите сообщение или приложите документ…
+          </div>
+          <button class="btn btn--ghost btn--sm" type="button">Файл</button>
+          <button class="btn btn--primary btn--sm" type="button">
+            Отправить
+          </button>
+        </div>
+        <p class="tiny muted">
+          Разбор бесплатный. Ответы AI помечены – критичное перед подачей в суд
+          проверяет юрист.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

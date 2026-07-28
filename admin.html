@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Панель юриста – макет админки</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .side-head {
+        padding: 0 20px 16px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .side-tabs {
+        display: flex;
+        gap: 8px;
+        font-size: 0.85rem;
+      }
+
+      .side-tab {
+        padding: 6px 11px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        background: var(--bg);
+      }
+
+      .side-tab--on {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .side-tab--on {
+          color: #0c0d10;
+        }
+      }
+
+      .dialog {
+        display: grid;
+        gap: 12px;
+        max-height: 320px;
+        overflow: auto;
+        padding-right: 4px;
+      }
+
+      .stat-row {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        margin-bottom: 24px;
+      }
+
+      .stat-row > div {
+        background: var(--bg);
+        padding: 16px 18px;
+      }
+
+      .stat-row b {
+        display: block;
+        font-size: 1.3rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      .stat-row span {
+        color: var(--text-muted);
+        font-size: 0.82rem;
+      }
+
+      @media (max-width: 620px) {
+        .stat-row {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mockbar">
+      <div class="wrap">
+        <strong>Макет панели юриста.</strong>
+        <span
+          >Так выглядит рабочее место Дмитрия и команды: очередь заявок, диалог
+          клиента с AI, кнопка черновика ответа и обязательный итог по каждой
+          заявке.</span
+        >
+      </div>
+    </div>
+
+    <div class="admin">
+      <!-- Очередь лидов -->
+      <aside class="admin-side">
+        <div class="side-head">
+          <a class="logo" href="index.html">Ерзиков <span>панель</span></a>
+          <div class="side-tabs">
+            <span class="side-tab side-tab--on">Новые · 4</span>
+            <span class="side-tab">В работе · 11</span>
+            <span class="side-tab">Все</span>
+          </div>
+        </div>
+
+        <div class="lead-item lead-item--active">
+          <div class="lead-item-top">
+            <span>Сергей М.</span>
+            <span class="tag tag--accent">суд</span>
+          </div>
+          <div class="lead-item-sub">1,84 млн ₽ · Самара · 12 минут назад</div>
+          <div class="lead-item-sub mono">директ / банкротство-цена</div>
+        </div>
+
+        <div class="lead-item">
+          <div class="lead-item-top">
+            <span>Наталья К.</span>
+            <span class="tag tag--free">МФЦ</span>
+          </div>
+          <div class="lead-item-sub">
+            640 тыс. ₽ · Тольятти · 40 минут назад
+          </div>
+          <div class="lead-item-sub mono">блог / последствия-банкротства</div>
+        </div>
+
+        <div class="lead-item">
+          <div class="lead-item-top">
+            <span>Игорь Т.</span>
+            <span class="tag">сложный</span>
+          </div>
+          <div class="lead-item-sub">
+            4,2 млн ₽, ипотека · Москва · 2 часа назад
+          </div>
+          <div class="lead-item-sub mono">директ / банкротство-ипотека</div>
+        </div>
+
+        <div class="lead-item">
+          <div class="lead-item-top">
+            <span>Аноним</span>
+            <span class="tag">не наш</span>
+          </div>
+          <div class="lead-item-sub">
+            долг работодателя перед ним · 3 часа назад
+          </div>
+          <div class="lead-item-sub mono">рся / списание-долгов</div>
+        </div>
+      </aside>
+
+      <!-- Карточка заявки -->
+      <main class="admin-main">
+        <div class="stat-row">
+          <div>
+            <b>28</b>
+            <span>заявок за 7 дней</span>
+          </div>
+          <div>
+            <b>19</b>
+            <span>целевых, 68%</span>
+          </div>
+          <div>
+            <b>2</b>
+            <span>договора</span>
+          </div>
+          <div>
+            <b>1 720 ₽</b>
+            <span>стоимость заявки</span>
+          </div>
+        </div>
+
+        <div class="stack-lg">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h2 style="font-size: 1.4rem">Сергей М.</h2>
+                <p class="small muted">
+                  Заявка от 28.07.2026, 09:12 · телефон
+                  <span class="mono">+7 9•• ••• 41 08</span> · Самарская область
+                </p>
+              </div>
+              <span class="tag tag--accent">судебное банкротство</span>
+            </div>
+
+            <dl class="kv">
+              <div>
+                <dt>Сумма долга</dt>
+                <dd>1,84 млн ₽</dd>
+              </div>
+              <div>
+                <dt>Кредиторы</dt>
+                <dd>3 банка, 1 МФО, ЖКХ</dd>
+              </div>
+              <div>
+                <dt>Имущество</dt>
+                <dd>единственное жилье, без ипотеки</dd>
+              </div>
+              <div>
+                <dt>Доход</dt>
+                <dd>официальный, 70 тыс. ₽</dd>
+              </div>
+              <div>
+                <dt>Стадия взыскания</dt>
+                <dd>коллекторы, приставов нет</dd>
+              </div>
+              <div>
+                <dt>Риск, отмеченный AI</dt>
+                <dd>продажа авто в 2024 – проверить цену</dd>
+              </div>
+            </dl>
+
+            <div>
+              <p class="eyebrow" style="margin-bottom: 10px">Диалог с AI</p>
+              <div class="dialog">
+                <div class="bubble bubble--user" style="max-width: 92%">
+                  1,8 млн: три кредита, две карты, микрозайм и коммуналка 40
+                  тысяч.
+                </div>
+                <div class="bubble bubble--ai" style="max-width: 92%">
+                  Уточняю про имущество и доход: квартира, машина, официальная
+                  работа?
+                </div>
+                <div class="bubble bubble--user" style="max-width: 92%">
+                  Квартира одна, без ипотеки. Машины нет, продал в 2024.
+                  Работаю, 70 тысяч.
+                </div>
+                <div class="bubble bubble--ai" style="max-width: 92%">
+                  МФЦ не подходит – долг больше 1 млн. Путь – судебное
+                  банкротство, сделку 2024 нужно проверить.
+                </div>
+              </div>
+              <p class="tiny muted" style="margin-top: 10px">
+                Полный транскрипт и загруженные файлы – 2 документа (договор
+                купли-продажи, справка из банка).
+              </p>
+            </div>
+          </div>
+
+          <!-- Ответ клиенту -->
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Ответ клиенту</h3>
+              <button class="btn btn--ghost btn--sm" type="button">
+                Сгенерировать черновик AI
+              </button>
+            </div>
+
+            <div class="draft">
+              <p class="tiny" style="font-weight: 600">
+                Черновик AI · виден только вам, клиенту не отправлен
+              </p>
+              <p>
+                Сергей, посмотрел ваш разбор. Сделка 2024 года рисков не
+                создает, если цена была рыночной – приложите договор и выписку о
+                поступлении денег. Начните с трех справок: о задолженности из
+                банков, из ФНС и выписки по счетам за 3 года. Дальше соберем
+                пакет документов.
+              </p>
+              <div class="btn-row">
+                <button class="btn btn--primary btn--sm" type="button">
+                  Правки и отправить
+                </button>
+                <button class="btn btn--ghost btn--sm" type="button">
+                  Переписать заново
+                </button>
+              </div>
+              <p class="tiny muted">
+                Отправляется как ответ юриста – без пометки AI, потому что вы
+                его прочитали и подтвердили. Черновик и отправленный текст
+                сохраняются отдельно: по разнице видно, что AI формулирует не
+                так, и промпт улучшается.
+              </p>
+            </div>
+
+            <p class="tiny muted">
+              Уведомление о новой заявке и о сообщении клиента приходит в
+              Telegram – отвечать можно прямо оттуда, не заходя в панель.
+            </p>
+          </div>
+
+          <!-- Итог по заявке -->
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Итог по заявке</h3>
+              <span class="tag">обязательное поле</span>
+            </div>
+            <p class="muted small">
+              Пока итог не выставлен, заявка считается незакрытой. Именно из
+              этих отметок считается конверсия «заявка – договор»: без нее
+              непонятно, окупается ли реклама.
+            </p>
+            <div class="btn-row">
+              <span class="select-fake">Договор заключен ▾</span>
+              <span class="select-fake">Дата: 28.07.2026</span>
+            </div>
+            <ul class="list small">
+              <li>Договор заключен</li>
+              <li>
+                Отказ клиента – с причиной: дорого / передумал / ушел к другим
+              </li>
+              <li>Не дозвонились и не ответил</li>
+              <li>Не наш случай – увели в МФЦ или банкротство не нужно</li>
+            </ul>
+            <p class="tiny muted">
+              Итоги выгружаются в Яндекс.Метрику как оффлайн-конверсии – реклама
+              начинает оптимизироваться на договоры, а не на клики.
+            </p>
+          </div>
+        </div>
+
+        <div class="pagenav">
+          <a href="index.html">← Лендинг</a>
+          <span>·</span>
+          <a href="chat.html">Чат клиента</a>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
