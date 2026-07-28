@@ -1454,16 +1454,18 @@
             return
           }
 
-          const started = performance.now()
-          requestAnimationFrame(function step(now) {
-            const progress = Math.min(1, (now - started) / 1200)
-            target.textContent = text.slice(
-              0,
-              Math.ceil(text.length * progress)
-            )
-            if (progress < 1) requestAnimationFrame(step)
-            else finish()
-          })
+          // Таймер, а не requestAnimationFrame: в неактивной вкладке rAF замирает
+          // и черновик остается пустым.
+          let shown = 0
+          const step = Math.max(2, Math.ceil(text.length / 50))
+          const timer = setInterval(() => {
+            shown = Math.min(text.length, shown + step)
+            target.textContent = text.slice(0, shown)
+            if (shown >= text.length) {
+              clearInterval(timer)
+              finish()
+            }
+          }, 24)
         })
 
         // Оплата
