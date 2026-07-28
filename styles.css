@@ -282,6 +282,11 @@ img {
   .topbar .btn {
     margin-left: auto;
   }
+
+  /* На узком экране в шапке остается одно действие, вход – из футера */
+  .topbar .btn--ghost {
+    display: none;
+  }
 }
 
 /* Кнопки */
