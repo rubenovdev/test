@@ -999,14 +999,318 @@
     })
 
     // Открыть нужный раздел по якорю: docs.html#refund
-    var hash = location.hash.replace('#', '')
-    if (hash) {
+    function openFromHash() {
+      var hash = location.hash.replace('#', '')
+      if (!hash) return
       var target = $('[data-doc="' + hash + '"]', nav)
-      if (target) target.click()
+      if (target && !target.classList.contains('is-on')) target.click()
+    }
+
+    openFromHash()
+    window.addEventListener('hashchange', openFromHash)
+  }
+
+
+  /* ---------- Мок Telegram: заявка приходит юристу ---------- */
+
+  var TG_LEAD = {
+    name: 'Сергей М.',
+    lines: [
+      ['Долг', '1,84 млн ₽'],
+      ['Регион', 'Самарская область'],
+      ['Маршрут AI', 'судебное банкротство'],
+      ['Риск', 'продажа авто в 2024'],
+      ['Источник', 'директ / банкротство-цена']
+    ],
+    draft:
+      'Сергей, посмотрел ваш разбор. Сделка 2024 года рисков не создает, если цена была рыночной – приложите договор и выписку о поступлении денег. Начните с трех справок: о задолженности из банков, из ФНС и выписки по счетам за 3 года.'
+  }
+
+  function initTelegram() {
+    var body = $('#tg-body')
+    if (!body) return
+
+    function add(kind, html) {
+      var el = document.createElement('div')
+      el.className = 'tg-msg' + (kind ? ' tg-msg--' + kind : '')
+      el.innerHTML = html
+      el.classList.add('bubble--enter')
+      body.appendChild(el)
+      body.scrollTop = body.scrollHeight
+      return el
+    }
+
+    function time() {
+      return '<div class="tg-time">09:12</div>'
+    }
+
+    function leadCard() {
+      var rows = TG_LEAD.lines
+        .map(function (pair) {
+          return '<div><span>' + pair[0] + '</span><span>' + pair[1] + '</span></div>'
+        })
+        .join('')
+
+      var msg = add(
+        '',
+        '<b>Новая заявка · ' +
+          TG_LEAD.name +
+          '</b>' +
+          '<div class="tg-lines">' +
+          rows +
+          '</div>' +
+          '<div class="tg-btns">' +
+          '<button type="button" data-act="draft">Сгенерировать черновик</button>' +
+          '<button type="button" data-act="outcome">Итог по заявке</button>' +
+          '<button type="button" class="tg-btn--wide" data-act="panel">Открыть заявку в панели</button>' +
+          '</div>' +
+          time()
+      )
+
+      msg.addEventListener('click', function (event) {
+        var btn = event.target.closest('button')
+        if (!btn) return
+
+        if (btn.dataset.act === 'draft') showDraft()
+        if (btn.dataset.act === 'outcome') showOutcome()
+        if (btn.dataset.act === 'panel') location.href = 'admin.html'
+      })
+    }
+
+    function showDraft() {
+      var msg = add('', '<b>Черновик ответа</b><p id="tg-draft"></p>')
+      var target = $('#tg-draft', msg)
+      var text = TG_LEAD.draft
+      var startedAt = performance.now()
+
+      target.classList.add('caret')
+
+      requestAnimationFrame(function step(now) {
+        var p = reduced ? 1 : Math.min(1, (now - startedAt) / 1300)
+        target.textContent = text.slice(0, Math.ceil(text.length * p))
+        body.scrollTop = body.scrollHeight
+
+        if (p < 1) {
+          requestAnimationFrame(step)
+          return
+        }
+
+        target.classList.remove('caret')
+        msg.insertAdjacentHTML(
+          'beforeend',
+          '<div class="tg-btns">' +
+            '<button type="button" data-act="send">Отправить клиенту</button>' +
+            '<button type="button" data-act="again">Переписать</button>' +
+            '</div>' +
+            time()
+        )
+
+        msg.addEventListener('click', function (event) {
+          var btn = event.target.closest('button')
+          if (!btn) return
+          if (btn.dataset.act === 'send') {
+            add('out', TG_LEAD.draft + time())
+            add(
+              'system',
+              'Ответ доставлен клиенту в чат на сайте и записан в карточку заявки'
+            )
+          }
+          if (btn.dataset.act === 'again') showDraft()
+        })
+      })
+    }
+
+    function showOutcome() {
+      var msg = add(
+        '',
+        '<b>Чем закончилась заявка?</b>' +
+          '<p class="tiny muted">Из этих отметок считается конверсия «заявка – договор».</p>' +
+          '<div class="tg-btns">' +
+          '<button type="button" data-value="Договор заключен">Договор</button>' +
+          '<button type="button" data-value="Отказ – дорого">Отказ: дорого</button>' +
+          '<button type="button" data-value="Не дозвонились">Не дозвонились</button>' +
+          '<button type="button" data-value="Не наш случай">Не наш случай</button>' +
+          '</div>' +
+          time()
+      )
+
+      msg.addEventListener('click', function (event) {
+        var btn = event.target.closest('button')
+        if (!btn) return
+        add('out', btn.dataset.value + time())
+        add(
+          'system',
+          'Итог записан: ' +
+            btn.dataset.value.toLowerCase() +
+            ' · уйдет в Яндекс.Метрику как оффлайн-конверсия'
+        )
+      })
+    }
+
+    add('system', 'Сегодня')
+    add(
+      '',
+      '<b>Бот подключен</b><p class="tiny muted">Сюда приходят новые заявки с сайта. Отвечать можно прямо здесь – клиент получит сообщение в чате на сайте.</p>' + time()
+    )
+    setTimeout(leadCard, reduced ? 0 : 900)
+
+    var sendBtn = $('#tg-send')
+    if (sendBtn) {
+      sendBtn.addEventListener('click', function () {
+        toast('В макете ввод отключен – нажмите кнопки в карточке заявки')
+      })
     }
   }
 
-  window.__prototypeBuild = '2026-07-28-interactive'
+  /* ---------- Демонстрация пути клиента из рекламы ---------- */
+
+  var SERP = {
+    price: {
+      query: 'банкротство физлиц цена',
+      volume: '1 582 показа в месяц',
+      cost: 'клик 400–700 ₽, лид 1 500–7 000 ₽',
+      comment:
+        'Горячий коммерческий запрос: слой узкий и его выкупают юркомпании. Здесь платный трафик дорогой, поэтому берем не объемом, а честной ценой в объявлении.',
+      items: [
+        {
+          ad: true,
+          ours: true,
+          url: 'erzikov.ru',
+          title: 'Банкротство физлиц: честная цена и бесплатный разбор',
+          desc: 'Считаем расходы открыто: депозит управляющего 25 000 ₽, публикации. Ведет действующий финансовый управляющий, реестр 22354.'
+        },
+        {
+          ad: true,
+          url: 'юркомпания.рф',
+          title: 'Списание долгов от 3 860 ₽ в месяц',
+          desc: 'Рассрочка без первого взноса. Бесплатная консультация юриста уже сегодня.'
+        },
+        {
+          url: 'banki.ru › forum',
+          title: 'Сколько реально стоит банкротство физлица в 2026 году',
+          desc: 'Обсуждение: обязательные расходы, цены юркомпаний, отзывы должников.'
+        }
+      ]
+    },
+    mfc: {
+      query: 'банкротство через мфц',
+      volume: '58 228 показов в месяц',
+      cost: 'органика, платный трафик тут не нужен',
+      comment:
+        'Самый крупный запрос темы, в шесть раз популярнее «юриста по банкротству». Люди ищут бесплатный путь – рекламу здесь ставить бессмысленно, заходим статьей блога.',
+      items: [
+        {
+          url: 'gosuslugi.ru',
+          title: 'Внесудебное банкротство через МФЦ: условия и порядок',
+          desc: 'Официальная информация о процедуре, требования к сумме долга и исполнительным производствам.'
+        },
+        {
+          ours: true,
+          url: 'erzikov.ru › блог',
+          title: 'МФЦ или суд: как понять, куда идти с вашими долгами',
+          desc: 'Условия внесудебной процедуры по 127-ФЗ, таблица «что выбрать при вашей ситуации», три ошибки, которые стоят полугода.'
+        },
+        {
+          url: 'фцбг.рф › статьи',
+          title: 'Банкротство через МФЦ – бесплатно ли это на самом деле',
+          desc: 'Разбор условий и подводных камней внесудебной процедуры.'
+        }
+      ]
+    },
+    pain: {
+      query: 'нечем платить кредит что делать',
+      volume: '2 280 показов в месяц',
+      cost: 'РСЯ и соцсети: 200–1 500 ₽ за лид, но до 70% нецелевых',
+      comment:
+        'Запрос про боль, а не про услугу. Человек еще не знает слова «банкротство» – здесь работают баннеры по интересам и AI-разбор, который отсеет нецелевых до дорогого аукциона.',
+      items: [
+        {
+          ours: true,
+          url: 'erzikov.ru › блог',
+          title: 'Нечем платить кредит: первые шаги, пока не поздно',
+          desc: 'Что сделать в первый месяц просрочки, о чем можно договориться с банком и когда пора думать о банкротстве.'
+        },
+        {
+          url: 'банк.ру › помощь',
+          title: 'Кредитные каникулы и реструктуризация: как оформить',
+          desc: 'Условия банка при снижении дохода, документы, сроки рассмотрения.'
+        },
+        {
+          url: 'vc.ru',
+          title: 'Что будет, если перестать платить по кредитам',
+          desc: 'Личный опыт: звонки, коллекторы, приставы и чем это заканчивается.'
+        }
+      ]
+    }
+  }
+
+  function initFunnel() {
+    var box = $('[data-serp]')
+    if (!box) return
+
+    var switcher = $('[data-serp-switch]')
+
+    function render(key) {
+      var data = SERP[key]
+      if (!data) return
+
+      var items = data.items
+        .map(function (item) {
+          return (
+            '<div class="serp-item' +
+            (item.ours ? ' serp-item--ours' : '') +
+            '">' +
+            '<div class="serp-url">' +
+            (item.ad ? '<span class="serp-label">Реклама</span>' : '') +
+            item.url +
+            (item.ours ? ' <span class="serp-label">это мы</span>' : '') +
+            '</div>' +
+            '<div class="serp-title">' +
+            item.title +
+            '</div>' +
+            '<div class="serp-desc">' +
+            item.desc +
+            '</div>' +
+            '</div>'
+          )
+        })
+        .join('')
+
+      box.innerHTML =
+        '<div class="serp-bar">' +
+        '<div class="fake-input">' +
+        data.query +
+        '</div>' +
+        '<button class="btn btn--primary btn--sm" type="button">Найти</button>' +
+        '</div>' +
+        '<div class="serp-list">' +
+        items +
+        '</div>' +
+        '<div class="serp-note"><b>' +
+        data.volume +
+        '</b> · ' +
+        data.cost +
+        '<br />' +
+        data.comment +
+        '</div>'
+    }
+
+    if (switcher) {
+      switcher.addEventListener('click', function (event) {
+        var btn = event.target.closest('button')
+        if (!btn) return
+        $$('button', switcher).forEach(function (b) {
+          b.classList.remove('is-on')
+        })
+        btn.classList.add('is-on')
+        render(btn.dataset.query)
+      })
+    }
+
+    render('price')
+  }
+
+  window.__prototypeBuild = '2026-07-28-docs'
 
   /* ---------- Запуск ---------- */
 

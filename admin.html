@@ -86,18 +86,21 @@
       <div class="wrap">
         <strong>Макет панели юриста.</strong>
         <span
-          >Так выглядит рабочее место Дмитрия и команды: очередь заявок, диалог
-          клиента с AI, кнопка черновика ответа и обязательный итог по каждой
-          заявке.</span
+          >Два режима работы, по двум состояниям клиента. <b>Заявки</b> – лид
+          после AI-разбора: диалог, черновик ответа, обязательный итог (это
+          первая итерация). <b>Дела</b> – клиент в процедуре: обратная сторона
+          личного кабинета, где каждое действие юриста меняет то, что клиент
+          видит у себя.</span
         >
         <span class="mock-nav"
           >Страницы макета: <a href="index.html">лендинг</a> ·
           <a href="roadmap.html">путь по шагам</a> ·
-          <a href="lawyer.html">о юристе</a> ·
-          <a href="blog.html">блог</a> · <a href="article.html">статья</a> ·
+          <a href="lawyer.html">о юристе</a> · <a href="blog.html">блог</a> ·
+          <a href="article.html">статья</a> ·
           <a href="chat.html">AI-разбор</a> ·
           <a href="cabinet.html">кабинет</a> ·
           <a href="docs.html">документы</a> ·
+          <a href="funnel.html">реклама</a> ·
           <a href="telegram.html">Telegram юриста</a> ·
           <a href="admin.html">панель юриста</a></span
         >
@@ -109,58 +112,110 @@
       <aside class="admin-side" data-lead-list>
         <div class="side-head">
           <a class="logo" href="index.html">Ерзиков <span>панель</span></a>
-          <div class="side-tabs">
-            <span class="side-tab side-tab--on">Новые · 4</span>
-            <span class="side-tab">В работе · 11</span>
-            <span class="side-tab">Все</span>
+          <div class="side-tabs" id="modeTabs">
+            <button
+              class="side-tab side-tab--on"
+              data-mode="leads"
+              type="button"
+            >
+              Заявки · 4
+            </button>
+            <button class="side-tab" data-mode="cases" type="button">
+              Дела · 11
+            </button>
           </div>
         </div>
 
-        <div class="lead-item lead-item--active" data-lead="sergey">
-          <div class="lead-item-top">
-            <span>Сергей М.</span>
-            <span class="tag tag--accent">суд</span>
+        <div id="leadList">
+          <div class="lead-item lead-item--active" data-lead="sergey">
+            <div class="lead-item-top">
+              <span>Сергей М.</span>
+              <span class="tag tag--accent">суд</span>
+            </div>
+            <div class="lead-item-sub">
+              1,84 млн ₽ · Самара · 12 минут назад
+            </div>
+            <div class="lead-item-sub mono">директ / банкротство-цена</div>
           </div>
-          <div class="lead-item-sub">1,84 млн ₽ · Самара · 12 минут назад</div>
-          <div class="lead-item-sub mono">директ / банкротство-цена</div>
+
+          <div class="lead-item" data-lead="natalya">
+            <div class="lead-item-top">
+              <span>Наталья К.</span>
+              <span class="tag tag--free">МФЦ</span>
+            </div>
+            <div class="lead-item-sub">
+              640 тыс. ₽ · Тольятти · 40 минут назад
+            </div>
+            <div class="lead-item-sub mono">блог / последствия-банкротства</div>
+          </div>
+
+          <div class="lead-item" data-lead="igor">
+            <div class="lead-item-top">
+              <span>Игорь Т.</span>
+              <span class="tag">сложный</span>
+            </div>
+            <div class="lead-item-sub">
+              4,2 млн ₽, ипотека · Москва · 2 часа назад
+            </div>
+            <div class="lead-item-sub mono">директ / банкротство-ипотека</div>
+          </div>
+
+          <div class="lead-item" data-lead="anon">
+            <div class="lead-item-top">
+              <span>Аноним</span>
+              <span class="tag">не наш</span>
+            </div>
+            <div class="lead-item-sub">
+              долг работодателя перед ним · 3 часа назад
+            </div>
+            <div class="lead-item-sub mono">рся / списание-долгов</div>
+          </div>
         </div>
 
-        <div class="lead-item" data-lead="natalya">
-          <div class="lead-item-top">
-            <span>Наталья К.</span>
-            <span class="tag tag--free">МФЦ</span>
+        <!-- Дела в работе: клиенты, у которых уже есть кабинет -->
+        <div id="caseList" hidden>
+          <div class="lead-item lead-item--active" data-case="sergey">
+            <div class="lead-item-top">
+              <span>Сергей М.</span>
+              <span class="tag tag--accent">сбор документов</span>
+            </div>
+            <div class="lead-item-sub">1,84 млн ₽ · Самара · договор 25.07</div>
+            <div class="lead-item-sub mono">11/14 документов · 3 задачи</div>
           </div>
-          <div class="lead-item-sub">
-            640 тыс. ₽ · Тольятти · 40 минут назад
-          </div>
-          <div class="lead-item-sub mono">блог / последствия-банкротства</div>
-        </div>
 
-        <div class="lead-item" data-lead="igor">
-          <div class="lead-item-top">
-            <span>Игорь Т.</span>
-            <span class="tag">сложный</span>
+          <div class="lead-item" data-case="olga">
+            <div class="lead-item-top">
+              <span>Ольга В.</span>
+              <span class="tag">процедура идет</span>
+            </div>
+            <div class="lead-item-sub">
+              2,1 млн ₽ · Самара · признана банкротом 14.05
+            </div>
+            <div class="lead-item-sub mono">реализация · заседание 12.09</div>
           </div>
-          <div class="lead-item-sub">
-            4,2 млн ₽, ипотека · Москва · 2 часа назад
-          </div>
-          <div class="lead-item-sub mono">директ / банкротство-ипотека</div>
-        </div>
 
-        <div class="lead-item" data-lead="anon">
-          <div class="lead-item-top">
-            <span>Аноним</span>
-            <span class="tag">не наш</span>
+          <div class="lead-item" data-case="igor">
+            <div class="lead-item-top">
+              <span>Игорь Т.</span>
+              <span class="tag st--warn">нужно внимание</span>
+            </div>
+            <div class="lead-item-sub">
+              4,2 млн ₽, ипотека · Москва · договор 12.07
+            </div>
+            <div class="lead-item-sub mono">
+              2 документа на проверке · вопрос в чате
+            </div>
           </div>
-          <div class="lead-item-sub">
-            долг работодателя перед ним · 3 часа назад
-          </div>
-          <div class="lead-item-sub mono">рся / списание-долгов</div>
+
+          <p class="tiny muted" style="padding: 14px 20px">
+            В макете три дела из одиннадцати. Остальные открываются так же.
+          </p>
         </div>
       </aside>
 
       <!-- Карточка заявки -->
       <main class="admin-main">
+        <div id="leadPane">
         <div class="stat-row">
           <div>
             <b>28</b>
