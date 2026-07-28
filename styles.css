@@ -2587,3 +2587,129 @@ input.real-input:focus {
 .pay + .pay {
   margin-top: 8px;
 }
+
+/* Трекер этапов дела – используется в кабинете и в панели юриста */
+
+.track {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+}
+
+.track button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  display: grid;
+  gap: 7px;
+  font: inherit;
+}
+
+.track .bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--border);
+}
+
+@media (prefers-color-scheme: dark) {
+  .track .bar {
+    background: var(--border-strong);
+  }
+}
+
+.track .done .bar {
+  background: var(--positive);
+}
+
+.track .now .bar {
+  background: var(--accent);
+}
+
+.track small {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.25;
+}
+
+.track .now small {
+  color: var(--text);
+  font-weight: 550;
+}
+
+@media (max-width: 900px) {
+  .track {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Строка ввода с кнопкой */
+
+.composer2 {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.composer2 input,
+.composer2 select {
+  flex: 1;
+  min-width: 200px;
+  padding: 11px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.94rem;
+}
+
+.composer2 input:focus,
+.composer2 select:focus {
+  outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  outline-offset: 1px;
+}
+
+/* Лента событий дела */
+
+.feed {
+  display: grid;
+  gap: 0;
+}
+
+.feed-item {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.93rem;
+  align-items: start;
+}
+
+.feed-item:last-child {
+  border-bottom: 0;
+}
+
+.feed-item i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  margin-top: 6px;
+}
+
+.feed-item.ok i {
+  background: var(--positive);
+}
+
+.feed-item.ai i {
+  background: var(--accent);
+}
+
+.feed-item time {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
