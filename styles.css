@@ -1608,3 +1608,457 @@ img {
   text-decoration: none;
   color: var(--accent);
 }
+
+/* ============================================================
+   Интерактив прототипа: появление блоков, чат, калькулятор,
+   фильтры, прогресс чтения, состояния админки.
+   ============================================================ */
+
+/* Появление при скролле */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  * {
+    scroll-behavior: auto !important;
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Активный пункт меню */
+
+.nav a.is-current {
+  color: var(--text);
+  font-weight: 550;
+}
+
+.mock-nav a.is-current {
+  font-weight: 600;
+}
+
+/* Индикатор набора текста */
+
+.typing {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: typing-bounce 1.1s infinite ease-in-out;
+}
+
+.typing i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes typing-bounce {
+  0%,
+  70%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  35% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+.bubble--enter {
+  animation: bubble-in 0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.caret::after {
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  background: var(--accent);
+  vertical-align: -0.15em;
+  animation: caret-blink 0.9s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Калькулятор */
+
+.calc {
+  display: grid;
+  gap: 22px;
+}
+
+.calc-field {
+  display: grid;
+  gap: 10px;
+}
+
+.calc-field > label {
+  font-size: 0.92rem;
+  font-weight: 550;
+}
+
+.calc-value {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--border-strong);
+  outline: none;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--bg);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+
+input[type='range']::-webkit-slider-thumb:active {
+  transform: scale(1.12);
+}
+
+.segmented {
+  display: inline-flex;
+  padding: 3px;
+  gap: 3px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.segmented button {
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 7px 15px;
+  border-radius: 999px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.segmented button.is-on {
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  font-weight: 550;
+}
+
+.calc-result {
+  border: 1px solid color-mix(in srgb, var(--accent) 32%, var(--border));
+  background: var(--accent-soft);
+  border-radius: var(--radius);
+  padding: 22px;
+  display: grid;
+  gap: 14px;
+  transition: border-color 0.25s ease;
+}
+
+.calc-result--free {
+  border-color: color-mix(in srgb, var(--positive) 40%, var(--border));
+  background: var(--positive-soft);
+}
+
+.calc-rows {
+  display: grid;
+  gap: 1px;
+  background: var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.calc-rows > div {
+  background: var(--bg);
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  font-size: 0.94rem;
+  flex-wrap: wrap;
+}
+
+.calc-rows span:last-child {
+  font-weight: 550;
+  font-variant-numeric: tabular-nums;
+}
+
+.num-flip {
+  animation: num-flip 0.3s ease;
+}
+
+@keyframes num-flip {
+  from {
+    opacity: 0.35;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Фильтры блога и ролей */
+
+.chip.is-on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .chip.is-on {
+    color: #0c0d10;
+  }
+}
+
+.post.is-hidden {
+  display: none;
+}
+
+.role.is-dim {
+  opacity: 0.32;
+  filter: saturate(0.4);
+}
+
+.role {
+  transition:
+    opacity 0.25s ease,
+    filter 0.25s ease;
+}
+
+/* Прогресс чтения и таймлайна */
+
+.readbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: var(--accent);
+  z-index: 50;
+}
+
+.rmap {
+  --rmap-progress: 0%;
+}
+
+.rmap::after {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 14px;
+  width: 2px;
+  height: var(--rmap-progress);
+  max-height: calc(100% - 60px);
+  background: var(--accent);
+  transition: height 0.15s linear;
+}
+
+@media (max-width: 700px) {
+  .rmap::after {
+    left: 13px;
+  }
+}
+
+.rstep.is-done::before {
+  background: var(--accent);
+}
+
+/* Оглавление статьи */
+
+.toc a {
+  color: var(--text);
+}
+
+.toc li.is-current a {
+  color: var(--accent);
+  font-weight: 550;
+}
+
+/* Кнопка наверх */
+
+.to-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  box-shadow: var(--shadow);
+  z-index: 40;
+}
+
+.to-top.is-on {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+/* Уведомление */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translate(-50%, 12px);
+  background: var(--text);
+  color: var(--bg);
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+  z-index: 60;
+  box-shadow: var(--shadow);
+}
+
+.toast.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* Админка: состояния */
+
+.lead-item {
+  transition: background 0.15s ease;
+}
+
+.draft.is-empty {
+  opacity: 0.6;
+}
+
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 550;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.badge-status--won {
+  background: var(--positive-soft);
+  color: var(--positive);
+  border-color: color-mix(in srgb, var(--positive) 30%, transparent);
+}
+
+select.select-real {
+  font: inherit;
+  font-size: 0.92rem;
+  padding: 10px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* Счетчик в чате и кнопки-подсказки */
+
+.chip[disabled] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.fake-input--real {
+  cursor: text;
+}
+
+input.real-input {
+  flex: 1;
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 12px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  min-width: 0;
+}
+
+input.real-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}

@@ -59,18 +59,19 @@
           </p>
         </div>
 
-        <div class="chips-row">
-          <span class="chip" style="cursor: default">Все статьи</span>
-          <a class="chip" href="article.html">МФЦ и суд</a>
-          <a class="chip" href="article.html">Последствия и страхи</a>
-          <a class="chip" href="article.html">Деньги и расходы</a>
-          <a class="chip" href="article.html">Как не попасть к мошенникам</a>
-          <a class="chip" href="article.html">Пошаговые инструкции</a>
+        <div class="chips-row" data-blog-filter>
+          <button class="chip is-on" type="button" data-cat="all">Все статьи</button>
+          <button class="chip" type="button" data-cat="mfc">МФЦ и суд</button>
+          <button class="chip" type="button" data-cat="fears">Последствия и страхи</button>
+          <button class="chip" type="button" data-cat="money">Деньги и расходы</button>
+          <button class="chip" type="button" data-cat="scam">Как не попасть к мошенникам</button>
+          <button class="chip" type="button" data-cat="howto">Пошаговые инструкции</button>
         </div>
 
+        <p class="tiny muted" style="margin-top:-14px">Показано: <span id="blog-count">9 материалов</span></p>
         <div class="post-grid">
           <!-- Главная статья -->
-          <a class="post post--feature" href="article.html">
+          <a data-cat="mfc" class="post post--feature" href="article.html">
             <div class="stack">
               <span class="tag tag--accent">Главное в разделе</span>
               <h3>МФЦ или суд: как понять, куда идти с вашими долгами</h3>
@@ -100,7 +101,7 @@
             </div>
           </a>
 
-          <a class="post" href="article.html">
+          <a data-cat="fears" class="post" href="article.html">
             <span class="tag">Последствия и страхи</span>
             <h3>Последствия банкротства: что действительно меняется в жизни</h3>
             <p>
@@ -113,7 +114,7 @@
             </div>
           </a>
 
-          <a class="post" href="article.html">
+          <a data-cat="fears" class="post" href="article.html">
             <span class="tag">Последствия и страхи</span>
             <h3>Минусы банкротства, о которых редко говорят в рекламе</h3>
             <p>
@@ -127,7 +128,7 @@
             </div>
           </a>
 
-          <a class="post" href="article.html">
+          <a data-cat="fears" class="post" href="article.html">
             <span class="tag">Последствия и страхи</span>
             <h3>Заберут ли единственную квартиру при банкротстве</h3>
             <p>
@@ -140,7 +141,7 @@
             </div>
           </a>
 
-          <a class="post" href="article.html">
+          <a data-cat="howto" class="post" href="article.html">
             <span class="tag">Пошаговые инструкции</span>
             <h3>Заблокировали карту во время процедуры: что делать</h3>
             <p>
@@ -153,7 +154,7 @@
             </div>
           </a>
 
-          <a class="post" href="article.html">
+          <a data-cat="howto" class="post" href="article.html">
             <span class="tag">Пошаговые инструкции</span>
             <h3>Нечем платить кредит: первые шаги, пока не поздно</h3>
             <p>
@@ -166,7 +167,7 @@
             </div>
           </a>
 
-          <a class="post" href="article.html">
+          <a data-cat="scam" class="post" href="article.html">
             <span class="tag">Как не попасть к мошенникам</span>
             <h3>Как отличить нормального юриста от «раздолжнителя»</h3>
             <p>
@@ -180,7 +181,7 @@
             </div>
           </a>
 
-          <a class="post" href="article.html">
+          <a data-cat="money" class="post" href="article.html">
             <span class="tag">Деньги и расходы</span>
             <h3>Сколько стоит банкротство: все обязательные расходы</h3>
             <p>
@@ -193,7 +194,7 @@
             </div>
           </a>
 
-          <a class="post" href="article.html">
+          <a data-cat="howto" class="post" href="article.html">
             <span class="tag">Пошаговые инструкции</span>
             <h3>Можно ли пройти банкротство самостоятельно</h3>
             <p>
@@ -259,5 +260,6 @@
         </div>
       </div>
     </footer>
+      <script src="app.js" defer></script>
   </body>
 </html>

@@ -70,7 +70,7 @@
         </div>
 
         <!-- Мок чата: главная фича прямо на первом экране -->
-        <div class="chatbox">
+        <div class="chatbox" data-hero-chat>
           <div class="chatbox-head">
             <span class="dot"></span>
             <b>AI-разбор ситуации</b>
@@ -268,76 +268,75 @@
         </div>
 
         <div class="price-grid">
-          <div class="card">
-            <h3>Обязательные расходы – не нам</h3>
-            <table class="price-table">
-              <thead>
-                <tr>
-                  <th>Расход</th>
-                  <th style="text-align: right">Сумма</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    Депозит финансового управляющего<br /><span
-                      class="tiny muted"
-                      >вносится на счет суда</span
-                    >
-                  </td>
-                  <td>25 000 ₽</td>
-                </tr>
-                <tr>
-                  <td>Публикации в Федресурсе и «Коммерсанте»</td>
-                  <td>
-                    <span
-                      class="slot"
-                      title="Актуальную сумму подтверждает Дмитрий"
-                      >~20 000 ₽</span
-                    >
-                  </td>
-                </tr>
-                <tr>
-                  <td>Госпошлина и почтовые расходы</td>
-                  <td>
-                    <span class="slot" title="Уточнить актуальные суммы на 2026"
-                      >уточним</span
-                    >
-                  </td>
-                </tr>
-                <tr>
-                  <td>Итого обязательных</td>
-                  <td>
-                    <span class="slot" title="Итог зависит от строк выше"
-                      >~45 000 ₽</span
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="card calc" data-calc>
+            <h3>Посчитайте свой случай</h3>
+
+            <div class="calc-field">
+              <label for="calc-debt">Сумма всех долгов</label>
+              <span class="calc-value" id="calc-debt-value">1 800 000 ₽</span>
+              <input
+                type="range"
+                id="calc-debt"
+                min="100000"
+                max="5000000"
+                step="50000"
+                value="1800000"
+              />
+              <span class="tiny muted">от 100 тыс. до 5 млн ₽</span>
+            </div>
+
+            <div class="calc-field">
+              <label>Есть имущество кроме единственного жилья?</label>
+              <div class="segmented" data-field="property">
+                <button type="button" data-value="no" class="is-on">Нет</button>
+                <button type="button" data-value="yes">
+                  Есть машина или доля
+                </button>
+              </div>
+            </div>
+
+            <div class="calc-field">
+              <label>Что с исполнительным производством?</label>
+              <div class="segmented" data-field="enforcement">
+                <button type="button" data-value="open" class="is-on">
+                  Идет или его нет
+                </button>
+                <button type="button" data-value="closed">
+                  Окончено, лист вернули
+                </button>
+              </div>
+            </div>
+
+            <p class="tiny muted">
+              Это предварительная проверка по условиям закона, а не оценка
+              вашего дела. Точный ответ даст разбор с юристом.
+            </p>
           </div>
 
+          <div class="calc-result" id="calc-result"></div>
+        </div>
+
+        <div class="cards">
           <div class="card card--tint">
-            <h3>Наша работа</h3>
-            <p
-              style="font-size: 2rem; font-weight: 600; letter-spacing: -0.03em"
-            >
-              <span class="slot" title="Цену и состав пакета определяет Дмитрий"
-                >– ₽</span
-              >
-            </p>
-            <p class="muted small">
-              Фиксированная сумма за подготовку и ведение процедуры: разбор,
-              документы, проверка юристом, сопровождение до определения суда.
-            </p>
+            <h3>Как платят</h3>
             <ul class="list small">
               <li>Оплата этапами, без полной предоплаты</li>
               <li>Рассрочка на срок процедуры</li>
               <li>Что входит и что нет – списком в договоре</li>
             </ul>
-            <p class="tiny muted">
+          </div>
+          <div class="card card--tint">
+            <h3>Чего мы не обещаем</h3>
+            <p class="muted small">
               Гарантий списания не даем – их не может дать никто, решение
-              принимает суд. Условия возврата описаны в договоре.
+              принимает суд. Сроков «за 3–4 месяца» тоже: так не бывает.
+            </p>
+          </div>
+          <div class="card card--tint">
+            <h3>Если банкротство не нужно</h3>
+            <p class="muted small">
+              Скажем прямо и объясним, что делать вместо него. Проверка условий
+              бесплатная и ни к чему не обязывает.
             </p>
           </div>
         </div>
@@ -710,5 +709,6 @@
         </p>
       </div>
     </footer>
+      <script src="app.js" defer></script>
   </body>
 </html>

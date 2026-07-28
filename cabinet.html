@@ -1,0 +1,1920 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Личный кабинет – макет</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Каркас кабинета */
+      .cab {
+        display: grid;
+        grid-template-columns: 264px 1fr;
+        min-height: 100vh;
+      }
+
+      .cab-side {
+        border-right: 1px solid var(--border);
+        background: var(--surface);
+        padding: 18px 0 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .cab-side-head {
+        padding: 0 20px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .case-badge {
+        border: 1px solid var(--border);
+        background: var(--bg);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        font-size: 0.82rem;
+        display: grid;
+        gap: 3px;
+      }
+
+      .case-badge b {
+        font-family: var(--mono);
+        font-size: 0.84rem;
+      }
+
+      .cab-menu {
+        display: grid;
+        gap: 2px;
+        padding: 0 10px;
+      }
+
+      .cab-menu button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        text-align: left;
+        padding: 10px 12px;
+        border: 0;
+        border-radius: var(--radius-sm);
+        background: transparent;
+        color: var(--text-muted);
+        font: inherit;
+        font-size: 0.94rem;
+        cursor: pointer;
+      }
+
+      .cab-menu button:hover {
+        background: var(--surface-2);
+        color: var(--text);
+      }
+
+      .cab-menu button[aria-current='true'] {
+        background: var(--bg);
+        color: var(--text);
+        font-weight: 550;
+        box-shadow: inset 2px 0 0 var(--accent);
+      }
+
+      .cab-menu .ic {
+        width: 18px;
+        text-align: center;
+        opacity: 0.75;
+      }
+
+      .cab-menu .count {
+        margin-left: auto;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        background: var(--surface-2);
+        border-radius: 999px;
+        padding: 1px 8px;
+      }
+
+      .cab-side-foot {
+        margin-top: auto;
+        padding: 0 20px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .lawyer-mini {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        border-radius: var(--radius-sm);
+        padding: 10px;
+        font-size: 0.85rem;
+      }
+
+      .lawyer-mini img {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center top;
+      }
+
+      /* Верхняя панель кабинета */
+      .cab-main {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .cab-top {
+        position: sticky;
+        top: 0;
+        z-index: 15;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 28px;
+        border-bottom: 1px solid var(--border);
+        background: color-mix(in srgb, var(--bg) 90%, transparent);
+        backdrop-filter: blur(12px);
+      }
+
+      .cab-top h1 {
+        font-size: 1.22rem;
+      }
+
+      .cab-top-actions {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .icon-btn {
+        position: relative;
+        width: 38px;
+        height: 38px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: var(--bg);
+        cursor: pointer;
+        font-size: 1rem;
+        color: var(--text);
+      }
+
+      .icon-btn:hover {
+        background: var(--surface-2);
+      }
+
+      .icon-btn .dot-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        min-width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #fff;
+        font-size: 0.68rem;
+        line-height: 18px;
+        font-weight: 600;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .icon-btn .dot-badge {
+          color: #0c0d10;
+        }
+      }
+
+      .user-chip {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        font-size: 0.9rem;
+        padding: 5px 10px 5px 5px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+      }
+
+      .avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: grid;
+        place-items: center;
+      }
+
+      .notif {
+        position: absolute;
+        top: 58px;
+        right: 24px;
+        width: min(360px, calc(100vw - 40px));
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 8px;
+        display: none;
+        z-index: 30;
+      }
+
+      .notif[data-open='true'] {
+        display: block;
+      }
+
+      .notif-item {
+        padding: 11px 12px;
+        border-radius: var(--radius-sm);
+        display: grid;
+        gap: 3px;
+        font-size: 0.89rem;
+      }
+
+      .notif-item:hover {
+        background: var(--surface);
+      }
+
+      .notif-item.unread {
+        background: var(--accent-soft);
+      }
+
+      .notif-item span {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+      }
+
+      .cab-body {
+        padding: 28px;
+        max-width: 980px;
+      }
+
+      .view {
+        display: none;
+        animation: fade 0.18s ease;
+      }
+
+      .view[data-active='true'] {
+        display: grid;
+        gap: 24px;
+      }
+
+      @keyframes fade {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+      }
+
+      /* Следующий шаг */
+      .next-step {
+        border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--border));
+        background: var(--accent-soft);
+        border-radius: var(--radius);
+        padding: 24px;
+        display: grid;
+        gap: 14px;
+      }
+
+      .next-step h2 {
+        font-size: 1.32rem;
+      }
+
+      /* Трекер этапов */
+      .track {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 6px;
+      }
+
+      .track button {
+        border: 0;
+        background: transparent;
+        padding: 0;
+        cursor: pointer;
+        text-align: left;
+        display: grid;
+        gap: 7px;
+        font: inherit;
+      }
+
+      .track .bar {
+        height: 6px;
+        border-radius: 999px;
+        background: var(--border);
+      }
+
+      .track .done .bar {
+        background: var(--positive);
+      }
+
+      .track .now .bar {
+        background: var(--accent);
+      }
+
+      .track small {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        line-height: 1.25;
+      }
+
+      .track .now small {
+        color: var(--text);
+        font-weight: 550;
+      }
+
+      .stage-detail {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--surface);
+        padding: 14px 16px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+
+      /* Плитки */
+      .tiles {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      @media (max-width: 780px) {
+        .tiles {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .tile {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 18px;
+        display: grid;
+        gap: 6px;
+        background: var(--bg);
+      }
+
+      .tile b {
+        font-size: 1.34rem;
+        letter-spacing: -0.02em;
+      }
+
+      .tile span {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      .progress {
+        height: 8px;
+        border-radius: 999px;
+        background: var(--surface-2);
+        overflow: hidden;
+        margin-top: 6px;
+      }
+
+      .progress i {
+        display: block;
+        height: 100%;
+        background: var(--accent);
+        transition: width 0.35s ease;
+      }
+
+      /* Лента событий */
+      .feed {
+        display: grid;
+        gap: 0;
+      }
+
+      .feed-item {
+        display: grid;
+        grid-template-columns: 20px 1fr auto;
+        gap: 14px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.93rem;
+        align-items: start;
+      }
+
+      .feed-item:last-child {
+        border-bottom: 0;
+      }
+
+      .feed-item i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--border-strong);
+        margin-top: 6px;
+      }
+
+      .feed-item.ok i {
+        background: var(--positive);
+      }
+
+      .feed-item.ai i {
+        background: var(--accent);
+      }
+
+      .feed-item time {
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        white-space: nowrap;
+      }
+
+      /* Документы */
+      .tabs {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .tab {
+        padding: 8px 14px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--bg);
+        color: var(--text-muted);
+        font: inherit;
+        font-size: 0.88rem;
+        cursor: pointer;
+      }
+
+      .tab[aria-selected='true'] {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+        font-weight: 550;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .tab[aria-selected='true'] {
+          color: #0c0d10;
+        }
+      }
+
+      .doc {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        align-items: center;
+        padding: 15px 16px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--bg);
+      }
+
+      .doc + .doc {
+        margin-top: 8px;
+      }
+
+      .doc-name {
+        display: grid;
+        gap: 4px;
+        min-width: 0;
+      }
+
+      .doc-name b {
+        font-weight: 550;
+        font-size: 0.96rem;
+      }
+
+      .doc-name span {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+      }
+
+      .doc-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .st {
+        font-size: 0.78rem;
+        font-weight: 550;
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        color: var(--text-muted);
+        white-space: nowrap;
+      }
+
+      .st--ok {
+        background: var(--positive-soft);
+        color: var(--positive);
+        border-color: color-mix(in srgb, var(--positive) 30%, transparent);
+      }
+
+      .st--wait {
+        background: var(--accent-soft);
+        color: var(--accent);
+        border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+      }
+
+      .st--warn {
+        background: var(--warn-soft);
+        color: var(--text);
+        border-color: var(--warn-line);
+      }
+
+      .drop {
+        border: 2px dashed var(--border-strong);
+        border-radius: var(--radius);
+        padding: 26px;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.92rem;
+        cursor: pointer;
+        background: var(--surface);
+      }
+
+      .drop:hover {
+        border-color: var(--accent);
+        color: var(--text);
+      }
+
+      /* Задачи */
+      .task {
+        display: grid;
+        grid-template-columns: 22px 1fr;
+        gap: 12px;
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--bg);
+      }
+
+      .task + .task {
+        margin-top: 8px;
+      }
+
+      .task input {
+        width: 18px;
+        height: 18px;
+        margin-top: 2px;
+        cursor: pointer;
+        accent-color: var(--accent);
+      }
+
+      .task.done .task-title {
+        text-decoration: line-through;
+        color: var(--text-muted);
+      }
+
+      .task-title {
+        font-weight: 550;
+      }
+
+      .task-body {
+        display: grid;
+        gap: 8px;
+        min-width: 0;
+      }
+
+      .task details summary {
+        cursor: pointer;
+        font-size: 0.86rem;
+        color: var(--accent);
+        list-style: none;
+      }
+
+      .task details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .task details p {
+        margin-top: 8px;
+        font-size: 0.89rem;
+        color: var(--text-muted);
+      }
+
+      /* Кредиторы */
+      .tbl {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.93rem;
+      }
+
+      .tbl th,
+      .tbl td {
+        padding: 13px 14px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .tbl thead th {
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+      }
+
+      .tbl td:nth-child(3) {
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+
+      .tbl-wrap {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow-x: auto;
+      }
+
+      /* Чат кабинета */
+      .cab-chat {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--bg);
+        display: grid;
+        grid-template-rows: 1fr auto;
+        overflow: hidden;
+      }
+
+      .cab-chat-body {
+        padding: 20px;
+        display: grid;
+        gap: 14px;
+        max-height: 460px;
+        overflow-y: auto;
+      }
+
+      .typing {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        padding-left: 4px;
+      }
+
+      .cab-chat-foot {
+        border-top: 1px solid var(--border);
+        background: var(--surface);
+        padding: 12px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .composer2 {
+        display: flex;
+        gap: 10px;
+      }
+
+      .composer2 input {
+        flex: 1;
+        padding: 11px 14px;
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius-sm);
+        background: var(--bg);
+        color: var(--text);
+        font: inherit;
+        font-size: 0.94rem;
+      }
+
+      .composer2 input:focus {
+        outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+        outline-offset: 1px;
+      }
+
+      /* Оплата и профиль */
+      .pay {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        align-items: center;
+        padding: 15px 16px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+      }
+
+      .pay + .pay {
+        margin-top: 8px;
+      }
+
+      .switch {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-size: 0.93rem;
+      }
+
+      .switch input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--accent);
+        cursor: pointer;
+      }
+
+      /* Тосты */
+      .toasts {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: grid;
+        gap: 10px;
+        z-index: 60;
+      }
+
+      .toast {
+        background: var(--text);
+        color: var(--bg);
+        padding: 12px 16px;
+        border-radius: var(--radius-sm);
+        font-size: 0.89rem;
+        box-shadow: var(--shadow);
+        animation: pop 0.2s ease;
+        max-width: 340px;
+      }
+
+      @keyframes pop {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+      }
+
+      /* Мобильная раскладка кабинета */
+      .cab-burger {
+        display: none;
+      }
+
+      @media (max-width: 900px) {
+        .cab {
+          grid-template-columns: 1fr;
+        }
+
+        .cab-side {
+          display: none;
+          border-right: 0;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .cab-side[data-open='true'] {
+          display: flex;
+        }
+
+        .cab-burger {
+          display: inline-grid;
+        }
+
+        .cab-top,
+        .cab-body {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        .track {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mockbar">
+      <div class="wrap">
+        <strong>Макет личного кабинета.</strong>
+        <span
+          >Кликабельно: разделы, этапы дела, загрузка документов, задачи, чат,
+          уведомления. Данные демонстрационные, при перезагрузке
+          сбрасываются.</span
+        >
+        <span class="mock-nav"
+          >Страницы макета: <a href="index.html">лендинг</a> ·
+          <a href="roadmap.html">путь по шагам</a> ·
+          <a href="blog.html">блог</a> · <a href="article.html">статья</a> ·
+          <a href="chat.html">AI-разбор</a> ·
+          <a href="cabinet.html">кабинет</a> ·
+          <a href="admin.html">панель юриста</a></span
+        >
+      </div>
+    </div>
+
+    <div class="cab">
+      <!-- Боковое меню -->
+      <aside class="cab-side" id="side">
+        <div class="cab-side-head">
+          <a class="logo" href="index.html">Ерзиков <span>кабинет</span></a>
+          <div class="case-badge">
+            <b
+              class="slot"
+              title="Номер дела появляется после принятия заявления судом"
+              >Дело не подано</b
+            >
+            <span>Судебное банкротство · Самара</span>
+          </div>
+        </div>
+
+        <nav class="cab-menu" id="menu">
+          <button data-view="case" aria-current="true">
+            <span class="ic">◍</span> Мое дело
+          </button>
+          <button data-view="docs">
+            <span class="ic">▤</span> Документы
+            <span class="count" id="docsCount">7/14</span>
+          </button>
+          <button data-view="tasks">
+            <span class="ic">✓</span> Что делать
+            <span class="count" id="tasksCount">3</span>
+          </button>
+          <button data-view="creditors">
+            <span class="ic">▦</span> Кредиторы <span class="count">6</span>
+          </button>
+          <button data-view="chat">
+            <span class="ic">✉</span> Чат по делу
+            <span class="count" id="chatCount">1</span>
+          </button>
+          <button data-view="pay"><span class="ic">₽</span> Оплата</button>
+          <button data-view="profile"><span class="ic">☺</span> Профиль</button>
+        </nav>
+
+        <div class="cab-side-foot">
+          <div class="lawyer-mini">
+            <img src="dmitry.jpg" alt="Дмитрий Ерзиков" />
+            <div>
+              <b style="display: block; font-size: 0.88rem">Дмитрий Ерзиков</b>
+              <span class="muted tiny">ваш юрист и ФУ · отвечает в чате</span>
+            </div>
+          </div>
+          <a class="tiny muted" href="index.html">← Вернуться на сайт</a>
+        </div>
+      </aside>
+
+      <!-- Контент -->
+      <div class="cab-main">
+        <header class="cab-top">
+          <button class="icon-btn cab-burger" id="burger" title="Меню">
+            ☰
+          </button>
+          <h1 id="viewTitle">Мое дело</h1>
+          <div class="cab-top-actions">
+            <button class="icon-btn" id="bell" title="Уведомления">
+              ◔<span class="dot-badge" id="bellCount">3</span>
+            </button>
+            <span class="user-chip"
+              ><span class="avatar">СМ</span> Сергей М.</span
+            >
+          </div>
+        </header>
+
+        <div class="notif" id="notif">
+          <div class="notif-item unread">
+            Юрист проверил опись имущества – замечаний нет
+            <span>сегодня, 09:40</span>
+          </div>
+          <div class="notif-item unread">
+            Справка о задолженности из банка действует до 12.08 – успейте подать
+            <span>сегодня, 08:15</span>
+          </div>
+          <div class="notif-item unread">
+            Загружена выписка по счету за 2024 год <span>вчера, 19:02</span>
+          </div>
+          <div class="notif-item">
+            Оплачен первый этап – 1 из 4 <span>25.07.2026</span>
+          </div>
+        </div>
+
+        <main class="cab-body">
+          <!-- МОЕ ДЕЛО -->
+          <section class="view" data-view="case" data-active="true">
+            <div class="next-step">
+              <span class="tag tag--accent">Ваш следующий шаг</span>
+              <h2>Осталось заказать 3 справки – без них заявление не подать</h2>
+              <p class="muted small" style="max-width: 62ch">
+                Справка из ФНС о доходах, выписка по счету в Т-Банке за 2024 год
+                и справка о задолженности из МФО. На каждую есть памятка: где
+                заказать, сколько ждать, что делать при отказе.
+              </p>
+              <div class="btn-row">
+                <button class="btn btn--primary" data-goto="tasks">
+                  Открыть задачи
+                </button>
+                <button class="btn btn--ghost" data-goto="docs">
+                  Загрузить документ
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <p class="eyebrow">Где вы сейчас</p>
+              <div class="track" id="track">
+                <button class="done" data-stage="0">
+                  <span class="bar"></span><small>Разбор ситуации</small>
+                </button>
+                <button class="now" data-stage="1">
+                  <span class="bar"></span><small>Сбор документов</small>
+                </button>
+                <button data-stage="2">
+                  <span class="bar"></span><small>Заявление</small>
+                </button>
+                <button data-stage="3">
+                  <span class="bar"></span><small>Подача в суд</small>
+                </button>
+                <button data-stage="4">
+                  <span class="bar"></span><small>Заседание</small>
+                </button>
+                <button data-stage="5">
+                  <span class="bar"></span><small>Процедура</small>
+                </button>
+                <button data-stage="6">
+                  <span class="bar"></span><small>Реализация</small>
+                </button>
+                <button data-stage="7">
+                  <span class="bar"></span><small>Списание</small>
+                </button>
+              </div>
+              <div
+                class="stage-detail"
+                id="stageDetail"
+                style="margin-top: 14px"
+              >
+                <b style="color: var(--text)">Сбор документов, идет сейчас.</b>
+                Заказываете справки по памяткам, загружаете сюда, юрист
+                проверяет комплект. Обычно занимает 2–6 недель – зависит от
+                скорости банков и госорганов.
+                <a href="roadmap.html" class="small">Весь путь по шагам →</a>
+              </div>
+            </div>
+
+            <div class="tiles">
+              <div class="tile">
+                <b id="tileDocs">7 из 14</b>
+                <span>документов собрано</span>
+                <div class="progress">
+                  <i id="tileBar" style="width: 50%"></i>
+                </div>
+              </div>
+              <div class="tile">
+                <b>2–6 недель</b>
+                <span>до подачи заявления при текущем темпе</span>
+              </div>
+              <div class="tile">
+                <b
+                  class="slot"
+                  title="Сумма зависит от прайса – на согласование"
+                  >1 из 4</b
+                >
+                <span>этапов оплачено</span>
+              </div>
+            </div>
+
+            <div>
+              <p class="eyebrow">Что происходило по делу</p>
+              <div class="feed">
+                <div class="feed-item ok">
+                  <i></i>
+                  <div>
+                    <b>Юрист проверил опись имущества</b>
+                    <div class="muted small">
+                      Замечаний нет, документ готов к подаче
+                    </div>
+                  </div>
+                  <time>сегодня</time>
+                </div>
+                <div class="feed-item ai">
+                  <i></i>
+                  <div>
+                    <b>AI подготовил проект списка кредиторов</b>
+                    <div class="muted small">
+                      По вашим данным: 6 кредиторов, 1 843 000 ₽. Ждет проверки
+                      юристом
+                    </div>
+                  </div>
+                  <time>вчера</time>
+                </div>
+                <div class="feed-item">
+                  <i></i>
+                  <div>
+                    <b>Вы загрузили выписку по счету за 2024 год</b>
+                    <div class="muted small">PDF, 2,4 МБ</div>
+                  </div>
+                  <time>вчера</time>
+                </div>
+                <div class="feed-item ok">
+                  <i></i>
+                  <div>
+                    <b>Оплачен первый этап</b>
+                    <div class="muted small">Чек отправлен на почту</div>
+                  </div>
+                  <time>25.07</time>
+                </div>
+                <div class="feed-item ai">
+                  <i></i>
+                  <div>
+                    <b>AI-разбор ситуации завершен</b>
+                    <div class="muted small">
+                      Маршрут: судебное банкротство. Отмечен риск: продажа авто
+                      в 2024
+                    </div>
+                  </div>
+                  <time>24.07</time>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ДОКУМЕНТЫ -->
+          <section class="view" data-view="docs">
+            <div>
+              <p class="lead small" style="margin-bottom: 16px">
+                Загружайте фото или PDF – все хранится в деле и переиспользуется
+                в документах. Юрист видит каждый файл и помечает, что принято, а
+                что нужно заменить.
+              </p>
+              <div class="tabs" id="docTabs">
+                <button class="tab" aria-selected="true" data-tab="need">
+                  Нужно собрать
+                </button>
+                <button class="tab" data-tab="ready">Готовые документы</button>
+                <button class="tab" data-tab="all">Все файлы</button>
+              </div>
+            </div>
+
+            <div class="progress" style="height: 10px">
+              <i id="docsBar" style="width: 50%"></i>
+            </div>
+
+            <div data-tabpanel="need" id="docList">
+              <div class="doc" data-doc="1">
+                <div class="doc-name">
+                  <b>Справка о доходах из ФНС</b>
+                  <span
+                    >За 3 года · заказывается на Госуслугах, до 5 рабочих
+                    дней</span
+                  >
+                </div>
+                <div class="doc-actions">
+                  <span class="st">нужно заказать</span>
+                  <button class="btn btn--ghost btn--sm" data-goto="tasks">
+                    Как получить
+                  </button>
+                  <button class="btn btn--primary btn--sm" data-upload="1">
+                    Загрузить
+                  </button>
+                </div>
+              </div>
+              <div class="doc" data-doc="2">
+                <div class="doc-name">
+                  <b>Выписка по счету в Т-Банке за 2024 год</b>
+                  <span>Нужна за все 3 года, 2024 еще не загружен</span>
+                </div>
+                <div class="doc-actions">
+                  <span class="st">нужно заказать</span>
+                  <button class="btn btn--ghost btn--sm" data-goto="tasks">
+                    Как получить
+                  </button>
+                  <button class="btn btn--primary btn--sm" data-upload="2">
+                    Загрузить
+                  </button>
+                </div>
+              </div>
+              <div class="doc" data-doc="3">
+                <div class="doc-name">
+                  <b>Справка о задолженности из МФО</b>
+                  <span>Запрос через личный кабинет МФО, обычно 1–3 дня</span>
+                </div>
+                <div class="doc-actions">
+                  <span class="st">нужно заказать</span>
+                  <button class="btn btn--ghost btn--sm" data-goto="tasks">
+                    Как получить
+                  </button>
+                  <button class="btn btn--primary btn--sm" data-upload="3">
+                    Загрузить
+                  </button>
+                </div>
+              </div>
+              <div class="doc" data-doc="4">
+                <div class="doc-name">
+                  <b>Справка о задолженности из банка</b>
+                  <span
+                    >Загружена 14.07 ·
+                    <span
+                      class="slot"
+                      title="Сроки годности справок уточняет юрист"
+                      >действует до 12.08</span
+                    ></span
+                  >
+                </div>
+                <div class="doc-actions">
+                  <span class="st st--warn">скоро истечет</span>
+                  <button class="btn btn--ghost btn--sm" data-upload="4">
+                    Заменить
+                  </button>
+                </div>
+              </div>
+              <div class="doc" data-doc="5">
+                <div class="doc-name">
+                  <b>Паспорт, все страницы</b>
+                  <span>Загружено 8 файлов · проверено юристом 24.07</span>
+                </div>
+                <div class="doc-actions">
+                  <span class="st st--ok">принято</span>
+                </div>
+              </div>
+              <div class="doc" data-doc="6">
+                <div class="doc-name">
+                  <b>Договор купли-продажи автомобиля, 2024</b>
+                  <span
+                    >Ключевой документ по отмеченному риску – юрист проверяет
+                    цену сделки</span
+                  >
+                </div>
+                <div class="doc-actions">
+                  <span class="st st--wait">на проверке</span>
+                </div>
+              </div>
+            </div>
+
+            <div data-tabpanel="ready" hidden>
+              <div class="doc">
+                <div class="doc-name">
+                  <b>Заявление о признании банкротом</b>
+                  <span
+                    >Черновик от 27.07 · подготовил AI, ждет проверки
+                    юристом</span
+                  >
+                </div>
+                <div class="doc-actions">
+                  <span class="st st--wait">на проверке</span>
+                  <button
+                    class="btn btn--ghost btn--sm"
+                    data-toast="Откроется просмотр PDF"
+                  >
+                    Посмотреть
+                  </button>
+                </div>
+              </div>
+              <div class="doc">
+                <div class="doc-name">
+                  <b>Опись имущества</b>
+                  <span
+                    >Версия 2 от 28.07 · проверено юристом, замечаний нет</span
+                  >
+                </div>
+                <div class="doc-actions">
+                  <span class="st st--ok">готово</span>
+                  <button
+                    class="btn btn--ghost btn--sm"
+                    data-toast="Скачивание PDF"
+                  >
+                    Скачать
+                  </button>
+                </div>
+              </div>
+              <div class="doc">
+                <div class="doc-name">
+                  <b>Список кредиторов и должников</b>
+                  <span>Черновик от 27.07 · 6 кредиторов на 1 843 000 ₽</span>
+                </div>
+                <div class="doc-actions">
+                  <span class="st st--wait">на проверке</span>
+                  <button class="btn btn--ghost btn--sm" data-goto="creditors">
+                    Проверить список
+                  </button>
+                </div>
+              </div>
+              <p class="tiny muted" style="margin-top: 14px">
+                Документы готовит AI по вашим данным, проверяет юрист.
+                Подписываете и подаете заявление вы сами – под своей учетной
+                записью Госуслуг, это требование закона.
+              </p>
+            </div>
+
+            <div data-tabpanel="all" hidden>
+              <p class="muted small">
+                Здесь будет весь архив файлов дела с поиском, фильтром по типу и
+                историей версий. В макете показаны две вкладки выше.
+              </p>
+            </div>
+
+            <div class="drop" id="drop">
+              Перетащите файлы сюда или нажмите, чтобы выбрать<br />
+              <span class="tiny"
+                >Фото с телефона, PDF, сканы · до 20 МБ на файл</span
+              >
+            </div>
+          </section>
+
+          <!-- ЧТО ДЕЛАТЬ -->
+          <section class="view" data-view="tasks">
+            <div>
+              <p class="lead small">
+                Одна задача – одно действие, с памяткой по шагам. Отмечайте
+                выполненные: юрист видит ваш прогресс и не дергает лишними
+                напоминаниями.
+              </p>
+            </div>
+
+            <div id="taskList">
+              <div class="task">
+                <input type="checkbox" />
+                <div class="task-body">
+                  <span class="task-title"
+                    >Заказать справку о доходах в ФНС</span
+                  >
+                  <span class="muted small"
+                    >Госуслуги · до 5 рабочих дней · бесплатно</span
+                  >
+                  <details>
+                    <summary>Как это сделать →</summary>
+                    <p>
+                      1. Госуслуги → поиск «Сведения о доходах» → выбрать период
+                      3 года.<br />
+                      2. Заказать выписку в электронном виде.<br />
+                      3. Полученный PDF загрузить в раздел «Документы».<br />
+                      Если сервис не отдает данные за нужный год – напишите в
+                      чат, юрист подскажет запрос в налоговую по месту
+                      жительства.
+                    </p>
+                  </details>
+                </div>
+              </div>
+
+              <div class="task">
+                <input type="checkbox" />
+                <div class="task-body">
+                  <span class="task-title"
+                    >Запросить выписку по счету в Т-Банке за 2024 год</span
+                  >
+                  <span class="muted small"
+                    >Приложение банка · моментально · бесплатно</span
+                  >
+                  <details>
+                    <summary>Как это сделать →</summary>
+                    <p>
+                      Приложение банка → «Выписки и справки» → период
+                      01.01.2024–31.12.2024 → формат PDF с подписью банка.
+                      Выписка нужна по каждому счету, включая закрытые.
+                    </p>
+                  </details>
+                </div>
+              </div>
+
+              <div class="task">
+                <input type="checkbox" />
+                <div class="task-body">
+                  <span class="task-title"
+                    >Взять справку о задолженности в МФО</span
+                  >
+                  <span class="muted small"
+                    >Личный кабинет МФО или письмо на почту · 1–3 дня</span
+                  >
+                  <details>
+                    <summary>Как это сделать →</summary>
+                    <p>
+                      Запросите справку с суммой основного долга, процентов и
+                      неустойки на текущую дату. Если МФО не отвечает 3 дня –
+                      напишите в чат, подготовим письменный запрос.
+                    </p>
+                  </details>
+                </div>
+              </div>
+
+              <div class="task done">
+                <input type="checkbox" checked />
+                <div class="task-body">
+                  <span class="task-title"
+                    >Загрузить все страницы паспорта</span
+                  >
+                  <span class="muted small"
+                    >Выполнено 24.07 · проверено юристом</span
+                  >
+                </div>
+              </div>
+
+              <div class="task done">
+                <input type="checkbox" checked />
+                <div class="task-body">
+                  <span class="task-title"
+                    >Найти договор продажи автомобиля 2024 года</span
+                  >
+                  <span class="muted small"
+                    >Выполнено 26.07 · на проверке у юриста</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-detail">
+              Депозит финансового управляющего 25 000 ₽ вносится на депозит суда
+              после того, как комплект собран – напомним отдельной задачей,
+              когда дойдем до этого шага.
+            </div>
+          </section>
+
+          <!-- КРЕДИТОРЫ -->
+          <section class="view" data-view="creditors">
+            <div>
+              <p class="lead small">
+                Список ваших долгов – основа заявления. Проверьте суммы: если
+                где-то ошибка, отметьте, и юрист запросит уточнение у кредитора.
+              </p>
+            </div>
+
+            <div class="tbl-wrap">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th>Кредитор</th>
+                    <th>Тип долга</th>
+                    <th>Сумма</th>
+                    <th>Статус</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Банк 1</td>
+                    <td>Потребительский кредит</td>
+                    <td>612 000 ₽</td>
+                    <td>
+                      <span class="st st--ok">подтверждено справкой</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Банк 2</td>
+                    <td>Кредитная карта</td>
+                    <td>318 400 ₽</td>
+                    <td>
+                      <span class="st st--ok">подтверждено справкой</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Банк 3</td>
+                    <td>Кредитная карта</td>
+                    <td>274 100 ₽</td>
+                    <td><span class="st st--wait">ждем справку</span></td>
+                  </tr>
+                  <tr>
+                    <td>Коллекторское агентство</td>
+                    <td>Долг продан по цессии</td>
+                    <td>498 500 ₽</td>
+                    <td><span class="st st--warn">уточняем сумму</span></td>
+                  </tr>
+                  <tr>
+                    <td>МФО</td>
+                    <td>Микрозайм</td>
+                    <td>98 000 ₽</td>
+                    <td><span class="st st--wait">ждем справку</span></td>
+                  </tr>
+                  <tr>
+                    <td>УК «Жилсервис»</td>
+                    <td>Коммунальные платежи</td>
+                    <td>42 000 ₽</td>
+                    <td><span class="st">с ваших слов</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tiles">
+              <div class="tile">
+                <b>1 843 000 ₽</b>
+                <span>общая сумма долга по списку</span>
+              </div>
+              <div class="tile">
+                <b>6</b>
+                <span>кредиторов, из них 1 коллектор по цессии</span>
+              </div>
+              <div class="tile">
+                <b>2</b>
+                <span>суммы требуют подтверждения справкой</span>
+              </div>
+            </div>
+
+            <div class="stage-detail">
+              После признания банкротом кредиторы заявляют требования в дело, и
+              список превращается в реестр требований. Здесь вы будете видеть,
+              кто заявился, а кто нет.
+              <span
+                class="slot"
+                title="Срок предъявления требований уточняет юрист"
+                >Сроки предъявления – на проверку юриста.</span
+              >
+            </div>
+          </section>
+
+          <!-- ЧАТ -->
+          <section class="view" data-view="chat">
+            <div class="cab-chat">
+              <div class="cab-chat-body" id="chatBody">
+                <div class="bubble bubble--ai">
+                  Здравствуйте, Сергей. По вашему делу сейчас один открытый
+                  вопрос: три справки. Могу подсказать по любой из них или
+                  ответить на вопрос про процедуру.
+                  <div class="bubble-meta">Ответ подготовлен с помощью AI</div>
+                </div>
+                <div class="bubble bubble--user">
+                  А что будет с зарплатной картой, когда начнется процедура?
+                </div>
+                <div class="bubble bubble--ai">
+                  Счетами в процедуре распоряжается финансовый управляющий,
+                  поэтому карты обычно блокируются, а деньги на жизнь выделяются
+                  из дохода. Порядок конкретно по вашему делу подтвердит Дмитрий
+                  – он же и будет управляющим.
+                  <div class="bubble-meta">
+                    Ответ подготовлен с помощью AI · критичное подтверждает
+                    юрист
+                  </div>
+                </div>
+                <div class="bubble bubble--lawyer">
+                  <b>Дмитрий Ерзиков, финансовый управляющий:</b> подтверждаю.
+                  Зарплату будем получать через специальный счет, я объясню
+                  порядок на этапе подачи. Сейчас главное – три справки,
+                  остальное не срочно.
+                  <div class="bubble-meta">
+                    Ответ человека, не AI · сегодня, 09:41
+                  </div>
+                </div>
+              </div>
+              <div class="cab-chat-foot">
+                <div class="composer2">
+                  <input
+                    id="chatInput"
+                    placeholder="Ваш вопрос по делу…"
+                    autocomplete="off"
+                  />
+                  <button class="btn btn--primary btn--sm" id="chatSend">
+                    Отправить
+                  </button>
+                </div>
+                <div class="chips">
+                  <button class="chip" data-ask="Когда подаем заявление?">
+                    Когда подаем заявление?
+                  </button>
+                  <button
+                    class="chip"
+                    data-ask="Что с моей машиной, которую я продал в 2024?"
+                  >
+                    Про машину 2024 года
+                  </button>
+                  <button class="chip" data-ask="Позовите юриста">
+                    Позвать юриста
+                  </button>
+                </div>
+                <p class="tiny muted">
+                  AI отвечает сразу, юрист – в рабочее время. Ответы AI
+                  помечены; выводы о результате дела дает только юрист.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- ОПЛАТА -->
+          <section class="view" data-view="pay">
+            <div>
+              <p class="lead small">
+                Оплата по этапам, без полной предоплаты. Отдельно – обязательные
+                расходы, которые уходят не нам, а суду, управляющему и на
+                публикации.
+              </p>
+            </div>
+
+            <div>
+              <p class="eyebrow">Наши услуги</p>
+              <div class="pay">
+                <div>
+                  <b>Этап 1. Разбор, план, старт сбора документов</b>
+                  <div class="muted small">
+                    Оплачено 25.07.2026 · чек отправлен на почту
+                  </div>
+                </div>
+                <span class="st st--ok">оплачено</span>
+              </div>
+              <div class="pay">
+                <div>
+                  <b>Этап 2. Пакет документов и заявление в суд</b>
+                  <div class="muted small">
+                    К оплате после проверки комплекта юристом ·
+                    <span
+                      class="slot"
+                      title="Сумму этапа определяет прайс Дмитрия"
+                      >сумма</span
+                    >
+                  </div>
+                </div>
+                <button
+                  class="btn btn--primary btn--sm"
+                  data-toast="Здесь будет форма оплаты"
+                >
+                  Оплатить
+                </button>
+              </div>
+              <div class="pay">
+                <div>
+                  <b>Этап 3. Подача и первое заседание</b>
+                  <div class="muted small">Позже, по графику дела</div>
+                </div>
+                <span class="st">ожидает</span>
+              </div>
+              <div class="pay">
+                <div>
+                  <b>Этап 4. Ведение процедуры до завершения</b>
+                  <div class="muted small">Позже, по графику дела</div>
+                </div>
+                <span class="st">ожидает</span>
+              </div>
+            </div>
+
+            <div>
+              <p class="eyebrow">Обязательные расходы – не нам</p>
+              <div class="pay">
+                <div>
+                  <b>Депозит финансового управляющего</b>
+                  <div class="muted small">
+                    25 000 ₽ · вносится на депозит суда перед подачей
+                  </div>
+                </div>
+                <span class="st">не внесен</span>
+              </div>
+              <div class="pay">
+                <div>
+                  <b>Публикации в Федресурсе и официальном издании</b>
+                  <div class="muted small">
+                    <span
+                      class="slot"
+                      title="Актуальную сумму подтверждает юрист"
+                      >~20 000 ₽</span
+                    >
+                    · оплачиваются в ходе процедуры
+                  </div>
+                </div>
+                <span class="st">позже</span>
+              </div>
+              <div class="pay">
+                <div>
+                  <b>Госпошлина и почтовые расходы</b>
+                  <div class="muted small">
+                    <span class="slot" title="Уточнить актуальные суммы"
+                      >уточним</span
+                    >
+                    · при подаче
+                  </div>
+                </div>
+                <span class="st">позже</span>
+              </div>
+            </div>
+
+            <div class="stage-detail">
+              Если решите остановиться – вы вправе отказаться от услуг в любой
+              момент и вернуть неотработанную часть. Условия и порядок – в
+              договоре.
+            </div>
+          </section>
+
+          <!-- ПРОФИЛЬ -->
+          <section class="view" data-view="profile">
+            <div>
+              <p class="lead small">
+                Данные заполняются один раз и подставляются во все документы
+                дела. Меняются только здесь – в заявлении и описи обновятся
+                автоматически.
+              </p>
+            </div>
+
+            <div class="tiles">
+              <div class="tile">
+                <span>ФИО</span>
+                <b style="font-size: 1.05rem">Сергей М.</b>
+              </div>
+              <div class="tile">
+                <span>Телефон</span>
+                <b style="font-size: 1.05rem" class="mono">+7 9•• ••• 41 08</b>
+              </div>
+              <div class="tile">
+                <span>Регион и суд</span>
+                <b style="font-size: 1.05rem">Самарская область</b>
+              </div>
+            </div>
+
+            <div>
+              <p class="eyebrow">Уведомления</p>
+              <label class="switch"
+                ><input
+                  type="checkbox"
+                  checked
+                  data-toast="Уведомления в Telegram включены"
+                />
+                Telegram – события дела и напоминания о справках</label
+              >
+              <label class="switch" style="margin-top: 8px"
+                ><input
+                  type="checkbox"
+                  checked
+                  data-toast="Уведомления на почту включены"
+                />
+                Электронная почта – документы и чеки</label
+              >
+              <label class="switch" style="margin-top: 8px"
+                ><input type="checkbox" data-toast="SMS отключены" /> SMS –
+                только критичное, например дата заседания</label
+              >
+            </div>
+
+            <div>
+              <p class="eyebrow">Документы и доступ</p>
+              <div class="pay">
+                <div>
+                  <b>Договор на оказание услуг</b>
+                  <div class="muted small">Подписан 25.07.2026</div>
+                </div>
+                <button
+                  class="btn btn--ghost btn--sm"
+                  data-toast="Откроется PDF договора"
+                >
+                  Открыть
+                </button>
+              </div>
+              <div class="pay">
+                <div>
+                  <b>Выйти из кабинета</b>
+                  <div class="muted small">
+                    Вход по коду из SMS или через Telegram
+                  </div>
+                </div>
+                <a class="btn btn--ghost btn--sm" href="index.html">Выйти</a>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div class="toasts" id="toasts"></div>
+
+    <script>
+      // Небольшой прототип: переключение разделов, загрузка документов, задачи, чат, уведомления.
+      const $ = (sel, root = document) => root.querySelector(sel)
+      const $$ = (sel, root = document) => [...root.querySelectorAll(sel)]
+
+      const titles = {
+        case: 'Мое дело',
+        docs: 'Документы',
+        tasks: 'Что делать',
+        creditors: 'Кредиторы',
+        chat: 'Чат по делу',
+        pay: 'Оплата',
+        profile: 'Профиль'
+      }
+
+      function toast(text) {
+        const el = document.createElement('div')
+        el.className = 'toast'
+        el.textContent = text
+        $('#toasts').append(el)
+        setTimeout(() => el.remove(), 3200)
+      }
+
+      // Навигация по разделам
+      function showView(name) {
+        $$('.view').forEach((v) =>
+          v.setAttribute('data-active', String(v.dataset.view === name))
+        )
+        $$('#menu button').forEach((b) =>
+          b.setAttribute('aria-current', String(b.dataset.view === name))
+        )
+        $('#viewTitle').textContent = titles[name] || 'Кабинет'
+        if (window.innerWidth <= 900) $('#side').removeAttribute('data-open')
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+
+      $('#menu').addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-view]')
+        if (btn) showView(btn.dataset.view)
+      })
+
+      document.addEventListener('click', (e) => {
+        const goto = e.target.closest('[data-goto]')
+        if (goto) showView(goto.dataset.goto)
+
+        const t = e.target.closest('[data-toast]')
+        if (t) toast(t.dataset.toast)
+      })
+
+      // Мобильное меню
+      $('#burger').addEventListener('click', () => {
+        const side = $('#side')
+        side.dataset.open = side.dataset.open === 'true' ? 'false' : 'true'
+      })
+
+      // Уведомления
+      $('#bell').addEventListener('click', (e) => {
+        e.stopPropagation()
+        const n = $('#notif')
+        const open = n.dataset.open === 'true'
+        n.dataset.open = open ? 'false' : 'true'
+        if (!open) {
+          $('#bellCount').style.display = 'none'
+          $$('.notif-item.unread').forEach((i) => i.classList.remove('unread'))
+        }
+      })
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#notif') && !e.target.closest('#bell')) {
+          $('#notif').dataset.open = 'false'
+        }
+      })
+
+      // Этапы дела
+      const stageText = [
+        '<b style="color:var(--text)">Разбор ситуации, выполнено 24.07.</b> Маршрут определен: судебное банкротство. AI отметил риск – продажа автомобиля в 2024 году, юрист его проверяет.',
+        '<b style="color:var(--text)">Сбор документов, идет сейчас.</b> Заказываете справки по памяткам, загружаете сюда, юрист проверяет комплект. Обычно занимает 2–6 недель – зависит от скорости банков и госорганов.',
+        '<b style="color:var(--text)">Заявление, впереди.</b> AI собирает заявление, опись и список кредиторов, юрист проверяет перед подачей. Здесь же появится задача внести депозит управляющего 25 000 ₽.',
+        '<b style="color:var(--text)">Подача в суд, впереди.</b> Отправляете заявление через «Мой Арбитр» под своей учетной записью Госуслуг – по закону это делает сам должник. Мы рядом в чате.',
+        '<b style="color:var(--text)">Первое заседание, впереди.</b> Суд проверяет обоснованность, признает банкротом и утверждает управляющего. Обычно 1–2 месяца после подачи.',
+        '<b style="color:var(--text)">Процедура, впереди.</b> Публикации, работа управляющего, требования кредиторов. Реализация вводится на срок не более шести месяцев и может продлеваться.',
+        '<b style="color:var(--text)">Реализация имущества, впереди.</b> Если ликвидного имущества нет – управляющий фиксирует это отчетом. Единственное жилье защищено, кроме ипотечного.',
+        '<b style="color:var(--text)">Списание, впереди.</b> Суд завершает процедуру и освобождает от дальнейшего исполнения обязательств. Определение появится здесь же, в документах дела.'
+      ]
+
+      $('#track').addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-stage]')
+        if (!btn) return
+        $('#stageDetail').innerHTML =
+          stageText[+btn.dataset.stage] +
+          ' <a href="roadmap.html" class="small">Весь путь по шагам →</a>'
+      })
+
+      // Документы: вкладки
+      $('#docTabs').addEventListener('click', (e) => {
+        const tab = e.target.closest('.tab')
+        if (!tab) return
+        $$('#docTabs .tab').forEach((t) =>
+          t.setAttribute('aria-selected', String(t === tab))
+        )
+        $$('[data-tabpanel]').forEach(
+          (p) => (p.hidden = p.dataset.tabpanel !== tab.dataset.tab)
+        )
+      })
+
+      // Документы: загрузка
+      let collected = 7
+      const total = 14
+
+      function refreshDocsProgress() {
+        const pct = Math.round((collected / total) * 100)
+        $('#docsBar').style.width = pct + '%'
+        $('#tileBar').style.width = pct + '%'
+        $('#tileDocs').textContent = collected + ' из ' + total
+        $('#docsCount').textContent = collected + '/' + total
+      }
+
+      function markUploaded(row) {
+        const status = $('.st', row)
+        const wasCounted = status.textContent.trim() === 'скоро истечет'
+        status.className = 'st st--wait'
+        status.textContent = 'загружено, на проверке'
+        $$('button[data-upload], button[data-goto]', row).forEach((b) =>
+          b.remove()
+        )
+        if (!wasCounted && collected < total) collected++
+        refreshDocsProgress()
+        toast('Файл загружен. Юрист проверит его в рабочее время')
+        setTimeout(() => {
+          status.className = 'st st--ok'
+          status.textContent = 'принято'
+          toast('Юрист принял документ: ' + $('.doc-name b', row).textContent)
+        }, 2600)
+      }
+
+      $('#docList').addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-upload]')
+        if (btn) markUploaded(btn.closest('.doc'))
+      })
+
+      $('#drop').addEventListener('click', () => {
+        const pending = $$('#docList .doc').find((d) =>
+          $('.st', d).textContent.includes('нужно')
+        )
+        if (pending) markUploaded(pending)
+        else toast('Все обязательные документы уже загружены')
+      })
+      ;['dragover', 'dragenter'].forEach((ev) =>
+        $('#drop').addEventListener(ev, (e) => {
+          e.preventDefault()
+          $('#drop').style.borderColor = 'var(--accent)'
+        })
+      )
+      $('#drop').addEventListener(
+        'dragleave',
+        () => ($('#drop').style.borderColor = '')
+      )
+      $('#drop').addEventListener('drop', (e) => {
+        e.preventDefault()
+        $('#drop').style.borderColor = ''
+        $('#drop').click()
+      })
+
+      // Задачи
+      $('#taskList').addEventListener('change', (e) => {
+        const box = e.target.closest('input[type=checkbox]')
+        if (!box) return
+        const task = box.closest('.task')
+        task.classList.toggle('done', box.checked)
+        const left = $$('#taskList .task input:not(:checked)').length
+        $('#tasksCount').textContent = String(left)
+        toast(
+          box.checked
+            ? 'Задача отмечена – юрист видит прогресс'
+            : 'Задача снова открыта'
+        )
+      })
+
+      // Чат
+      const answers = [
+        {
+          match: /заявлен|подад|подач/i,
+          text: 'Как только придут три оставшиеся справки, AI соберет заявление, опись и список кредиторов, юрист проверит комплект – это 2–3 дня. Дальше вы подаете заявление через «Мой Арбитр» сами, мы проведем по шагам.'
+        },
+        {
+          match: /машин|авто|продал|сделк/i,
+          text: 'Продажа автомобиля в 2024 году сама по себе не проблема. Управляющий проверит, была ли цена рыночной, поэтому нужен договор и подтверждение поступления денег – договор вы уже загрузили, он на проверке у юриста.'
+        },
+        {
+          match: /карт|счет|зарплат|деньги/i,
+          text: 'В процедуре счетами распоряжается управляющий, карты обычно блокируются, а средства на жизнь выделяются из дохода. Точный порядок по вашему делу подтвердит Дмитрий.'
+        },
+        {
+          match: /квартир|жиль|дом|ипотек/i,
+          text: 'Единственное жилье защищено исполнительским иммунитетом и в конкурсную массу не включается. Исключение – жилье в ипотеке: там ситуация решается отдельно.'
+        },
+        {
+          match: /срок|сколько ждать|когда закончит/i,
+          text: 'Активная часть занимает от 4 до 14 месяцев, полный цикл до завершения дела – в среднем около полутора лет. Сроки зависят от суда, кредиторов и полноты документов.'
+        }
+      ]
+
+      function bubble(cls, html) {
+        const el = document.createElement('div')
+        el.className = 'bubble ' + cls
+        el.innerHTML = html
+        $('#chatBody').append(el)
+        $('#chatBody').scrollTop = $('#chatBody').scrollHeight
+        return el
+      }
+
+      function ask(text) {
+        if (!text.trim()) return
+        bubble('bubble--user', text.replace(/</g, '&lt;'))
+        const typing = document.createElement('div')
+        typing.className = 'typing'
+        typing.textContent = 'AI печатает…'
+        $('#chatBody').append(typing)
+        $('#chatBody').scrollTop = $('#chatBody').scrollHeight
+
+        const wantsHuman = /юрист|дмитри|человек|позов/i.test(text)
+        setTimeout(() => {
+          typing.remove()
+          if (wantsHuman) {
+            bubble(
+              'bubble--ai',
+              'Передал вопрос Дмитрию – он ответит здесь же в рабочее время. Если вопрос срочный, отметьте его как срочный, и уведомление придет ему сразу.' +
+                '<div class="bubble-meta">Ответ подготовлен с помощью AI</div>'
+            )
+            setTimeout(() => {
+              bubble(
+                'bubble--lawyer',
+                '<b>Дмитрий Ерзиков, финансовый управляющий:</b> вижу вопрос, отвечу подробно в течение рабочего дня. Коротко: по вашему делу сейчас все идет штатно, ждем три справки.' +
+                  '<div class="bubble-meta">Ответ человека, не AI</div>'
+              )
+              toast('Юрист ответил в чате')
+            }, 2200)
+            return
+          }
+          const found = answers.find((a) => a.match.test(text))
+          bubble(
+            'bubble--ai',
+            (found
+              ? found.text
+              : 'Записал вопрос. По нему нужен юрист – передам Дмитрию, он ответит здесь же в рабочее время. Если это про сбор документов, могу подсказать сразу.') +
+              '<div class="bubble-meta">Ответ подготовлен с помощью AI · критичное подтверждает юрист</div>'
+          )
+        }, 900)
+      }
+
+      $('#chatSend').addEventListener('click', () => {
+        ask($('#chatInput').value)
+        $('#chatInput').value = ''
+      })
+      $('#chatInput').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') $('#chatSend').click()
+      })
+      $$('.chip[data-ask]').forEach((c) =>
+        c.addEventListener('click', () => {
+          showView('chat')
+          ask(c.dataset.ask)
+        })
+      )
+
+      // Сброс счетчика непрочитанного в чате при входе в раздел
+      $$('#menu button').forEach((b) =>
+        b.addEventListener('click', () => {
+          if (b.dataset.view === 'chat') $('#chatCount').style.display = 'none'
+        })
+      )
+
+      refreshDocsProgress()
+    </script>
+  </body>
+</html>

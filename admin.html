@@ -102,7 +102,7 @@
 
     <div class="admin">
       <!-- Очередь лидов -->
-      <aside class="admin-side">
+      <aside class="admin-side" data-lead-list>
         <div class="side-head">
           <a class="logo" href="index.html">Ерзиков <span>панель</span></a>
           <div class="side-tabs">
@@ -112,7 +112,7 @@
           </div>
         </div>
 
-        <div class="lead-item lead-item--active">
+        <div class="lead-item lead-item--active" data-lead="sergey">
           <div class="lead-item-top">
             <span>Сергей М.</span>
             <span class="tag tag--accent">суд</span>
@@ -121,7 +121,7 @@
           <div class="lead-item-sub mono">директ / банкротство-цена</div>
         </div>
 
-        <div class="lead-item">
+        <div class="lead-item" data-lead="natalya">
           <div class="lead-item-top">
             <span>Наталья К.</span>
             <span class="tag tag--free">МФЦ</span>
@@ -132,7 +132,7 @@
           <div class="lead-item-sub mono">блог / последствия-банкротства</div>
         </div>
 
-        <div class="lead-item">
+        <div class="lead-item" data-lead="igor">
           <div class="lead-item-top">
             <span>Игорь Т.</span>
             <span class="tag">сложный</span>
@@ -143,7 +143,7 @@
           <div class="lead-item-sub mono">директ / банкротство-ипотека</div>
         </div>
 
-        <div class="lead-item">
+        <div class="lead-item" data-lead="anon">
           <div class="lead-item-top">
             <span>Аноним</span>
             <span class="tag">не наш</span>
@@ -180,66 +180,19 @@
           <div class="panel">
             <div class="panel-head">
               <div>
-                <h2 style="font-size: 1.4rem">Сергей М.</h2>
-                <p class="small muted">
-                  Заявка от 28.07.2026, 09:12 · телефон
-                  <span class="mono">+7 9•• ••• 41 08</span> · Самарская область
-                </p>
+                <h2 style="font-size: 1.4rem" id="lead-name">Сергей М.</h2>
+                <p class="small muted" id="lead-meta"></p>
               </div>
-              <span class="tag tag--accent">судебное банкротство</span>
+              <span class="tag tag--accent" id="lead-tag">судебное банкротство</span>
             </div>
 
-            <dl class="kv">
-              <div>
-                <dt>Сумма долга</dt>
-                <dd>1,84 млн ₽</dd>
-              </div>
-              <div>
-                <dt>Кредиторы</dt>
-                <dd>3 банка, 1 МФО, ЖКХ</dd>
-              </div>
-              <div>
-                <dt>Имущество</dt>
-                <dd>единственное жилье, без ипотеки</dd>
-              </div>
-              <div>
-                <dt>Доход</dt>
-                <dd>официальный, 70 тыс. ₽</dd>
-              </div>
-              <div>
-                <dt>Стадия взыскания</dt>
-                <dd>коллекторы, приставов нет</dd>
-              </div>
-              <div>
-                <dt>Риск, отмеченный AI</dt>
-                <dd>продажа авто в 2024 – проверить цену</dd>
-              </div>
-            </dl>
+            <dl class="kv" id="lead-facts"></dl>
 
             <div>
               <p class="eyebrow" style="margin-bottom: 10px">Диалог с AI</p>
-              <div class="dialog">
-                <div class="bubble bubble--user" style="max-width: 92%">
-                  1,8 млн: три кредита, две карты, микрозайм и коммуналка 40
-                  тысяч.
-                </div>
-                <div class="bubble bubble--ai" style="max-width: 92%">
-                  Уточняю про имущество и доход: квартира, машина, официальная
-                  работа?
-                </div>
-                <div class="bubble bubble--user" style="max-width: 92%">
-                  Квартира одна, без ипотеки. Машины нет, продал в 2024.
-                  Работаю, 70 тысяч.
-                </div>
-                <div class="bubble bubble--ai" style="max-width: 92%">
-                  МФЦ не подходит – долг больше 1 млн. Путь – судебное
-                  банкротство, сделку 2024 нужно проверить.
-                </div>
+              <div class="dialog" id="lead-dialog"></div>
               </div>
-              <p class="tiny muted" style="margin-top: 10px">
-                Полный транскрипт и загруженные файлы – 2 документа (договор
-                купли-продажи, справка из банка).
-              </p>
+              <p class="tiny muted" style="margin-top: 10px" id="lead-files"></p>
             </div>
           </div>
 
@@ -247,37 +200,12 @@
           <div class="panel">
             <div class="panel-head">
               <h3>Ответ клиенту</h3>
-              <button class="btn btn--ghost btn--sm" type="button">
+              <button class="btn btn--ghost btn--sm" type="button" id="draft-generate">
                 Сгенерировать черновик AI
               </button>
             </div>
 
-            <div class="draft">
-              <p class="tiny" style="font-weight: 600">
-                Черновик AI · виден только вам, клиенту не отправлен
-              </p>
-              <p>
-                Сергей, посмотрел ваш разбор. Сделка 2024 года рисков не
-                создает, если цена была рыночной – приложите договор и выписку о
-                поступлении денег. Начните с трех справок: о задолженности из
-                банков, из ФНС и выписки по счетам за 3 года. Дальше соберем
-                пакет документов.
-              </p>
-              <div class="btn-row">
-                <button class="btn btn--primary btn--sm" type="button">
-                  Правки и отправить
-                </button>
-                <button class="btn btn--ghost btn--sm" type="button">
-                  Переписать заново
-                </button>
-              </div>
-              <p class="tiny muted">
-                Отправляется как ответ юриста – без пометки AI, потому что вы
-                его прочитали и подтвердили. Черновик и отправленный текст
-                сохраняются отдельно: по разнице видно, что AI формулирует не
-                так, и промпт улучшается.
-              </p>
-            </div>
+            <div class="draft is-empty" id="lead-draft"></div>
 
             <p class="tiny muted">
               Уведомление о новой заявке и о сообщении клиента приходит в
@@ -296,18 +224,18 @@
               этих отметок считается конверсия «заявка – договор»: без нее
               непонятно, окупается ли реклама.
             </p>
-            <div class="btn-row">
-              <span class="select-fake">Договор заключен ▾</span>
-              <span class="select-fake">Дата: 28.07.2026</span>
+            <div class="btn-row" style="align-items: center">
+              <select class="select-real" id="lead-outcome">
+                <option value="">Выберите итог…</option>
+                <option value="won">Договор заключен</option>
+                <option value="lost-price">Отказ клиента – дорого</option>
+                <option value="lost-think">Отказ клиента – передумал</option>
+                <option value="lost-other">Ушел к другим</option>
+                <option value="noanswer">Не дозвонились</option>
+                <option value="notours">Не наш случай – МФЦ или не нужно</option>
+              </select>
+              <span class="badge-status" id="lead-status">Итог не выставлен</span>
             </div>
-            <ul class="list small">
-              <li>Договор заключен</li>
-              <li>
-                Отказ клиента – с причиной: дорого / передумал / ушел к другим
-              </li>
-              <li>Не дозвонились и не ответил</li>
-              <li>Не наш случай – увели в МФЦ или банкротство не нужно</li>
-            </ul>
             <p class="tiny muted">
               Итоги выгружаются в Яндекс.Метрику как оффлайн-конверсии – реклама
               начинает оптимизироваться на договоры, а не на клики.
@@ -324,5 +252,6 @@
         </div>
       </main>
     </div>
+      <script src="app.js" defer></script>
   </body>
 </html>
