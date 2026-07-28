@@ -306,6 +306,13 @@
         background: var(--border);
       }
 
+      /* В темной теме бордер слишком темный для полосок будущих этапов */
+      @media (prefers-color-scheme: dark) {
+        .track .bar {
+          background: var(--border-strong);
+        }
+      }
+
       .track .done .bar {
         background: var(--positive);
       }
@@ -1126,6 +1133,12 @@
                   <span class="st st--wait">на проверке</span>
                 </div>
               </div>
+              <p class="tiny muted" style="margin-top: 12px">
+                Еще 8 файлов юрист уже принял – паспорт, СНИЛС, ИНН,
+                свидетельство о браке, выписки по двум счетам за 2023 и 2025
+                годы, справка из ПФР. Они лежат во вкладке «Все файлы» и здесь
+                не мешают.
+              </p>
             </div>
 
             <div data-tabpanel="ready" hidden>
