@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Блог – макет раздела статей</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="mockbar">
+      <div class="wrap">
+        <strong>Макет блога.</strong>
+        <span
+          >Серой рамкой у каждой статьи – частотность запроса в Вордстате: это
+          внутренняя метка для выбора приоритетов, на живом сайте ее не будет.
+          Тексты статей пишем после согласования, в макете открыта одна.</span
+        >
+      </div>
+    </div>
+
+    <header class="topbar">
+      <div class="wrap">
+        <a class="logo" href="index.html"
+          >Ерзиков <span>банкротство физлиц</span></a
+        >
+        <nav class="nav">
+          <a href="index.html#how">Как это работает</a>
+          <a href="index.html#price">Цена</a>
+          <a href="index.html#cases">Дела</a>
+          <a href="blog.html">Блог</a>
+          <a href="index.html#faq">Вопросы</a>
+        </nav>
+        <a class="btn btn--primary btn--sm" href="chat.html"
+          >Разобрать ситуацию</a
+        >
+      </div>
+    </header>
+
+    <section class="section section--flat" style="padding-top: 56px">
+      <div class="wrap stack-lg">
+        <div>
+          <p class="eyebrow">Блог</p>
+          <h1 style="font-size: clamp(1.9rem, 3.4vw, 2.6rem)">
+            Разбираем банкротство простым языком
+          </h1>
+          <p class="lead" style="margin-top: 16px">
+            Без юридического жаргона и без обещаний. Что реально меняется в
+            жизни после процедуры, когда хватит бесплатного МФЦ, как отличить
+            нормального юриста от «раздолжнителя» и что делать, если
+            заблокировали карту.
+          </p>
+        </div>
+
+        <div class="chips-row">
+          <span class="chip" style="cursor: default">Все статьи</span>
+          <a class="chip" href="#">МФЦ и суд</a>
+          <a class="chip" href="#">Последствия и страхи</a>
+          <a class="chip" href="#">Деньги и расходы</a>
+          <a class="chip" href="#">Как не попасть к мошенникам</a>
+          <a class="chip" href="#">Пошаговые инструкции</a>
+        </div>
+
+        <div class="post-grid">
+          <!-- Главная статья -->
+          <a class="post post--feature" href="article.html">
+            <div class="stack">
+              <span class="tag tag--accent">Главное в разделе</span>
+              <h3>МФЦ или суд: как понять, куда идти с вашими долгами</h3>
+              <p>
+                Половина людей платит юркомпаниям за то, что можно пройти
+                бесплатно через МФЦ, а другая половина идет в МФЦ и получает
+                возврат заявления. Разбираем условия по закону и таблицу «что
+                выбрать при вашей ситуации».
+              </p>
+              <div class="post-meta">
+                <span>28 июля 2026</span>
+                <span>·</span>
+                <span>7 минут</span>
+                <span>·</span>
+                <span>проверил юрист</span>
+              </div>
+            </div>
+            <div class="stack">
+              <span class="seo-note"
+                >«банкротство через мфц» – 58 228 показов/мес</span
+              >
+              <p class="tiny muted">
+                Самый крупный запрос всей темы и в шесть раз популярнее, чем
+                «юрист по банкротству». Люди ищут бесплатный путь – и находить
+                их нужно именно здесь, а не в дорогом коммерческом аукционе.
+              </p>
+            </div>
+          </a>
+
+          <a class="post" href="#">
+            <span class="tag">Последствия и страхи</span>
+            <h3>Последствия банкротства: что действительно меняется в жизни</h3>
+            <p>
+              Кредитная история, работа, выезд за границу, повторное банкротство
+              через пять лет – по пунктам и без запугивания.
+            </p>
+            <span class="seo-note">«последствия» – 5 048</span>
+            <div class="post-meta">
+              <span>6 минут</span><span>·</span><span>черновик</span>
+            </div>
+          </a>
+
+          <a class="post" href="#">
+            <span class="tag">Последствия и страхи</span>
+            <h3>Минусы банкротства, о которых редко говорят в рекламе</h3>
+            <p>
+              Публичность процедуры, распоряжение счетами у управляющего,
+              ограничения на время процедуры. Честный список, чтобы решение было
+              осознанным.
+            </p>
+            <span class="seo-note">«минусы» – 3 428</span>
+            <div class="post-meta">
+              <span>5 минут</span><span>·</span><span>черновик</span>
+            </div>
+          </a>
+
+          <a class="post" href="#">
+            <span class="tag">Последствия и страхи</span>
+            <h3>Заберут ли единственную квартиру при банкротстве</h3>
+            <p>
+              Что защищено исполнительским иммунитетом, чем отличается ситуация
+              с ипотекой и когда риск действительно есть.
+            </p>
+            <span class="seo-note">кластер «заберут ли квартиру»</span>
+            <div class="post-meta">
+              <span>8 минут</span><span>·</span><span>черновик</span>
+            </div>
+          </a>
+
+          <a class="post" href="#">
+            <span class="tag">Пошаговые инструкции</span>
+            <h3>Заблокировали карту во время процедуры: что делать</h3>
+            <p>
+              Самая частая бытовая проблема банкрота: как получать зарплату и
+              детские выплаты, пока счетами распоряжается управляющий.
+            </p>
+            <span class="seo-note">«разблокируют карты» – 255 + 253</span>
+            <div class="post-meta">
+              <span>4 минуты</span><span>·</span><span>черновик</span>
+            </div>
+          </a>
+
+          <a class="post" href="#">
+            <span class="tag">Пошаговые инструкции</span>
+            <h3>Нечем платить кредит: первые шаги, пока не поздно</h3>
+            <p>
+              Что сделать в первый месяц просрочки, о чем можно договориться с
+              банком и когда пора думать про банкротство.
+            </p>
+            <span class="seo-note">«нечем платить кредит» – 2 280</span>
+            <div class="post-meta">
+              <span>6 минут</span><span>·</span><span>черновик</span>
+            </div>
+          </a>
+
+          <a class="post" href="#">
+            <span class="tag">Как не попасть к мошенникам</span>
+            <h3>Как отличить нормального юриста от «раздолжнителя»</h3>
+            <p>
+              Семь признаков: обещание списать все, «управимся за три месяца»,
+              цена «от 3 860 в месяц», отказ показать договор. И как проверить
+              статус управляющего в реестре.
+            </p>
+            <span class="seo-note">«рейтинг банкротства» – 684</span>
+            <div class="post-meta">
+              <span>7 минут</span><span>·</span><span>черновик</span>
+            </div>
+          </a>
+
+          <a class="post" href="#">
+            <span class="tag">Деньги и расходы</span>
+            <h3>Сколько стоит банкротство: все обязательные расходы</h3>
+            <p>
+              Депозит управляющего, публикации, пошлина, почта – что платят все
+              и на чем не получится сэкономить.
+            </p>
+            <span class="seo-note">«банкротство цена» – 1 582</span>
+            <div class="post-meta">
+              <span>5 минут</span><span>·</span><span>черновик</span>
+            </div>
+          </a>
+
+          <a class="post" href="#">
+            <span class="tag">Пошаговые инструкции</span>
+            <h3>Можно ли пройти банкротство самостоятельно</h3>
+            <p>
+              Что реально сделать своими руками, где нужен юрист и какие ошибки
+              чаще всего приводят к возврату заявления.
+            </p>
+            <span class="seo-note">«самостоятельно» – 2 200+</span>
+            <div class="post-meta">
+              <span>9 минут</span><span>·</span><span>черновик</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="cta">
+          <h2>Не хотите читать – спросите</h2>
+          <p class="lead">
+            AI разберет вашу ситуацию за 10 минут и скажет, какая из этих статей
+            вообще про вас. Бесплатно.
+          </p>
+          <a class="btn btn--primary" href="chat.html"
+            >Разобрать мою ситуацию</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-grid">
+          <div class="stack">
+            <a class="logo" href="index.html"
+              >Ерзиков <span>банкротство физлиц</span></a
+            >
+            <p class="tiny">
+              Статьи носят информационный характер и не заменяют консультацию по
+              вашему делу. Правовые формулировки перед публикацией проверяет
+              юрист.
+            </p>
+          </div>
+          <div class="footer-links">
+            <b style="color: var(--text)">Разделы</b>
+            <a href="index.html#how">Как это работает</a>
+            <a href="index.html#price">Цена</a>
+            <a href="index.html#cases">Дела</a>
+            <a href="blog.html">Блог</a>
+            <a href="chat.html">AI-разбор</a>
+          </div>
+          <div class="footer-links">
+            <b style="color: var(--text)">Документы</b>
+            <a href="#">Договор и оферта</a>
+            <a href="#">Условия возврата</a>
+            <a href="#">Правила сервиса</a>
+          </div>
+        </div>
+
+        <div class="disclaimer">
+          <b>Место обязательного предупреждения о последствиях банкротства.</b>
+          <span class="slot" title="Дословный текст утверждает юрист"
+            >Дословную формулировку и параметры показа утверждает Дмитрий по
+            первоисточнику</span
+          >
+          – в макете текст намеренно не сочинен.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
